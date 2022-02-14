@@ -34,30 +34,23 @@ class InBoxViewController: UIViewController {
         }
     }
     
+    func getData(newTask: [Group]){
+        data = TaskService().appendTask(newTask: newTask)
+        tableView.reloadData()
+    }
+    
     func createTableView(){
         tableView = UITableView(frame: view.bounds, style: .insetGrouped)
+        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        tableView.sectionFooterHeight = 0
         
         let nib = UINib(nibName: "TableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: identifier)
         
         tableView.delegate = self
         tableView.dataSource = self
-        
-        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        tableView.sectionFooterHeight = 0
-        
+
         view.addSubview(tableView)
-    }
-    
-    fileprivate func createBarButtonItemRight() {
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
-                                                                target: self,
-                                                                action: #selector(actionBarButtonItem(sender:)))
-    }
-    
-    @objc func actionBarButtonItem(sender: UIBarButtonItem){
-        let dest = AddTaskViewController(nibName:"AddTaskViewController", bundle: nil)
-        navigationController?.pushViewController(dest, animated: true)
     }
 }
 
@@ -98,5 +91,27 @@ extension InBoxViewController: UITableViewDelegate, UITableViewDataSource{
             cell?.nameLabel.text = n
         }
         return cell ?? TableViewCell()
+    }
+}
+
+//MARK: - Open AddTaskViewController
+extension InBoxViewController{
+    fileprivate func createBarButtonItemRight() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
+                                                                target: self,
+                                                                action: #selector(actionBarButtonItem(sender:)))
+    }
+    
+    @objc func actionBarButtonItem(sender: UIBarButtonItem){
+        let dest = AddTaskViewController(nibName:"AddTaskViewController", bundle: nil)
+        dest.delegate = self
+        navigationController?.pushViewController(dest, animated: true)
+    }
+}
+
+//Получить новую задачу и перезагрузить таблицу
+extension InBoxViewController: AddTaskDelegate {
+    func callback(_ newTask: [Group]){
+        getData(newTask: newTask)
     }
 }

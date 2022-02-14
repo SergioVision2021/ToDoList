@@ -11,6 +11,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddTaskViewController" customModule="ToDoList" customModuleProvider="target">
             <connections>
                 <outlet property="dateSchedleButton" destination="Hjn-YI-I9u" id="9G7-X7-wit"/>
+                <outlet property="nameTaskTF" destination="CVm-qW-gmd" id="88o-9f-Y6Q"/>
+                <outlet property="notesTV" destination="eE2-iS-iet" id="BMb-da-bDK"/>
+                <outlet property="selectGroupButton" destination="jjb-bs-CQ9" id="9aU-ex-duj"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,38 +23,56 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Hcd-Qb-bP5">
-                    <rect key="frame" x="10" y="54" width="394" height="288"/>
+                    <rect key="frame" x="10" y="54" width="394" height="327"/>
                     <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" spacing="69" translatesAutoresizingMaskIntoConstraints="NO" id="giq-m7-QP4">
+                            <rect key="frame" x="0.0" y="0.0" width="394" height="31"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Group:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9NL-lL-0T2">
+                                    <rect key="frame" x="0.0" y="0.0" width="52" height="31"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jjb-bs-CQ9">
+                                    <rect key="frame" x="121" y="0.0" width="273" height="31"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="Select group"/>
+                                    <connections>
+                                        <action selector="selectGroupButton:" destination="-1" eventType="touchUpInside" id="xcc-Um-Tdw"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name task:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="07f-rt-pvz">
-                            <rect key="frame" x="0.0" y="0.0" width="86" height="20.5"/>
+                            <rect key="frame" x="0.0" y="39" width="86" height="20.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CVm-qW-gmd">
-                            <rect key="frame" x="0.0" y="28.5" width="394" height="34"/>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="NEW TASK" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CVm-qW-gmd">
+                            <rect key="frame" x="0.0" y="67.5" width="394" height="34"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6SK-2x-bgd">
-                            <rect key="frame" x="0.0" y="70.5" width="50" height="20.5"/>
+                            <rect key="frame" x="0.0" y="109.5" width="50" height="20.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="eE2-iS-iet">
-                            <rect key="frame" x="0.0" y="99" width="394" height="150"/>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Note new task" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="eE2-iS-iet">
+                            <rect key="frame" x="0.0" y="138" width="394" height="150"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="150" id="5Xx-qL-s34"/>
                             </constraints>
-                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                             <color key="textColor" systemColor="labelColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Y1a-QC-Ewr">
-                            <rect key="frame" x="0.0" y="257" width="394" height="31"/>
+                            <rect key="frame" x="0.0" y="296" width="394" height="31"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date sheduled:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="514-IT-FFb">
                                     <rect key="frame" x="0.0" y="0.0" width="115" height="31"/>
@@ -59,10 +80,10 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hjn-YI-I9u">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hjn-YI-I9u">
                                     <rect key="frame" x="123" y="0.0" width="271" height="31"/>
                                     <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" title="выбрать дату"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="Select date" subtitle=""/>
                                     <connections>
                                         <action selector="selectDateButton:" destination="-1" eventType="touchUpInside" id="tTW-0a-d7d"/>
                                     </connections>
@@ -73,6 +94,8 @@
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="Y1a-QC-Ewr" secondAttribute="trailing" id="8wD-10-WRo"/>
                         <constraint firstAttribute="trailing" secondItem="eE2-iS-iet" secondAttribute="trailing" id="IUx-Iu-CrZ"/>
+                        <constraint firstAttribute="trailing" secondItem="giq-m7-QP4" secondAttribute="trailing" id="Ti5-u3-poA"/>
+                        <constraint firstItem="giq-m7-QP4" firstAttribute="leading" secondItem="Hcd-Qb-bP5" secondAttribute="leading" id="aG7-hU-sPv"/>
                         <constraint firstItem="CVm-qW-gmd" firstAttribute="leading" secondItem="Hcd-Qb-bP5" secondAttribute="leading" id="uXD-Oi-8AD"/>
                         <constraint firstAttribute="trailing" secondItem="CVm-qW-gmd" secondAttribute="trailing" id="w0h-iP-mfa"/>
                         <constraint firstItem="Y1a-QC-Ewr" firstAttribute="leading" secondItem="Hcd-Qb-bP5" secondAttribute="leading" id="y7O-IY-tUU"/>

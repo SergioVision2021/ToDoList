@@ -44,7 +44,6 @@ class InBoxViewController: UIViewController {
         tableView.dataSource = self
         
         tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
         tableView.sectionFooterHeight = 0
         
         view.addSubview(tableView)
@@ -65,7 +64,7 @@ class InBoxViewController: UIViewController {
 extension InBoxViewController: UITableViewDelegate, UITableViewDataSource{
     //MARK: - Section
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return data.count
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -75,15 +74,14 @@ extension InBoxViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))
         let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 40))
-        lbl.text = "Section \(section)"
+        lbl.text = data[section].name
         view.addSubview(lbl)
-        
         return view
     }
 
     //MARK: - Cell
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return data[section].list?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -92,9 +90,13 @@ extension InBoxViewController: UITableViewDelegate, UITableViewDataSource{
         
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? TableViewCell
-        
         cell?.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-        cell?.nameLabel.text = "adasdas"
+        
+        let task = data[indexPath.section].list?[indexPath.row]
+        if let n = task?.name, let s = task?.status {
+            cell?.statusImageView.tintColor = s ? .systemGreen : .systemYellow
+            cell?.nameLabel.text = n
+        }
         return cell ?? TableViewCell()
     }
 }

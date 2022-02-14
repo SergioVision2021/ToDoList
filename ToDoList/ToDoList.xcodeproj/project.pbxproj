@@ -14,6 +14,8 @@
 		D31B939827BA5831008B23D6 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31B939727BA5831008B23D6 /* SearchViewController.swift */; };
 		D31B939D27BA5ECC008B23D6 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31B939C27BA5ECC008B23D6 /* Task.swift */; };
 		D31B939F27BA5ED7008B23D6 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31B939E27BA5ED7008B23D6 /* Group.swift */; };
+		D31B93A327BA611D008B23D6 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31B93A127BA611D008B23D6 /* TableViewCell.swift */; };
+		D31B93A427BA611D008B23D6 /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D31B93A227BA611D008B23D6 /* TableViewCell.xib */; };
 		D3C53D3A27BA5396000B6E26 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C53D3927BA5396000B6E26 /* AppDelegate.swift */; };
 		D3C53D3C27BA5396000B6E26 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C53D3B27BA5396000B6E26 /* SceneDelegate.swift */; };
 		D3C53D3E27BA5396000B6E26 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C53D3D27BA5396000B6E26 /* ViewController.swift */; };
@@ -30,6 +32,8 @@
 		D31B939727BA5831008B23D6 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		D31B939C27BA5ECC008B23D6 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		D31B939E27BA5ED7008B23D6 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		D31B93A127BA611D008B23D6 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		D31B93A227BA611D008B23D6 /* TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
 		D3C53D3627BA5396000B6E26 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3C53D3927BA5396000B6E26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3C53D3B27BA5396000B6E26 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -71,6 +75,15 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		D31B93A027BA60F8008B23D6 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				D31B93A127BA611D008B23D6 /* TableViewCell.swift */,
+				D31B93A227BA611D008B23D6 /* TableViewCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		D3C53D2D27BA5396000B6E26 = {
 			isa = PBXGroup;
 			children = (
@@ -90,6 +103,7 @@
 		D3C53D3827BA5396000B6E26 /* ToDoList */ = {
 			isa = PBXGroup;
 			children = (
+				D31B93A027BA60F8008B23D6 /* Cell */,
 				D31B939027BA57C5008B23D6 /* ViewControllers */,
 				D3C53D3927BA5396000B6E26 /* AppDelegate.swift */,
 				D3C53D3B27BA5396000B6E26 /* SceneDelegate.swift */,
@@ -163,6 +177,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3C53D4627BA5397000B6E26 /* LaunchScreen.storyboard in Resources */,
+				D31B93A427BA611D008B23D6 /* TableViewCell.xib in Resources */,
 				D3C53D4327BA5397000B6E26 /* Assets.xcassets in Resources */,
 				D3C53D4127BA5396000B6E26 /* Main.storyboard in Resources */,
 			);
@@ -181,6 +196,7 @@
 				D31B939F27BA5ED7008B23D6 /* Group.swift in Sources */,
 				D31B938F27BA578A008B23D6 /* TabBarController.swift in Sources */,
 				D31B939227BA57E0008B23D6 /* InBoxViewController.swift in Sources */,
+				D31B93A327BA611D008B23D6 /* TableViewCell.swift in Sources */,
 				D3C53D3A27BA5396000B6E26 /* AppDelegate.swift in Sources */,
 				D31B939427BA580C008B23D6 /* ToDayViewController.swift in Sources */,
 				D31B939D27BA5ECC008B23D6 /* Task.swift in Sources */,

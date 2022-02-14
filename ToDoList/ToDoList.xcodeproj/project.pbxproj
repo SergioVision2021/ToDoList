@@ -16,6 +16,11 @@
 		D31B939F27BA5ED7008B23D6 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31B939E27BA5ED7008B23D6 /* Group.swift */; };
 		D31B93A327BA611D008B23D6 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31B93A127BA611D008B23D6 /* TableViewCell.swift */; };
 		D31B93A427BA611D008B23D6 /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D31B93A227BA611D008B23D6 /* TableViewCell.xib */; };
+		D31B93A927BA7510008B23D6 /* AddTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31B93A727BA7510008B23D6 /* AddTaskViewController.swift */; };
+		D31B93AA27BA7510008B23D6 /* AddTaskViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D31B93A827BA7510008B23D6 /* AddTaskViewController.xib */; };
+		D31B93AD27BA7BBA008B23D6 /* SelectDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31B93AB27BA7BBA008B23D6 /* SelectDateViewController.swift */; };
+		D31B93AE27BA7BBA008B23D6 /* SelectDateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D31B93AC27BA7BBA008B23D6 /* SelectDateViewController.xib */; };
+		D31B93B027BA7E6D008B23D6 /* ConvertDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31B93AF27BA7E6D008B23D6 /* ConvertDate.swift */; };
 		D3C53D3A27BA5396000B6E26 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C53D3927BA5396000B6E26 /* AppDelegate.swift */; };
 		D3C53D3C27BA5396000B6E26 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C53D3B27BA5396000B6E26 /* SceneDelegate.swift */; };
 		D3C53D3E27BA5396000B6E26 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C53D3D27BA5396000B6E26 /* ViewController.swift */; };
@@ -34,6 +39,11 @@
 		D31B939E27BA5ED7008B23D6 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		D31B93A127BA611D008B23D6 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		D31B93A227BA611D008B23D6 /* TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
+		D31B93A727BA7510008B23D6 /* AddTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewController.swift; sourceTree = "<group>"; };
+		D31B93A827BA7510008B23D6 /* AddTaskViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddTaskViewController.xib; sourceTree = "<group>"; };
+		D31B93AB27BA7BBA008B23D6 /* SelectDateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDateViewController.swift; sourceTree = "<group>"; };
+		D31B93AC27BA7BBA008B23D6 /* SelectDateViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectDateViewController.xib; sourceTree = "<group>"; };
+		D31B93AF27BA7E6D008B23D6 /* ConvertDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertDate.swift; sourceTree = "<group>"; };
 		D3C53D3627BA5396000B6E26 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3C53D3927BA5396000B6E26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3C53D3B27BA5396000B6E26 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -84,6 +94,26 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		D31B93A527BA74CE008B23D6 /* Xib */ = {
+			isa = PBXGroup;
+			children = (
+				D31B93A027BA60F8008B23D6 /* Cell */,
+				D31B93A627BA74DA008B23D6 /* ViewControllers */,
+			);
+			path = Xib;
+			sourceTree = "<group>";
+		};
+		D31B93A627BA74DA008B23D6 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				D31B93A727BA7510008B23D6 /* AddTaskViewController.swift */,
+				D31B93A827BA7510008B23D6 /* AddTaskViewController.xib */,
+				D31B93AB27BA7BBA008B23D6 /* SelectDateViewController.swift */,
+				D31B93AC27BA7BBA008B23D6 /* SelectDateViewController.xib */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		D3C53D2D27BA5396000B6E26 = {
 			isa = PBXGroup;
 			children = (
@@ -103,7 +133,7 @@
 		D3C53D3827BA5396000B6E26 /* ToDoList */ = {
 			isa = PBXGroup;
 			children = (
-				D31B93A027BA60F8008B23D6 /* Cell */,
+				D31B93A527BA74CE008B23D6 /* Xib */,
 				D31B939027BA57C5008B23D6 /* ViewControllers */,
 				D3C53D3927BA5396000B6E26 /* AppDelegate.swift */,
 				D3C53D3B27BA5396000B6E26 /* SceneDelegate.swift */,
@@ -113,6 +143,7 @@
 				D3C53D4427BA5397000B6E26 /* LaunchScreen.storyboard */,
 				D3C53D4727BA5397000B6E26 /* Info.plist */,
 				D31B938E27BA578A008B23D6 /* TabBarController.swift */,
+				D31B93AF27BA7E6D008B23D6 /* ConvertDate.swift */,
 				D31B939B27BA5E8E008B23D6 /* Model */,
 			);
 			path = ToDoList;
@@ -178,7 +209,9 @@
 			files = (
 				D3C53D4627BA5397000B6E26 /* LaunchScreen.storyboard in Resources */,
 				D31B93A427BA611D008B23D6 /* TableViewCell.xib in Resources */,
+				D31B93AE27BA7BBA008B23D6 /* SelectDateViewController.xib in Resources */,
 				D3C53D4327BA5397000B6E26 /* Assets.xcassets in Resources */,
+				D31B93AA27BA7510008B23D6 /* AddTaskViewController.xib in Resources */,
 				D3C53D4127BA5396000B6E26 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -190,7 +223,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D31B93AD27BA7BBA008B23D6 /* SelectDateViewController.swift in Sources */,
+				D31B93B027BA7E6D008B23D6 /* ConvertDate.swift in Sources */,
 				D31B939627BA581E008B23D6 /* TaskListViewController.swift in Sources */,
+				D31B93A927BA7510008B23D6 /* AddTaskViewController.swift in Sources */,
 				D3C53D3E27BA5396000B6E26 /* ViewController.swift in Sources */,
 				D31B939827BA5831008B23D6 /* SearchViewController.swift in Sources */,
 				D31B939F27BA5ED7008B23D6 /* Group.swift in Sources */,

@@ -19,6 +19,7 @@ class InBoxViewController: UIViewController {
         self.title = "In Box"
         
         createTableView()
+        createBarButtonItemRight()
     }
     
     func createTableView(){
@@ -35,6 +36,17 @@ class InBoxViewController: UIViewController {
         tableView.sectionFooterHeight = 0
         
         view.addSubview(tableView)
+    }
+    
+    fileprivate func createBarButtonItemRight() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
+                                                                target: self,
+                                                                action: #selector(actionBarButtonItem(sender:)))
+    }
+    
+    @objc func actionBarButtonItem(sender: UIBarButtonItem){
+        let dest = AddTaskViewController(nibName:"AddTaskViewController", bundle: nil)
+        navigationController?.pushViewController(dest, animated: true)
     }
 }
 

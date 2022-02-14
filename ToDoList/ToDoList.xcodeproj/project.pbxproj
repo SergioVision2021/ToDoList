@@ -12,6 +12,8 @@
 		D31B939427BA580C008B23D6 /* ToDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31B939327BA580C008B23D6 /* ToDayViewController.swift */; };
 		D31B939627BA581E008B23D6 /* TaskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31B939527BA581E008B23D6 /* TaskListViewController.swift */; };
 		D31B939827BA5831008B23D6 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31B939727BA5831008B23D6 /* SearchViewController.swift */; };
+		D31B939D27BA5ECC008B23D6 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31B939C27BA5ECC008B23D6 /* Task.swift */; };
+		D31B939F27BA5ED7008B23D6 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31B939E27BA5ED7008B23D6 /* Group.swift */; };
 		D3C53D3A27BA5396000B6E26 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C53D3927BA5396000B6E26 /* AppDelegate.swift */; };
 		D3C53D3C27BA5396000B6E26 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C53D3B27BA5396000B6E26 /* SceneDelegate.swift */; };
 		D3C53D3E27BA5396000B6E26 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C53D3D27BA5396000B6E26 /* ViewController.swift */; };
@@ -26,6 +28,8 @@
 		D31B939327BA580C008B23D6 /* ToDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDayViewController.swift; sourceTree = "<group>"; };
 		D31B939527BA581E008B23D6 /* TaskListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewController.swift; sourceTree = "<group>"; };
 		D31B939727BA5831008B23D6 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		D31B939C27BA5ECC008B23D6 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		D31B939E27BA5ED7008B23D6 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		D3C53D3627BA5396000B6E26 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3C53D3927BA5396000B6E26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3C53D3B27BA5396000B6E26 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -58,6 +62,15 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		D31B939B27BA5E8E008B23D6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D31B939C27BA5ECC008B23D6 /* Task.swift */,
+				D31B939E27BA5ED7008B23D6 /* Group.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		D3C53D2D27BA5396000B6E26 = {
 			isa = PBXGroup;
 			children = (
@@ -86,6 +99,7 @@
 				D3C53D4427BA5397000B6E26 /* LaunchScreen.storyboard */,
 				D3C53D4727BA5397000B6E26 /* Info.plist */,
 				D31B938E27BA578A008B23D6 /* TabBarController.swift */,
+				D31B939B27BA5E8E008B23D6 /* Model */,
 			);
 			path = ToDoList;
 			sourceTree = "<group>";
@@ -164,10 +178,12 @@
 				D31B939627BA581E008B23D6 /* TaskListViewController.swift in Sources */,
 				D3C53D3E27BA5396000B6E26 /* ViewController.swift in Sources */,
 				D31B939827BA5831008B23D6 /* SearchViewController.swift in Sources */,
+				D31B939F27BA5ED7008B23D6 /* Group.swift in Sources */,
 				D31B938F27BA578A008B23D6 /* TabBarController.swift in Sources */,
 				D31B939227BA57E0008B23D6 /* InBoxViewController.swift in Sources */,
 				D3C53D3A27BA5396000B6E26 /* AppDelegate.swift in Sources */,
 				D31B939427BA580C008B23D6 /* ToDayViewController.swift in Sources */,
+				D31B939D27BA5ECC008B23D6 /* Task.swift in Sources */,
 				D3C53D3C27BA5396000B6E26 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

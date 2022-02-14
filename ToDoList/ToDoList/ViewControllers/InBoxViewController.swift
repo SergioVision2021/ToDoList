@@ -9,6 +9,8 @@ import UIKit
 
 class InBoxViewController: UIViewController {
 
+    var data = [Group]()
+    
     var tableView = UITableView()
     let identifier = "IDCell"
     
@@ -18,8 +20,18 @@ class InBoxViewController: UIViewController {
         view.backgroundColor = .white
         self.title = "In Box"
         
-        createTableView()
         createBarButtonItemRight()
+        
+        getData()
+    }
+    
+    func getData(){
+        if let d = TaskService().filterPeriod(){
+            data = d
+            createTableView()
+        }else{
+            print("not data")
+        }
     }
     
     func createTableView(){

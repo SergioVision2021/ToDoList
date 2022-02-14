@@ -30,7 +30,7 @@ class SelectDateViewController: UIViewController {
     }
     
     @objc func actionBarButtonItem(sender: UIBarButtonItem){
-        delegate?.callback(ConvertDate().convert(date: schedulePD.date))
+        delegate?.callback(ConvertDate().convert(from: schedulePD.date))
         navigationController?.popViewController(animated: true)
     }
 }

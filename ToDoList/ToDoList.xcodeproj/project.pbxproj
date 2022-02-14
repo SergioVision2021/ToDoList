@@ -21,6 +21,7 @@
 		D31B93AD27BA7BBA008B23D6 /* SelectDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31B93AB27BA7BBA008B23D6 /* SelectDateViewController.swift */; };
 		D31B93AE27BA7BBA008B23D6 /* SelectDateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D31B93AC27BA7BBA008B23D6 /* SelectDateViewController.xib */; };
 		D31B93B027BA7E6D008B23D6 /* ConvertDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31B93AF27BA7E6D008B23D6 /* ConvertDate.swift */; };
+		D31B93B327BA8660008B23D6 /* TaskService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31B93B227BA8660008B23D6 /* TaskService.swift */; };
 		D3C53D3A27BA5396000B6E26 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C53D3927BA5396000B6E26 /* AppDelegate.swift */; };
 		D3C53D3C27BA5396000B6E26 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C53D3B27BA5396000B6E26 /* SceneDelegate.swift */; };
 		D3C53D3E27BA5396000B6E26 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C53D3D27BA5396000B6E26 /* ViewController.swift */; };
@@ -44,6 +45,7 @@
 		D31B93AB27BA7BBA008B23D6 /* SelectDateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDateViewController.swift; sourceTree = "<group>"; };
 		D31B93AC27BA7BBA008B23D6 /* SelectDateViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectDateViewController.xib; sourceTree = "<group>"; };
 		D31B93AF27BA7E6D008B23D6 /* ConvertDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertDate.swift; sourceTree = "<group>"; };
+		D31B93B227BA8660008B23D6 /* TaskService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskService.swift; sourceTree = "<group>"; };
 		D3C53D3627BA5396000B6E26 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3C53D3927BA5396000B6E26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3C53D3B27BA5396000B6E26 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -114,6 +116,15 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		D31B93B127BA8639008B23D6 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				D31B93B227BA8660008B23D6 /* TaskService.swift */,
+				D31B93AF27BA7E6D008B23D6 /* ConvertDate.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		D3C53D2D27BA5396000B6E26 = {
 			isa = PBXGroup;
 			children = (
@@ -143,7 +154,7 @@
 				D3C53D4427BA5397000B6E26 /* LaunchScreen.storyboard */,
 				D3C53D4727BA5397000B6E26 /* Info.plist */,
 				D31B938E27BA578A008B23D6 /* TabBarController.swift */,
-				D31B93AF27BA7E6D008B23D6 /* ConvertDate.swift */,
+				D31B93B127BA8639008B23D6 /* Data */,
 				D31B939B27BA5E8E008B23D6 /* Model */,
 			);
 			path = ToDoList;
@@ -228,6 +239,7 @@
 				D31B939627BA581E008B23D6 /* TaskListViewController.swift in Sources */,
 				D31B93A927BA7510008B23D6 /* AddTaskViewController.swift in Sources */,
 				D3C53D3E27BA5396000B6E26 /* ViewController.swift in Sources */,
+				D31B93B327BA8660008B23D6 /* TaskService.swift in Sources */,
 				D31B939827BA5831008B23D6 /* SearchViewController.swift in Sources */,
 				D31B939F27BA5ED7008B23D6 /* Group.swift in Sources */,
 				D31B938F27BA578A008B23D6 /* TabBarController.swift in Sources */,

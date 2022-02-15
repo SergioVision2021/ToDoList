@@ -18,17 +18,17 @@ class TaskService{
                                         Task.init(id: 1, name: "task 1", taskScheduledDate: ConvertDate().convert(from: "2022-02-17"), notes: "nnnnnn", status: false),
                                         Task.init(id: 2, name: "task 2", taskDeadline: ConvertDate().convert(from: "2022-02-14"), taskScheduledDate: ConvertDate().convert(from: "2022-02-14"), notes: "nnnnnn", status: true)]))
         source.append(Group.init(
-            id: 1, name: "Work", list: [Task.init(id: 0, name: "task 0", taskScheduledDate: ConvertDate().convert(from: "2022-02-16"), notes: "nnnnnn", status: false)]))
+            id: 1, name: "Hobby", list: [Task.init(id: 0, name: "Собрать кухню", taskScheduledDate: ConvertDate().convert(from: "2022-02-20"), notes: "Нет времени", status: false)]))
         source.append(Group.init(
-            id: 2, name: "Hobby", list: [Task.init(id: 0, name: "task 0", taskScheduledDate: ConvertDate().convert(from: "2022-02-15"), notes: "nnnnnn", status: false),
-                                         Task.init(id: 1, name: "task 1", taskScheduledDate: ConvertDate().convert(from: "2022-02-15"), notes: "nnnnnn", status: false),
-                                         Task.init(id: 2, name: "task 2", taskScheduledDate: ConvertDate().convert(from: "2022-02-15"), notes: "nnnnnn", status: false),
-                                         Task.init(id: 3, name: "task 3", taskDeadline: ConvertDate().convert(from: "2022-02-15"), taskScheduledDate: ConvertDate().convert(from: "2022-02-15"), notes: "nnnnnn", status: true),
-                                         Task.init(id: 4, name: "task 4", taskScheduledDate: ConvertDate().convert(from: "2022-02-01"), notes: "nnnnnn", status: false),
-                                         Task.init(id: 5, name: "task 5", taskScheduledDate: ConvertDate().convert(from: "2022-02-19"), notes: "nnnnnn", status: false)]))
+            id: 2, name: "Work", list: [Task.init(id: 0, name: "Написать тестовое задание", taskScheduledDate: ConvertDate().convert(from: "2022-02-15"), notes: "Самообразование", status: false),
+                                         Task.init(id: 1, name: "Прочитать статьи по SwiftGen", taskScheduledDate: ConvertDate().convert(from: "2022-02-15"), notes: "nnnnnn", status: false),
+                                         Task.init(id: 2, name: "Проверить задачи в JIRA", taskScheduledDate: ConvertDate().convert(from: "2022-02-15"), notes: "Смотреть и наши и чешские", status: false),
+                                         Task.init(id: 3, name: "Проверить invite от AppleID", taskDeadline: ConvertDate().convert(from: "2022-02-15"), taskScheduledDate: ConvertDate().convert(from: "2022-02-15"), notes: "На почте от  Cetelem", status: true),
+                                         Task.init(id: 4, name: "Потренероваться в перекраске WL для банка", taskScheduledDate: ConvertDate().convert(from: "2022-02-01"), notes: "Придумай сам", status: false),
+                                         Task.init(id: 5, name: "Почитать док по GPE", taskScheduledDate: ConvertDate().convert(from: "2022-02-19"), notes: "Лежат в папке", status: false)]))
         source.append(Group.init(
-            id: 3, name: "Films", list: [Task.init(id: 0, name: "task 0",  taskDeadline: ConvertDate().convert(from: "2022-02-15"), taskScheduledDate: ConvertDate().convert(from: "2022-02-21"), notes: "nnnnnn", status: true),
-                                         Task.init(id: 1, name: "task 1", taskScheduledDate: ConvertDate().convert(from: "2022-02-18"), notes: "nnnnnn", status: false)]))
+            id: 3, name: "Films", list: [Task.init(id: 0, name: "Посмотреть Матрицу 4",  taskDeadline: ConvertDate().convert(from: "2022-02-15"), taskScheduledDate: ConvertDate().convert(from: "2022-02-21"), notes: "Советовали", status: true),
+                                         Task.init(id: 1, name: "Анчартед: На картах не значится", taskScheduledDate: ConvertDate().convert(from: "2022-02-18"), notes: "Советовали", status: false)]))
         source.append(Group.init(
             id: 4, name: "Building", list: [Task.init(id: 0, name: "task 0", taskScheduledDate: ConvertDate().convert(from: "2022-02-17"), notes: "nnnnnn", status: false),
                                             Task.init(id: 1, name: "task 1", taskScheduledDate: ConvertDate().convert(from: "2022-02-20"), notes: "nnnnnn", status: false)]))
@@ -36,6 +36,7 @@ class TaskService{
     
     //Для InBoxViewController
     func filterPeriod() -> [Group]?{
+        current.removeAll()
         
         var sections = [String]()
         var tasks =  [(Int, Task)]()
@@ -60,13 +61,15 @@ class TaskService{
         }
 
         for s in 0..<sections.count{                 //Section
-            var temp = [Task]()
+            var sectionTasks = [Task]()
             for t in 0..<tasks.count{                //Task
+                
                 if (s == tasks[t].0){
-                    temp.append(tasks[t].1)
+                    tasks[t].1.id = sectionTasks.count              //Костыль (перделать)
+                    sectionTasks.append(tasks[t].1)
                 }
             }
-            current.append(Group.init(id: s, name: sections[s], list: temp))
+            current.append(Group.init(id: s, name: sections[s], list: sectionTasks))
         }
         
         return current
@@ -118,13 +121,15 @@ class TaskService{
     
     //AddTask - добавление новой задачи
     func appendTask(newTask: [Group]){
-        if let idG = newTask[0].id, let list = newTask[0].list{
-            current[idG].list?.append(contentsOf: list)
+        if  let list = newTask[0].list{
+            source[0].list?.append(contentsOf: list)
         }
     }
     
     //DetailTask - авершение задачи
     func editTask(idG: Int, idT: Int){
+        
+        
         current[idG].list?[idT].taskDeadline = Date()
         current[idG].list?[idT].status = true
     }

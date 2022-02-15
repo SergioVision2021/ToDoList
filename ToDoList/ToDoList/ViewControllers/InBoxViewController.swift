@@ -39,14 +39,16 @@ class InBoxViewController: UIViewController {
         }
     }
     
-    func getData(newTask: [Group]){
+    func getData(_ newTask: [Group]){
         taskService.appendTask(newTask: newTask)
         getData(flag: "SET")
     }
     
     func getData(_ idG: Int, _ idT: Int){
         taskService.editTask(idG: idG, idT: idT)
-        getData(flag: "SET")
+        
+        data = taskService.current
+        tableView.reloadData()
     }
     
     func createTableView(){
@@ -105,16 +107,12 @@ extension InBoxViewController: UITableViewDelegate, UITableViewDataSource{
     
     //MARK: - Cell operations
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        //print(data[indexPath.section].name)
-        //print(data[indexPath.section].list?[indexPath.row].status)
-        
         //Связь му 2 VC (без segues)
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyBoard.instantiateViewController(withIdentifier: "IDDetailTask") as! DetailTaskViewController
-        vc.selectedTask = data[indexPath.section]                          //передать данные
-        vc.indexSectionTableView = indexPath.section
-        vc.indexRowTableView = indexPath.row
+        vc.task = data[indexPath.section].list?[indexPath.row] ?? Task()             //передать данные
+        vc.nameSectionTV = data[indexPath.section].name ?? ""
+        vc.idSection = data[indexPath.section].id ?? 0                          //ID - для массива Периодов
         vc.delegate = self
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -144,6 +142,6 @@ extension InBoxViewController{
 //Получить новую задачу и перезагрузить таблицу
 extension InBoxViewController: AddTaskDelegate {
     func callback(_ newTask: [Group]){
-        getData(newTask: newTask)
+        getData(newTask)
     }
 }

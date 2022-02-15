@@ -15,10 +15,10 @@ class DetailTaskViewController: UIViewController {
     @IBOutlet weak var scheduleDP: UIDatePicker!
     @IBOutlet weak var deadlineDP: UIDatePicker!
     
-    var selectedTask = Group()
-    var indexSectionTableView = Int()
-    var indexRowTableView = Int()
-    
+    var task = Task()
+    var nameSectionTV = String()
+    var idSection = Int()
+
     var delegate: DetailTaskDelegate?
 
     override func viewDidLoad() {
@@ -32,14 +32,14 @@ class DetailTaskViewController: UIViewController {
     }
 
     func getData(){
-        groupTF.text = selectedTask.name
-        nameTF.text = selectedTask.list?[indexRowTableView].name
-        noteTV.text = selectedTask.list?[indexRowTableView].notes
-        if let dS = selectedTask.list?[indexRowTableView].taskScheduledDate{
+        groupTF.text = nameSectionTV
+        nameTF.text = task.name
+        noteTV.text = task.notes
+        if let dS = task.taskScheduledDate{
             scheduleDP.date = dS
         }
         
-        if let dD = selectedTask.list?[indexRowTableView].taskDeadline{
+        if let dD = task.taskDeadline{
             deadlineDP.date = dD
             navigationItem.rightBarButtonItem?.isEnabled = false
         }else{
@@ -55,8 +55,9 @@ class DetailTaskViewController: UIViewController {
     }
     
     @objc func actionBarButtonItem(sender: UIBarButtonItem){
-            delegate?.callback(indexSectionTableView, indexRowTableView)        //Завершить задачу
-            navigationController?.popViewController(animated: true)
+        //Возврат номера Группы и строки выбранной задачи
+        delegate?.callback(idSection, task.id ?? 0)
+        navigationController?.popViewController(animated: true)
     }
 }
 

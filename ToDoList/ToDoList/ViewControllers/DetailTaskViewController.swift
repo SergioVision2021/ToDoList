@@ -17,7 +17,6 @@ class DetailTaskViewController: UIViewController {
     
     var task = Task()
     var nameSectionTV = String()
-    var idSection = Int()
 
     var delegate: DetailTaskDelegate?
 
@@ -56,13 +55,13 @@ class DetailTaskViewController: UIViewController {
     
     @objc func actionBarButtonItem(sender: UIBarButtonItem){
         //Возврат номера Группы и строки выбранной задачи
-        delegate?.callback(idSection, task.id ?? 0)
+        delegate?.callback(task)
         navigationController?.popViewController(animated: true)
     }
 }
 
 //Вернуть завершенную задачу
 protocol DetailTaskDelegate{
-    func callback(_ idGroup: Int, _ idTask: Int)
+    func callback(_ editTask: Task)
 }
 

@@ -44,11 +44,9 @@ class InBoxViewController: UIViewController {
         getData(flag: "SET")
     }
     
-    func getData(_ idG: Int, _ idT: Int){
-        taskService.editTask(idG: idG, idT: idT)
-        
-        data = taskService.current
-        tableView.reloadData()
+    func getData(_ editTask: Task){
+        taskService.editTask(editTask)
+        getData(flag: "SET")
     }
     
     func createTableView(){
@@ -112,15 +110,14 @@ extension InBoxViewController: UITableViewDelegate, UITableViewDataSource{
         let vc = storyBoard.instantiateViewController(withIdentifier: "IDDetailTask") as! DetailTaskViewController
         vc.task = data[indexPath.section].list?[indexPath.row] ?? Task()             //передать данные
         vc.nameSectionTV = data[indexPath.section].name ?? ""
-        vc.idSection = data[indexPath.section].id ?? 0                          //ID - для массива Периодов
         vc.delegate = self
         navigationController?.pushViewController(vc, animated: true)
     }
 }
 
 extension InBoxViewController: DetailTaskDelegate {
-    func callback(_ idGroup: Int, _ idTask: Int){
-        getData(idGroup, idTask)
+    func callback(_ editTask: Task){
+        getData(editTask)
     }
 }
 

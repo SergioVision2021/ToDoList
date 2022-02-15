@@ -31,7 +31,7 @@ class ConvertDate{
             
             switch number{
                 case ..<0: status = "Late"
-                case 0: status = "Today"
+                case 0: status = "ToDay"
                 case 1: status = "Tomorrow"
                 case 2...: status = "Through \(number) day(s)"
                 default: break

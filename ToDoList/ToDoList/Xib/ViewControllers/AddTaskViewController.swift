@@ -13,7 +13,6 @@ class AddTaskViewController: UIViewController {
     @IBOutlet weak var selectGroupButton: UIButton!
     @IBOutlet weak var nameTaskTF: UITextField!
     @IBOutlet weak var notesTV: UITextView!
-    @IBOutlet weak var dateSchedleButton: UIButton!
     @IBOutlet weak var scheduleDateButoon: UIButton!
     
     var newTask = [Group]()
@@ -74,7 +73,7 @@ class AddTaskViewController: UIViewController {
 
 extension AddTaskViewController: SelectDateDelegate{
     func callback(_ date: String) {
-        dateSchedleButton.setTitle(date, for: .normal)
+        scheduleDateButoon.setTitle(date, for: .normal)
     }
 }
 

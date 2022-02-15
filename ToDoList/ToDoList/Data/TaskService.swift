@@ -28,7 +28,7 @@ class TaskService{
                                          Task.init(id: 2, name: "Почитать док по GPE", taskScheduledDate: ConvertDate().convert(from: "2022-02-19"), notes: "Лежат в папке", status: false)]))
         source.append(Group.init(
             id: 3, name: "Films", list: [Task.init(id: 3, name: "Посмотреть Матрицу 4",  taskDeadline: ConvertDate().convert(from: "2022-02-15"), taskScheduledDate: ConvertDate().convert(from: "2022-02-21"), notes: "Советовали", status: true),
-                                         Task.init(id: 3, name: "Анчартед: На картах не значится", taskScheduledDate: ConvertDate().convert(from: "2022-02-18"), notes: "Советовали", status: false)]))
+                                         Task.init(id: 3, name: "Посмотреть Анчартед: На картах не значится", taskScheduledDate: ConvertDate().convert(from: "2022-02-18"), notes: "Советовали", status: false)]))
         source.append(Group.init(
             id: 4, name: "Building", list: [Task.init(id: 4, name: "task 0", taskScheduledDate: ConvertDate().convert(from: "2022-02-17"), notes: "nnnnnn", status: false),
                                             Task.init(id: 4, name: "task 1", taskScheduledDate: ConvertDate().convert(from: "2022-02-20"), notes: "nnnnnn", status: false)]))
@@ -111,6 +111,21 @@ class TaskService{
         }
         
         return statusToDay
+    }
+    
+    
+    func filterAllTasks() -> [String]{
+        var allName = [String]()
+        
+        for g in 0..<source.count{
+            if let countL = source[g].list?.count{
+                for l in 0..<countL{
+                    allName.append(source[g].list?[l].name ?? "")
+                }
+            }
+        }
+        
+        return allName
     }
     
     func filterGroup() -> [String]{

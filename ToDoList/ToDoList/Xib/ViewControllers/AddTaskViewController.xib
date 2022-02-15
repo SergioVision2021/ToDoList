@@ -13,6 +13,7 @@
                 <outlet property="dateSchedleButton" destination="Hjn-YI-I9u" id="9G7-X7-wit"/>
                 <outlet property="nameTaskTF" destination="CVm-qW-gmd" id="88o-9f-Y6Q"/>
                 <outlet property="notesTV" destination="eE2-iS-iet" id="BMb-da-bDK"/>
+                <outlet property="scheduleDateButoon" destination="Hjn-YI-I9u" id="oc0-Pr-B7o"/>
                 <outlet property="selectGroupButton" destination="jjb-bs-CQ9" id="9aU-ex-duj"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

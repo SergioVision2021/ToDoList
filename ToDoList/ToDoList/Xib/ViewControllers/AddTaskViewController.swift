@@ -9,10 +9,12 @@ import UIKit
 
 class AddTaskViewController: UIViewController {
 
+    //MARK: - Outlet
     @IBOutlet weak var selectGroupButton: UIButton!
     @IBOutlet weak var nameTaskTF: UITextField!
     @IBOutlet weak var notesTV: UITextView!
     @IBOutlet weak var dateSchedleButton: UIButton!
+    @IBOutlet weak var scheduleDateButoon: UIButton!
     
     var newTask = [Group]()
     var delegate: AddTaskDelegate?
@@ -41,24 +43,26 @@ class AddTaskViewController: UIViewController {
                                                                 action: #selector(actionBarButtonItem(sender:)))
     }
     
+    //Переход на предыдущий экран, сохранения таска и обновление таблицы
     @objc func actionBarButtonItem(sender: UIBarButtonItem){
-        //переход на предыдущий экран, сохранения таска и обновление таблицы
-        
-        newTask.append(Group(id: 0,
-                          name: listGroup[0],
-                          dateCreated: Date(),
-                          list: [Task(id: 0,
-                                     name: "NEW TASK",
-                                     taskDeadline: nil,
-                                     taskScheduledDate: Date(),
-                                     notes: notesTV.text,
-                                     status: false)]))
-        delegate?.callback(newTask)
-        navigationController?.popViewController(animated: true)
+        if let b = scheduleDateButoon.titleLabel?.text{
+            newTask.append(Group(id: 0,
+                              name: listGroup[0],                       //Default 0 = "InBox"
+                              dateCreated: Date(),
+                              list: [Task(id: 0,
+                                         name: nameTaskTF.text,
+                                         taskDeadline: nil,
+                                          taskScheduledDate: ConvertDate().convert(from: b),
+                                         notes: notesTV.text,
+                                         status: false)]))
+            delegate?.callback(newTask)
+            navigationController?.popViewController(animated: true)
+        }
     }
     
+    //MARK: - Action
     @IBAction func selectGroupButton(_ sender: UIButton) {
-        selectGroupButton.setTitle("InBox", for: .normal)
+        selectGroupButton.setTitle(listGroup[0], for: .normal)      //Default 0 = "InBox"
     }
     
     @IBAction func selectDateButton(_ sender: UIButton) {

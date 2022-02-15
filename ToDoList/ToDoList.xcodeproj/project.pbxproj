@@ -24,7 +24,7 @@
 		D31B93B327BA8660008B23D6 /* TaskService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31B93B227BA8660008B23D6 /* TaskService.swift */; };
 		D3C53D3A27BA5396000B6E26 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C53D3927BA5396000B6E26 /* AppDelegate.swift */; };
 		D3C53D3C27BA5396000B6E26 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C53D3B27BA5396000B6E26 /* SceneDelegate.swift */; };
-		D3C53D3E27BA5396000B6E26 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C53D3D27BA5396000B6E26 /* ViewController.swift */; };
+		D3C53D3E27BA5396000B6E26 /* DetailTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C53D3D27BA5396000B6E26 /* DetailTaskViewController.swift */; };
 		D3C53D4127BA5396000B6E26 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3C53D3F27BA5396000B6E26 /* Main.storyboard */; };
 		D3C53D4327BA5397000B6E26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3C53D4227BA5397000B6E26 /* Assets.xcassets */; };
 		D3C53D4627BA5397000B6E26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3C53D4427BA5397000B6E26 /* LaunchScreen.storyboard */; };
@@ -49,7 +49,7 @@
 		D3C53D3627BA5396000B6E26 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3C53D3927BA5396000B6E26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3C53D3B27BA5396000B6E26 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		D3C53D3D27BA5396000B6E26 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D3C53D3D27BA5396000B6E26 /* DetailTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTaskViewController.swift; sourceTree = "<group>"; };
 		D3C53D4027BA5396000B6E26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D3C53D4227BA5397000B6E26 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D3C53D4527BA5397000B6E26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -74,6 +74,7 @@
 				D31B939327BA580C008B23D6 /* ToDayViewController.swift */,
 				D31B939527BA581E008B23D6 /* TaskListViewController.swift */,
 				D31B939727BA5831008B23D6 /* SearchViewController.swift */,
+				D3C53D3D27BA5396000B6E26 /* DetailTaskViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -148,7 +149,6 @@
 				D31B939027BA57C5008B23D6 /* ViewControllers */,
 				D3C53D3927BA5396000B6E26 /* AppDelegate.swift */,
 				D3C53D3B27BA5396000B6E26 /* SceneDelegate.swift */,
-				D3C53D3D27BA5396000B6E26 /* ViewController.swift */,
 				D3C53D3F27BA5396000B6E26 /* Main.storyboard */,
 				D3C53D4227BA5397000B6E26 /* Assets.xcassets */,
 				D3C53D4427BA5397000B6E26 /* LaunchScreen.storyboard */,
@@ -238,7 +238,7 @@
 				D31B93B027BA7E6D008B23D6 /* ConvertDate.swift in Sources */,
 				D31B939627BA581E008B23D6 /* TaskListViewController.swift in Sources */,
 				D31B93A927BA7510008B23D6 /* AddTaskViewController.swift in Sources */,
-				D3C53D3E27BA5396000B6E26 /* ViewController.swift in Sources */,
+				D3C53D3E27BA5396000B6E26 /* DetailTaskViewController.swift in Sources */,
 				D31B93B327BA8660008B23D6 /* TaskService.swift in Sources */,
 				D31B939827BA5831008B23D6 /* SearchViewController.swift in Sources */,
 				D31B939F27BA5ED7008B23D6 /* Group.swift in Sources */,

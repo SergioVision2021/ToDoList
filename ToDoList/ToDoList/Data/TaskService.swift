@@ -8,48 +8,50 @@
 import Foundation
 
 class TaskService{
-    var group = [Group]()
+    var source = [Group]()
 
+    var current = [Group]()
+    
     init(){
-        group.append(Group.init(
-            id: 0, name: "Inbox", list: [Task.init(id: 1, name: "task 0", taskScheduledDate: ConvertDate().convert(from: "2022-02-10"), notes: "nnnnnn", status: true),
-                                        Task.init(id: 1, name: "task 1", taskScheduledDate: ConvertDate().convert(from: "2022-02-14"), notes: "nnnnnn", status: false),
-                                        Task.init(id: 1, name: "task 2", taskScheduledDate: ConvertDate().convert(from: "2022-02-14"), notes: "nnnnnn", status: true)]))
-        group.append(Group.init(
-            id: 1, name: "Work", list: [Task.init(id: 2, name: "task 0", taskScheduledDate: ConvertDate().convert(from: "2022-02-09"), notes: "nnnnnn", status: true)]))
-        group.append(Group.init(
-            id: 2, name: "Hobby", list: [Task.init(id: 3, name: "task 0", taskScheduledDate: ConvertDate().convert(from: "2022-02-20"), notes: "nnnnnn", status: false),
-                                         Task.init(id: 3, name: "task 1", taskScheduledDate: ConvertDate().convert(from: "2022-02-01"), notes: "nnnnnn", status: false),
-                                         Task.init(id: 3, name: "task 2", taskScheduledDate: ConvertDate().convert(from: "2022-02-11"), notes: "nnnnnn", status: true),
-                                         Task.init(id: 3, name: "task 3", taskScheduledDate: ConvertDate().convert(from: "2022-02-11"), notes: "nnnnnn", status: true),
-                                         Task.init(id: 3, name: "task 4", taskScheduledDate: ConvertDate().convert(from: "2022-02-01"), notes: "nnnnnn", status: true),
-                                         Task.init(id: 3, name: "task 5", taskScheduledDate: ConvertDate().convert(from: "2022-02-11"), notes: "nnnnnn", status: false)]))
-        group.append(Group.init(
-            id: 3, name: "Films", list: [Task.init(id: 4, name: "task 0", taskScheduledDate: ConvertDate().convert(from: "2022-02-20"), notes: "nnnnnn", status: true),
-                                         Task.init(id: 4, name: "task 1", taskScheduledDate: ConvertDate().convert(from: "2022-02-11"), notes: "nnnnnn", status: true)]))
-        group.append(Group.init(
-            id: 4, name: "Building", list: [Task.init(id: 5, name: "task 0", taskScheduledDate: ConvertDate().convert(from: "2022-02-11"), notes: "nnnnnn", status: true),
-                                            Task.init(id: 5, name: "task 1", taskScheduledDate: ConvertDate().convert(from: "2022-02-20"), notes: "nnnnnn", status: false)]))
+        source.append(Group.init(
+            id: 0, name: "Inbox", list: [Task.init(id: 0, name: "task 0", taskDeadline: ConvertDate().convert(from: "2022-02-13"), taskScheduledDate: ConvertDate().convert(from: "2022-02-13"), notes: "nnnnnn", status: true),
+                                        Task.init(id: 1, name: "task 1", taskScheduledDate: ConvertDate().convert(from: "2022-02-17"), notes: "nnnnnn", status: false),
+                                        Task.init(id: 2, name: "task 2", taskDeadline: ConvertDate().convert(from: "2022-02-14"), taskScheduledDate: ConvertDate().convert(from: "2022-02-14"), notes: "nnnnnn", status: true)]))
+        source.append(Group.init(
+            id: 1, name: "Work", list: [Task.init(id: 0, name: "task 0", taskScheduledDate: ConvertDate().convert(from: "2022-02-16"), notes: "nnnnnn", status: false)]))
+        source.append(Group.init(
+            id: 2, name: "Hobby", list: [Task.init(id: 0, name: "task 0", taskScheduledDate: ConvertDate().convert(from: "2022-02-20"), notes: "nnnnnn", status: false),
+                                         Task.init(id: 1, name: "task 1", taskScheduledDate: ConvertDate().convert(from: "2022-02-01"), notes: "nnnnnn", status: false),
+                                         Task.init(id: 2, name: "task 2", taskScheduledDate: ConvertDate().convert(from: "2022-02-19"), notes: "nnnnnn", status: false),
+                                         Task.init(id: 3, name: "task 3", taskDeadline: ConvertDate().convert(from: "2022-02-15"), taskScheduledDate: ConvertDate().convert(from: "2022-02-15"), notes: "nnnnnn", status: true),
+                                         Task.init(id: 4, name: "task 4", taskScheduledDate: ConvertDate().convert(from: "2022-02-01"), notes: "nnnnnn", status: false),
+                                         Task.init(id: 5, name: "task 5", taskScheduledDate: ConvertDate().convert(from: "2022-02-19"), notes: "nnnnnn", status: false)]))
+        source.append(Group.init(
+            id: 3, name: "Films", list: [Task.init(id: 0, name: "task 0",  taskDeadline: ConvertDate().convert(from: "2022-02-15"), taskScheduledDate: ConvertDate().convert(from: "2022-02-21"), notes: "nnnnnn", status: true),
+                                         Task.init(id: 1, name: "task 1", taskScheduledDate: ConvertDate().convert(from: "2022-02-18"), notes: "nnnnnn", status: false)]))
+        source.append(Group.init(
+            id: 4, name: "Building", list: [Task.init(id: 0, name: "task 0", taskScheduledDate: ConvertDate().convert(from: "2022-02-17"), notes: "nnnnnn", status: false),
+                                            Task.init(id: 1, name: "task 1", taskScheduledDate: ConvertDate().convert(from: "2022-02-20"), notes: "nnnnnn", status: false)]))
     }
     
-    //Для View Controller Inbox
+    //Для InBoxViewController
     func filterPeriod() -> [Group]?{
         
         var sections = [String]()
         var tasks =  [(Int, Task)]()
-        var tasksByPeriods = [Group]()
+        //var tasksByPeriods = [Group]()
         
-        for g in 0..<group.count{
-            if let countL = group[g].list?.count{
+        for g in 0..<source.count{
+            if let countL = source[g].list?.count{
                 for l in 0..<countL{
                     //Получить период до планируемой даты
-                    var s = ConvertDate().IntervaleString(end: group[g].list?[l].taskScheduledDate)
+                    var s = ConvertDate().IntervaleString(end: source[g].list?[l].taskScheduledDate)
                     if !sections.contains(s){
                         //Массив всех периодов
                         sections.append(s)
                     }
                     //Массив всех задач Id = section, Task = value
-                    if  let task = group[g].list?[l],
+                    if  let task = source[g].list?[l],
                         let id = sections.index{$0 == s}{
                             tasks.append((id,task))
                     }
@@ -64,24 +66,26 @@ class TaskService{
                     temp.append(tasks[t].1)
                 }
             }
-            tasksByPeriods.append(Group.init(id: s, name: sections[s], list: temp))
+            current.append(Group.init(id: s, name: sections[s], list: temp))
         }
         
-        return tasksByPeriods
+        return current
     }
     
     func filterGroup() -> [String]{
-        return group.map{str in str.name ?? ""}
+        return source.map{str in str.name ?? ""}
     }
     
-    
-    //Новый список всех задач по группам (после добавления новой задачи)
-    func appendTask(newTask: [Group]) -> [Group]{
-        
+    //AddTask - добавление новой задачи
+    func appendTask(newTask: [Group]){
         if let idG = newTask[0].id, let list = newTask[0].list{
-            group[idG].list?.append(contentsOf: list)
+            current[idG].list?.append(contentsOf: list)
         }
-        
-        return group
+    }
+    
+    //DetailTask - авершение задачи
+    func editTask(idG: Int, idT: Int){
+        current[idG].list?[idT].taskDeadline = Date()
+        current[idG].list?[idT].status = true
     }
 }

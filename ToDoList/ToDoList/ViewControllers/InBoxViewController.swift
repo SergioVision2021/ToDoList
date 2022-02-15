@@ -9,6 +9,7 @@ import UIKit
 
 class InBoxViewController: UIViewController {
 
+    var taskService = TaskService()     //
     var data = [Group]()
     
     var tableView = UITableView()
@@ -22,21 +23,30 @@ class InBoxViewController: UIViewController {
         
         createBarButtonItemRight()
         
-        getData()
+        getData(flag: "GET")
     }
     
-    func getData(){
-        if let d = TaskService().filterPeriod(){
+    func getData(flag: String){
+        if let d = taskService.filterPeriod(){
             data = d
-            createTableView()
+            switch flag{
+                case "GET": createTableView()
+                case "SET": tableView.reloadData()
+                default: break
+            }
         }else{
             print("not data")
         }
     }
     
     func getData(newTask: [Group]){
-        data = TaskService().appendTask(newTask: newTask)
-        tableView.reloadData()
+        taskService.appendTask(newTask: newTask)
+        getData(flag: "SET")
+    }
+    
+    func getData(_ idG: Int, _ idT: Int){
+        taskService.editTask(idG: idG, idT: idT)
+        getData(flag: "SET")
     }
     
     func createTableView(){
@@ -91,6 +101,28 @@ extension InBoxViewController: UITableViewDelegate, UITableViewDataSource{
             cell?.nameLabel.text = n
         }
         return cell ?? TableViewCell()
+    }
+    
+    //MARK: - Cell operations
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        //print(data[indexPath.section].name)
+        //print(data[indexPath.section].list?[indexPath.row].status)
+        
+        //Связь му 2 VC (без segues)
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyBoard.instantiateViewController(withIdentifier: "IDDetailTask") as! DetailTaskViewController
+        vc.selectedTask = data[indexPath.section]                          //передать данные
+        vc.indexSectionTableView = indexPath.section
+        vc.indexRowTableView = indexPath.row
+        vc.delegate = self
+        navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+extension InBoxViewController: DetailTaskDelegate {
+    func callback(_ idGroup: Int, _ idTask: Int){
+        getData(idGroup, idTask)
     }
 }
 

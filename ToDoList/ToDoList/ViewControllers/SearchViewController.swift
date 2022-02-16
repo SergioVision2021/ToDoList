@@ -44,7 +44,7 @@ class SearchViewController: UIViewController{
     }
     
     func createTableView(){
-        tableView = UITableView(frame: view.bounds, style: .insetGrouped)
+        tableView = UITableView(frame: view.bounds, style: .plain)
         tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         tableView.sectionFooterHeight = 0
         

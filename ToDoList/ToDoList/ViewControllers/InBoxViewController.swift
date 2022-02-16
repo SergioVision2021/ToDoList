@@ -77,6 +77,7 @@ extension InBoxViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))
         let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 40))
+        lbl.font = UIFont.boldSystemFont(ofSize: 18.0)
         lbl.text = data[section].name
         view.addSubview(lbl)
         return view

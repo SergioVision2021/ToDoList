@@ -30,8 +30,14 @@ class ToDayViewController: UIViewController {
             data = d
             createTableView()
         }else{
-            print("not data")
+            createAlert(title: "Warning", message: "No tasks for today!")
         }
+    }
+    
+    func createAlert(title: String, message: String){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func createTableView(){

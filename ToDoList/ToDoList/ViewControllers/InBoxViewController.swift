@@ -9,24 +9,26 @@ import UIKit
 
 class InBoxViewController: UIViewController {
 
-    var taskService = TaskService()     //
-    var data = [Group]()
+    //MARK: - Properties
+    private var taskService = TaskService()     //
+    private var data = [Group]()
     
-    var tableView = UITableView()
-    let identifier = "IDCell"
+    //MARK: - Visual Component
+    private var tableView = UITableView()
+    private let identifier = "IDCell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         navigationController?.navigationBar.prefersLargeTitles = true
         view.backgroundColor = .white
-        self.title = "In Box"
+        title = "In Box"
         
         createBarButtonItemRight()
-        
         getData(flag: "GET")
     }
     
-    func getData(flag: String){
+    private func getData(flag: String){
         if let d = taskService.filterPeriod(){
             data = d
             switch flag{
@@ -39,17 +41,17 @@ class InBoxViewController: UIViewController {
         }
     }
     
-    func getData(_ newTask: [Group]){
-        taskService.appendTask(newTask: newTask)
+    private func getData(_ newTask: [Group]){
+        taskService.appendTask(newTask)
         getData(flag: "SET")
     }
     
-    func getData(_ editTask: Task){
+    private func getData(_ editTask: Task){
         taskService.editTask(editTask)
         getData(flag: "SET")
     }
     
-    func createTableView(){
+    private func createTableView(){
         tableView = UITableView(frame: view.bounds, style: .insetGrouped)
         tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         tableView.sectionFooterHeight = 0
@@ -64,8 +66,9 @@ class InBoxViewController: UIViewController {
     }
 }
 
+//MARK: - Extensions
 extension InBoxViewController: UITableViewDelegate, UITableViewDataSource{
-    //MARK: - Section
+    //MARK: Section
     func numberOfSections(in tableView: UITableView) -> Int {
         return data.count
     }
@@ -83,7 +86,7 @@ extension InBoxViewController: UITableViewDelegate, UITableViewDataSource{
         return view
     }
 
-    //MARK: - Cell
+    //MARK: Cell
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data[section].list?.count ?? 0
     }
@@ -104,7 +107,7 @@ extension InBoxViewController: UITableViewDelegate, UITableViewDataSource{
         return cell ?? TableViewCell()
     }
     
-    //MARK: - Cell operations
+    //MARK: Cell operations
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //Связь му 2 VC (без segues)
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -131,13 +134,13 @@ extension InBoxViewController{
     }
     
     @objc func actionBarButtonItem(sender: UIBarButtonItem){
-        let dest = AddTaskViewController(nibName:"AddTaskViewController", bundle: nil)
-        dest.delegate = self
-        navigationController?.pushViewController(dest, animated: true)
+        let vc = AddTaskViewController(nibName:"AddTaskViewController", bundle: nil)
+        vc.delegate = self
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
-//Получить новую задачу и перезагрузить таблицу
+//Получить новую новую задачу и перезагрузить таблицу
 extension InBoxViewController: AddTaskDelegate {
     func callback(_ newTask: [Group]){
         getData(newTask)

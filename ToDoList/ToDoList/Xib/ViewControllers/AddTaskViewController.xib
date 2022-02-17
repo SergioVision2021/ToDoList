@@ -12,7 +12,7 @@
             <connections>
                 <outlet property="nameTaskTF" destination="DBP-Cl-kcM" id="kIj-bv-G2a"/>
                 <outlet property="notesTV" destination="cH2-VH-Uws" id="g37-E9-7Vp"/>
-                <outlet property="scheduleDateButoon" destination="yWc-hN-rkr" id="FOG-eU-frV"/>
+                <outlet property="scheduleDateButton" destination="yWc-hN-rkr" id="XJc-ed-9Ep"/>
                 <outlet property="selectGroupButton" destination="qi2-PY-LLh" id="Ywq-tm-yY6"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -88,7 +88,7 @@
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" title="Select date" subtitle=""/>
                                                     <connections>
-                                                        <action selector="selectDateButton:" destination="-1" eventType="touchUpInside" id="Dao-0z-Oph"/>
+                                                        <action selector="selectDateButton:" destination="-1" eventType="touchUpInside" id="kmV-BY-ghB"/>
                                                     </connections>
                                                 </button>
                                             </subviews>

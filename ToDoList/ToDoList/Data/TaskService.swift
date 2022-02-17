@@ -39,7 +39,7 @@ class TaskService{
         current.removeAll()
         
         var sections = [String]()
-        var tasks =  [(Int, Task)]()
+        var tasks = [(Int, Task)]()
         //var tasksByPeriods = [Group]()
         
         for g in 0..<source.count{
@@ -75,18 +75,18 @@ class TaskService{
     
     //Для TodayViewController
     func filterToday(namePeriod: String) -> [Group]?{
-        var source = filterPeriod()
-    
-        guard let source = source else {
+        filterPeriod()
+
+        guard current.count != 0 else {
             return nil
         }
 
-        //Из всех секций = периодов получаем секцию ToDay
+        //Из всех секций (периодов) = получаем секцию ToDay
         var sectionToDay = [Group]()
         
-        for i in 0..<source.count {
-            if (source[i].name == namePeriod){
-                sectionToDay = [source[i]]
+        for i in 0..<current.count {
+            if (current[i].name == namePeriod){
+                sectionToDay = [current[i]]
                 break
             }
         }
@@ -117,7 +117,6 @@ class TaskService{
         return statusToDay
     }
     
-    
     func filterAllTasks() -> [String]{
         var allName = [String]()
         
@@ -137,13 +136,13 @@ class TaskService{
     }
     
     //AddTask - добавление новой задачи
-    func appendTask(newTask: [Group]){
+    func appendTask(_ newTask: [Group]){
         if  let list = newTask[0].list{
             source[0].list?.append(contentsOf: list)
         }
     }
     
-    //DetailTask - авершение задачи
+    //DetailTask - завершение задачи
     func editTask(_ editTask: Task){
         let idGroup = editTask.id ?? 0
         let count = source[idGroup].list?.count ?? 0

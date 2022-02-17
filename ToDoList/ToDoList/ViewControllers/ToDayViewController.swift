@@ -9,6 +9,7 @@ import UIKit
 
 class ToDayViewController: UIViewController {
 
+    //MARK: - Properties
     var taskService = TaskService()
     var data = [Group]()
     

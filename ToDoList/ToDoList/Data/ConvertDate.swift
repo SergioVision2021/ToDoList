@@ -18,16 +18,14 @@ class ConvertDate{
     func convert(from date: Date) -> String{
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        let strDate = formatter.string(from: date)
-        return strDate
+        return formatter.string(from: date)
     }
     
-    func IntervaleString(end date: Date?) -> String{
-        var status: String = ""
+    func intervaleString(end date: Date?) -> String{
+        var status = String()
         
         if let endDate = date{
             let number = intervaleDate(to: endDate)
-            //Calendar.current.date(byAdding: .day, value: number, to: Date())
             
             switch number{
                 case ..<0: status = "Late"

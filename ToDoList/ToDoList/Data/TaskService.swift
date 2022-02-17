@@ -46,7 +46,7 @@ class TaskService{
             if let countL = source[g].list?.count{
                 for l in 0..<countL{
                     //Получить период до планируемой даты
-                    var s = ConvertDate().IntervaleString(end: source[g].list?[l].taskScheduledDate)
+                    var s = ConvertDate().intervaleString(end: source[g].list?[l].taskScheduledDate)
                     if !sections.contains(s){
                         //Массив всех периодов
                         sections.append(s)

@@ -54,7 +54,6 @@ class DetailTaskViewController: UIViewController {
     }
     
     @objc func actionBarButtonItem(sender: UIBarButtonItem){
-        //Возврат номера Группы и строки выбранной задачи
         delegate?.callback(task)
         navigationController?.popViewController(animated: true)
     }

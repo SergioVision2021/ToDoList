@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SelectDateViewController" customModule="ToDoList" customModuleProvider="target">
             <connections>
-                <outlet property="schedulePD" destination="JAM-AP-TXZ" id="b0d-EV-fEz"/>
+                <outlet property="scheduleDatePicker" destination="JAM-AP-TXZ" id="lPa-ep-GHb"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -140,11 +139,11 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="deadlineDP" destination="eAd-5v-v08" id="Izc-NN-YGv"/>
-                        <outlet property="groupTF" destination="dNi-Mc-bgz" id="H9B-Rz-nyk"/>
-                        <outlet property="nameTF" destination="3Ij-lv-Tns" id="m8m-tl-55K"/>
-                        <outlet property="noteTV" destination="6Qu-TE-GP7" id="2Rj-ym-IE6"/>
-                        <outlet property="scheduleDP" destination="5gS-JL-20h" id="7xD-6F-XEI"/>
+                        <outlet property="deadlineDatePicker" destination="eAd-5v-v08" id="6Qa-s8-ATS"/>
+                        <outlet property="groupTexField" destination="dNi-Mc-bgz" id="dBY-OW-vqS"/>
+                        <outlet property="nameTextField" destination="3Ij-lv-Tns" id="ta6-Zc-qOH"/>
+                        <outlet property="noteTextView" destination="6Qu-TE-GP7" id="V1j-TB-xRl"/>
+                        <outlet property="scheduleDatePicker" destination="5gS-JL-20h" id="OiJ-zT-elb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HcP-eC-11k" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

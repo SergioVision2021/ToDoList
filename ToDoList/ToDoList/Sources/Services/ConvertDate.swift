@@ -8,20 +8,20 @@
 import Foundation
 
 class ConvertDate{
-    
-    func convert(from text: String) -> Date?{
+
+    func convert(from text: String) -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter.date(from: text)
     }
-    
-    func convert(from date: Date) -> String{
+
+    func convert(from date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter.string(from: date)
     }
-    
-    func intervaleString(end date: Date?) -> String{
+
+    func intervaleString(end date: Date?) -> String {
         var status = String()
         
         if let endDate = date{
@@ -37,7 +37,7 @@ class ConvertDate{
         }
         return status
     }
-    
+
     func intervaleDate(to endDate: Date, startDate: Date = Date()) -> Int {
         let calendar = Calendar.current
         let date1 = calendar.startOfDay(for: startDate)

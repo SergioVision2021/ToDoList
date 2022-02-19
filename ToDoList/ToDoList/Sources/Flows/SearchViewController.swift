@@ -9,7 +9,22 @@ import UIKit
 
 class SearchViewController: UIViewController{
     
-    let searchController: UISearchController = {
+    //MARK: - Properties
+    private var data: [String] = []
+    private var filteredData: [String] = []
+
+    //MARK: - Visual Component
+    private let tableView: UITableView = {
+        let table = UITableView(frame: CGRect.zero, style: .insetGrouped)
+        table.translatesAutoresizingMaskIntoConstraints = false
+        table.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        table.sectionFooterHeight = 0
+        let nib = UINib(nibName: "TaskCell", bundle: nil)
+        table.register(nib, forCellReuseIdentifier: InBoxViewController.Constants.taskCellIdentifier)
+        return table
+    }()
+
+    private let searchController: UISearchController = {
         //Для отображения результата поиска использовать текущий VC (можно указать другой)
         let search = UISearchController(searchResultsController: nil)
         //Для отображения деталей
@@ -18,46 +33,39 @@ class SearchViewController: UIViewController{
         return search
     }()
 
-    var tableView = UITableView()
-    let identifier = "IDCell"
-    
-    var data = [String]()
-    var filteredData = [String]()
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.prefersLargeTitles = true
-        view.backgroundColor = .white
-        self.title = "Search"
-
-        data = TaskService().filterAllTasks()
         
         createSearchController()
-        createTableView()
+        fetchData()
     }
     
-    func createSearchController(){
+    private func fetchData(){
+        if TaskService().filterAllTasks().count != 0 {
+            data = TaskService().filterAllTasks()
+            addTableView()
+        } else {
+            print("Not data")
+        }
+    }
+    
+    private func createSearchController(){
         definesPresentationContext = true
         //Подпись класса на протокол UISearchResultsUpdating
         searchController.searchResultsUpdater = self
         navigationItem.searchController = searchController
     }
     
-    func createTableView(){
-        tableView = UITableView(frame: view.bounds, style: .plain)
-        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        tableView.sectionFooterHeight = 0
-        
-        let nib = UINib(nibName: "TableViewCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: identifier)
-        
+    private func addTableView(){
         tableView.delegate = self
         tableView.dataSource = self
-
+        
+        tableView.frame = view.bounds
         view.addSubview(tableView)
     }
 }
 
+//MARK: - UISearchResultsUpdating
 extension SearchViewController: UISearchResultsUpdating {
     //Проверка строки на пустоту
     private var searchBarIsEmpty: Bool {
@@ -85,20 +93,26 @@ extension SearchViewController: UISearchResultsUpdating {
     }
 }
 
-extension SearchViewController: UITableViewDelegate, UITableViewDataSource{
+//MARK: - TableView Delegate
+extension SearchViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        40
+    }
+}
+
+//MARK: - TableView DataSource
+extension SearchViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering {
             return filteredData.count
         }
         return data.count
     }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        40
-    }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? TableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: InBoxViewController.Constants.taskCellIdentifier, for: indexPath) as? TaskCell
         
         var row: String
 
@@ -109,6 +123,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource{
         }
         
         cell?.nameLabel.text = row
-        return cell ?? TableViewCell()
+        return cell ?? TaskCell()
     }
 }

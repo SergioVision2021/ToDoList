@@ -10,8 +10,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddTaskViewController" customModule="ToDoList" customModuleProvider="target">
             <connections>
-                <outlet property="nameTaskTF" destination="DBP-Cl-kcM" id="kIj-bv-G2a"/>
-                <outlet property="notesTV" destination="cH2-VH-Uws" id="g37-E9-7Vp"/>
+                <outlet property="nameTaskTextField" destination="DBP-Cl-kcM" id="asg-IE-9fh"/>
+                <outlet property="notesTextView" destination="cH2-VH-Uws" id="gsb-y9-gV4"/>
                 <outlet property="scheduleDateButton" destination="yWc-hN-rkr" id="XJc-ed-9Ep"/>
                 <outlet property="selectGroupButton" destination="qi2-PY-LLh" id="Ywq-tm-yY6"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

@@ -9,21 +9,21 @@ import UIKit
 
 class DetailTaskViewController: UIViewController {
 
-    //MARK: - IBOutlet
+    // MARK: - IBOutlet
     @IBOutlet weak var groupTexField: UITextField!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var noteTextView: UITextView!
     @IBOutlet weak var scheduleDatePicker: UIDatePicker!
     @IBOutlet weak var deadlineDatePicker: UIDatePicker!
-    
-    //MARK: - Properties
+
+    // MARK: - Properties
     internal var task = Task()
     internal var nameSection = String()
     internal var delegate: DetailTaskDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         addBarButtonItem()
         getData()
     }
@@ -35,7 +35,7 @@ class DetailTaskViewController: UIViewController {
         if let dS = task.taskScheduledDate{
             scheduleDatePicker.date = dS
         }
-        
+
         if let dD = task.taskDeadline{
             deadlineDatePicker.date = dD
             navigationItem.rightBarButtonItem?.isEnabled = false
@@ -46,17 +46,17 @@ class DetailTaskViewController: UIViewController {
     }
 }
 
-//MARK: - BarButtonItem
+// MARK: - BarButtonItem
 private extension DetailTaskViewController {
     func addBarButtonItem() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done,
                                                             target: self,
                                                             action: #selector(addActionButton(sender:)))
     }
-    
+
     @objc
     func addActionButton(sender: UIBarButtonItem) {
-        //Вернуть завершенную задачу
+        // Вернуть завершенную задачу
         delegate?.callback(self, task)
         navigationController?.popViewController(animated: true)
     }

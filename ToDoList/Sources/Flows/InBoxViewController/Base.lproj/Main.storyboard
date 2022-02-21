@@ -11,7 +11,7 @@
         <!--Detail Task View Controller-->
         <scene sceneID="ZMy-XS-j4h">
             <objects>
-                <viewController storyboardIdentifier="IDDetailTask" id="zwS-Wp-unw" customClass="DetailTaskViewController" customModule="ToDoList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="IdDetailTask" id="zwS-Wp-unw" customClass="DetailTaskViewController" customModule="ToDoList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tOH-fx-GeJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

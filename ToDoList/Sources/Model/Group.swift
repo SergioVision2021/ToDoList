@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct Group{
+struct Group {
     var id: Int?
     var name: String?
-    var dateCreated: Date?      //Дата создания группы
+    var dateCreated: Date?      // Дата создания группы
     var list: [Task]?
 }

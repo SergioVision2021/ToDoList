@@ -8,5 +8,5 @@
 import UIKit
 
 protocol SelectDateDelegate {
-    func callback(_ sender: UIViewController,_ date: String)
+    func selectDateDidTapDone(_ sender: UIViewController, _ date: String)
 }

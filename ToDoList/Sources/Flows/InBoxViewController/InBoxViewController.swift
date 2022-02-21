@@ -7,18 +7,20 @@
 
 import UIKit
 
+extension InBoxViewController {
+    enum Constants {
+        static let taskCellIdentifier = "IdCell"
+    }
+}
+
 class InBoxViewController: UIViewController {
 
-    internal enum Constants {
-        static let taskCellIdentifier = "IDCell"
-    }
-    
     // MARK: - Properties
     private var taskService = TaskService()     //
     private var data: [Group] = []
-    
+
     // MARK: - Visual Component
-    private let tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let table = UITableView(frame: CGRect.zero, style: .insetGrouped)
         table.translatesAutoresizingMaskIntoConstraints = false
         table.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -27,15 +29,15 @@ class InBoxViewController: UIViewController {
         table.register(nib, forCellReuseIdentifier: Constants.taskCellIdentifier)
         return table
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         addBarButtonItem()
         fetchData()
         addTableView()
     }
-  
+
     private func fetchData() {
         if let dataService = taskService.filterPeriod() {
             data = dataService
@@ -43,25 +45,55 @@ class InBoxViewController: UIViewController {
             print("Not data")
         }
     }
-    
+
     private func appendNewTask(_ newTask: [Group]) {
         taskService.appendTask(newTask)
         fetchData()
         tableView.reloadData()
     }
-    
+
     private func editSelectTask(_ editTask: Task) {
         taskService.editTask(editTask)
         fetchData()
         tableView.reloadData()
     }
-    
-    private func addTableView() {
+}
+
+// MARK: - TableView
+extension InBoxViewController {
+
+    func addTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        
+
         tableView.frame = view.bounds
         view.addSubview(tableView)
+    }
+
+    func configureCell(_ cell: TaskCell, _ at: IndexPath) {
+        cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+        let task = data[at.section].list?[at.row]
+        if let name = task?.name,
+           let status = task?.status {
+            cell.statusImageView.tintColor = status ? .systemGreen : .systemYellow
+            cell.nameLabel.text = name
+        }
+    }
+
+    func configureSection(_ section: Int) -> UIView {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))
+        let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 40))
+        lbl.font = UIFont.boldSystemFont(ofSize: 18.0)
+        lbl.text = data[section].name
+        view.addSubview(lbl)
+        return view
+    }
+
+    func configureViewController(_ vc: DetailTaskViewController, _ at: IndexPath) {
+        vc.task = data[at.section].list?[at.row] ?? Task()
+        vc.nameSection = data[at.section].name ?? ""
+        vc.delegate = self
+        show(vc, sender: self)
     }
 }
 
@@ -77,47 +109,36 @@ extension InBoxViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.taskCellIdentifier, for: indexPath) as? TaskCell
-        cell?.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-        
-        let task = data[indexPath.section].list?[indexPath.row]
-        if let name = task?.name,
-           let status = task?.status {
-            cell?.statusImageView.tintColor = status ? .systemGreen : .systemYellow
-            cell?.nameLabel.text = name
-        }
-        return cell ?? TaskCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.taskCellIdentifier, for: indexPath) as? TaskCell else { fatalError("Unexpected Index Path") }
+
+        configureCell(cell, indexPath)
+
+        return cell
     }
 }
 
 // MARK: - TableView Delegate
 extension InBoxViewController: UITableViewDelegate {
-    
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        40
+        return 40
     }
-    
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))
-        let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 40))
-        lbl.font = UIFont.boldSystemFont(ofSize: 18.0)
-        lbl.text = data[section].name
-        view.addSubview(lbl)
-        return view
+        return configureSection(section)
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //Связь му 2 VC (без segues)
+        // Связь му 2 VC (без segues)
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyBoard.instantiateViewController(withIdentifier: "IDDetailTask") as? DetailTaskViewController
-        vc?.task = data[indexPath.section].list?[indexPath.row] ?? Task()             //передать данные
-        vc?.nameSection = data[indexPath.section].name ?? ""
-        vc?.delegate = self
-        navigationController?.pushViewController(vc!, animated: true)
+
+        guard let vc = storyBoard.instantiateViewController(withIdentifier: "IdDetailTask") as? DetailTaskViewController else { fatalError("Unexpected Index Path") }
+
+        configureViewController(vc, indexPath)
     }
 }
 
@@ -128,23 +149,24 @@ extension InBoxViewController {
                                                             target: self,
                                                             action: #selector(addActionButton(sender:)))
     }
-    
+
     @objc
     func addActionButton(sender: UIBarButtonItem) {
         let vc = AddTaskViewController(nibName: "AddTaskViewController", bundle: nil)
         vc.delegate = self
-        navigationController?.pushViewController(vc, animated: true)
+
+        show(vc, sender: self)
     }
 }
 
 // MARK: - Delegates
 extension InBoxViewController: AddTaskDelegate {
-    func callback(_ sender: UIViewController, _ newTask: [Group]) {
+    func addTaskDidTapSave(_ sender: UIViewController, _ newTask: [Group]) {
         appendNewTask(newTask)
     }
 }
 extension InBoxViewController: DetailTaskDelegate {
-    func callback(_ sender: UIViewController, _ editTask: Task) {
+    func detailTaskDidTapDone(_ sender: UIViewController, _ editTask: Task) {
         editSelectTask(editTask)
     }
 }

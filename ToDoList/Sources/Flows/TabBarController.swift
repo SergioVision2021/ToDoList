@@ -19,22 +19,22 @@ class TabBarController: UITabBarController {
         setupTabBar()
     }
 
-    private func setupTabBar(){
-        for idx in 0..<vc.count{
+    private func setupTabBar() {
+        for idx in 0..<vc.count {
             vc[idx].title = name[idx]
             vcTabBar.append(createNavController(vc: vc[idx], itemName: name[idx], itemImage: UIImage(systemName:image[idx])!))
         }
-        
+
         viewControllers = vcTabBar
     }
     
-    private func createNavController(vc: UIViewController, itemName: String, itemImage: UIImage) -> UINavigationController{
+    private func createNavController(vc: UIViewController, itemName: String, itemImage: UIImage) -> UINavigationController {
         let item = UITabBarItem(title: itemName,
                                 image: itemImage,
                                 tag: 0)
-        
+
         vc.view.backgroundColor = .white
-        
+
         let navController = UINavigationController(rootViewController: vc)
         navController.tabBarItem = item
         navController.navigationBar.prefersLargeTitles = true

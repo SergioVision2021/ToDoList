@@ -9,10 +9,10 @@ import UIKit
 
 class TaskListViewController: UIViewController {
 
-    //MARK: - Properties
+    // MARK: - Properties
     private var data: [String] = []
-    
-    //MARK: - Visual Component
+
+    // MARK: - Visual Component
     private let tableView: UITableView = {
         let table = UITableView(frame: CGRect.zero, style: .insetGrouped)
         table.translatesAutoresizingMaskIntoConstraints = false
@@ -22,13 +22,13 @@ class TaskListViewController: UIViewController {
         table.register(nib, forCellReuseIdentifier: InBoxViewController.Constants.taskCellIdentifier)
         return table
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         fetchData()
     }
-    
+
     private func fetchData() {
         if TaskService().filterGroup().count != 0 {
             data = TaskService().filterGroup()
@@ -37,30 +37,44 @@ class TaskListViewController: UIViewController {
             print("Not data")
         }
     }
-    
+}
+
+extension TaskListViewController {
+
     private func addTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        
+
         tableView.frame = view.bounds
         view.addSubview(tableView)
     }
+
+    func configureCell(_ cell: TaskCell, _ at: IndexPath) {
+        let group = data[at.row]
+        cell.nameLabel.text = group
+    }
 }
 
-extension TaskListViewController: UITableViewDelegate, UITableViewDataSource {
-    //MARK: - Cell
+// MARK: - TableView Delegate
+extension TaskListViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 40
+    }
+}
+
+// MARK: - TableView DataSource
+extension TaskListViewController: UITableViewDataSource {
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
     }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        40
-    }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: InBoxViewController.Constants.taskCellIdentifier, for: indexPath) as? TaskCell
-        let group = data[indexPath.row]
-        cell?.nameLabel.text = group
-        return cell ?? TaskCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: InBoxViewController.Constants.taskCellIdentifier, for: indexPath) as? TaskCell  else { fatalError("Unexpected Index Path") }
+
+        configureCell(cell, indexPath)
+
+        return cell
     }
 }

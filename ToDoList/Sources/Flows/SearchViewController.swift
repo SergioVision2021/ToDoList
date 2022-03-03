@@ -20,7 +20,7 @@ class SearchViewController: UIViewController {
         table.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         table.sectionFooterHeight = 0
         let nib = UINib(nibName: "TaskCell", bundle: nil)
-        table.register(nib, forCellReuseIdentifier: InBoxViewController.Constants.taskCellIdentifier)
+        table.register(nib, forCellReuseIdentifier: Constants.taskCellIdentifier)
         return table
     }()
 
@@ -41,8 +41,8 @@ class SearchViewController: UIViewController {
     }
 
     private func fetchData() {
-        if TaskService().filterAllTasks().count != 0 {
-            data = TaskService().filterAllTasks()
+        if TaskService(typeData: .json).filterAllTasks().count != 0 {
+            data = TaskService(typeData: .json).filterAllTasks()
             addTableView()
         } else {
             print("Not data")
@@ -127,7 +127,7 @@ extension SearchViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: InBoxViewController.Constants.taskCellIdentifier, for: indexPath) as? TaskCell  else { fatalError("Unexpected Index Path") }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.taskCellIdentifier, for: indexPath) as? TaskCell  else { fatalError("Unexpected Index Path") }
 
         configureCell(cell, indexPath)
 

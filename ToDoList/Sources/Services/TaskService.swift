@@ -1,4 +1,4 @@
-//
+// swiftlint:disable all
 //  TaskService.swift
 //  ToDoList
 //
@@ -8,93 +8,124 @@
 import Foundation
 
 class TaskService {
-    var source = [Group]()
 
+    enum TypeData {
+        case swift, json
+    }
+    
+    var source = [Group]()
     var current = [Group]()
 
-    init() {
-        source.append(Group.init(
-            id: 0, name: "Inbox", list: [Task.init(id: 0,
-                                                   name: "task 0",
-                                                   taskDeadline: ConvertDate().convert(from: "2022-02-15"),
-                                                   taskScheduledDate: ConvertDate().convert(from: "2022-02-15"),
-                                                   notes: "nnnnnn",
-                                                   status: true),
-                                        Task.init(id: 0,
-                                                  name: "task 1",
-                                                  taskScheduledDate: ConvertDate().convert(from: "2022-02-17"),
-                                                  notes: "nnnnnn",
-                                                  status: false),
-                                        Task.init(id: 0,
-                                                  name: "task 2",
-                                                  taskDeadline: ConvertDate().convert(from: "2022-02-14"),
-                                                  taskScheduledDate: ConvertDate().convert(from: "2022-02-14"),
-                                                  notes: "nnnnnn", status: true)]))
-        source.append(Group.init(
-            id: 1, name: "Hobby", list: [Task.init(id: 1,
-                                                   name: "Собрать кухню",
-                                                   taskScheduledDate: ConvertDate().convert(from: "2022-02-20"),
-                                                   notes: "Нет времени",
-                                                   status: false)]))
-        source.append(Group.init(
-            id: 2, name: "Work", list: [Task.init(id: 2,
-                                                  name: "Написать тестовое задание",
-                                                  taskScheduledDate: Date(),
-                                                  notes: "Самообразование",
-                                                  status: false),
-                                         Task.init(id: 2,
-                                                   name: "Прочитать статьи по SwiftGen",
-                                                   taskScheduledDate: ConvertDate().convert(from: "2022-02-15"),
-                                                   notes: "nnnnnn",
-                                                   status: false),
-                                         Task.init(id: 2,
-                                                   name: "Проверить задачи в JIRA",
-                                                   taskScheduledDate: ConvertDate().convert(from: "2022-02-15"),
-                                                   notes: "Смотреть и наши и чешские",
-                                                   status: false),
-                                         Task.init(id: 2,
-                                                   name: "Проверить invite от AppleID",
-                                                   taskDeadline: Date() + 1,
-                                                   taskScheduledDate: Date(),
-                                                   notes: "На почте от  Cetelem",
-                                                   status: true),
-                                         Task.init(id: 2,
-                                                   name: "Потренероваться в перекраске WL для банка",
-                                                   taskScheduledDate: ConvertDate().convert(from: "2022-02-01"),
-                                                   notes: "Придумай сам",
-                                                   status: false),
-                                         Task.init(id: 2,
-                                                   name: "Почитать док по GPE",
-                                                   taskScheduledDate: ConvertDate().convert(from: "2022-02-19"),
-                                                   notes: "Лежат в папке",
-                                                   status: false)]))
-        source.append(Group.init(
-            id: 3, name: "Films", list: [Task.init(id: 3,
-                                                   name: "Посмотреть Матрицу 4",
-                                                   taskDeadline: ConvertDate().convert(from: "2022-02-15"),
-                                                   taskScheduledDate: ConvertDate().convert(from: "2022-02-21"),
-                                                   notes: "Советовали",
-                                                   status: true),
-                                         Task.init(id: 3,
-                                                   name: "Посмотреть Анчартед: На картах не значится",
-                                                   taskScheduledDate: ConvertDate().convert(from: "2022-02-18"),
-                                                   notes: "Советовали",
-                                                   status: false)]))
-        source.append(Group.init(
-            id: 4, name: "Building", list: [Task.init(id: 4,
-                                                      name: "task 0",
-                                                      taskScheduledDate: ConvertDate().convert(from: "2022-02-17"),
-                                                      notes: "nnnnnn",
-                                                      status: false),
-                                            Task.init(id: 4,
-                                                      name: "task 1",
-                                                      taskScheduledDate: ConvertDate().convert(from: "2022-02-20"),
-                                                      notes: "nnnnnn",
-                                                      status: false)]))
+    init(typeData: TypeData) {
+        switch typeData {
+        case .swift:
+            loadDataSwift()
+        case .json:
+            loadDataJSON()
+        }
     }
+    
+    func loadDataSwift() {
+        source = DataSwift().source
+    }
+    
+    func loadDataJSON() {
+
+        let jsonData = readFromFile()
+
+        //        let json = """
+        //            [
+        //                {
+        //                    "id": 0,
+        //                    "name": "Inbox",
+        //                    "list": [
+        //                                {
+        //                                    "id": 0,
+        //                                    "name": "task 0",
+        //                                    "taskScheduledDate": "2022-02-25T12:45:00Z",
+        //                                    "notes": "text",
+        //                                    "status": false
+        //                                }
+        //                            ]
+        //                }
+        //            ]
+        //        """
+
+        //        guard let jsonData = json.data(using: .utf8) else {
+        //            fatalError("Could not convert to data")
+        //        }
+                
+        //        let formate = DateFormatter()
+        //        formate.dateFormat = "yyyy-MM-dd"
+        
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        
+        guard let group = try? decoder.decode([Group].self, from: jsonData) else {
+            fatalError("There must be a problem decoding the data.....")
+        }
+        
+        source = group
+    }
+
+    func readFromFile() -> Data {
+
+        
+        
+        guard let file = Bundle.main.url(forResource: "Data", withExtension: "json") else {
+            fatalError("Could not find Data.json")
+        }
+
+        guard let data = try? Data(contentsOf: file) else {
+            fatalError("Could not convert to data")
+        }
+
+        return data
+    }
+    
+    func saveToFile() {
+    }
+
+    // func dataJSON() {
+        //
+        //Example1
+        //        do {
+        //            let data = try Data(contentsOf: file)
+        //
+        //            // Декодирование из объекта JSON
+        //            let decoder = JSONDecoder()
+        //
+        //                // decoder.dateDecodingStrategy = .formatted(formate)
+        //                decoder.dateDecodingStrategy = .iso8601
+        //                let dataFromJson = try decoder.decode([GroupJSON].self, from: data)
+        //
+        //            // let dataFromJson = try decoder.decode([GroupJSON].self, from: data)
+        //
+        //            userTasks = dataFromJson
+        //        } catch {
+        //            print(error)
+        //        }
+        
+        //Example2
+        //
+        //        let decoder2 = JSONDecoder()
+        //        decoder2.dateDecodingStrategy = .iso8601
+        //        guard let userTasks = try? decoder2.decode([Group].self, from: loadFile()) else {
+        //            fatalError("There must be a problem decoding the data.....")
+        //        }
+        //
+        //        for task in userTasks {
+        //            print(task.id)
+        //            print(task.name)
+        //            print(task.dateCreated)
+        //            print(task.list)
+        //        }
+        // var sort = group.sorted(by: { $0.id! < $1.id! })
+    // }
 
     // Для InBoxViewController
     func filterPeriod() -> [Group]? {
+
         current.removeAll()
 
         var sections = [String]()
@@ -170,16 +201,18 @@ class TaskService {
     }
 
     func filterAllTasks() -> [String] {
-        var allName = [String]()
+        var allNames = [String]()
 
-        for sourceIdx in 0..<source.count {
-            if let countL = source[sourceIdx].list?.count {
-                for listIdx in 0..<countL {
-                    allName.append(source[sourceIdx].list?[listIdx].name ?? "")
-                }
-            }
-        }
-        return allName
+        source.map { $0.list.map { $0.map { allNames.append($0.name!) } } }
+        
+//        for sourceIdx in 0..<source.count {
+//            if let countL = source[sourceIdx].list?.count {
+//                for listIdx in 0..<countL {
+//                    allNames.append(source[sourceIdx].list?[listIdx].name ?? "")
+//                }
+//            }
+//        }
+        return allNames
     }
 
     func filterGroup() -> [String] {
@@ -190,6 +223,16 @@ class TaskService {
     func appendTask(_ newTask: [Group]) {
         if let list = newTask[0].list {
             source[0].list?.append(contentsOf: list)
+            
+            
+            let encoder = JSONEncoder()
+            encoder.dateEncodingStrategy = .iso8601
+            
+            guard let encodedData = try? encoder.encode(newTask) else {
+                fatalError("encoded")
+            }
+            
+            print(String(data: encodedData, encoding: .utf8))
         }
     }
 

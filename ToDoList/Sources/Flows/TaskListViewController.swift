@@ -19,7 +19,7 @@ class TaskListViewController: UIViewController {
         table.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         table.sectionFooterHeight = 0
         let nib = UINib(nibName: "TaskCell", bundle: nil)
-        table.register(nib, forCellReuseIdentifier: InBoxViewController.Constants.taskCellIdentifier)
+        table.register(nib, forCellReuseIdentifier: Constants.taskCellIdentifier)
         return table
     }()
 
@@ -30,8 +30,8 @@ class TaskListViewController: UIViewController {
     }
 
     private func fetchData() {
-        if TaskService().filterGroup().count != 0 {
-            data = TaskService().filterGroup()
+        if TaskService(typeData: .json).filterGroup().count != 0 {
+            data = TaskService(typeData: .json).filterGroup()
             addTableView()
         } else {
             print("Not data")
@@ -71,7 +71,7 @@ extension TaskListViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: InBoxViewController.Constants.taskCellIdentifier, for: indexPath) as? TaskCell  else { fatalError("Unexpected Index Path") }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.taskCellIdentifier, for: indexPath) as? TaskCell  else { fatalError("Unexpected Index Path") }
 
         configureCell(cell, indexPath)
 

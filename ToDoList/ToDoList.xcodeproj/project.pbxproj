@@ -32,6 +32,9 @@
 		D3026B9D27C26814007BDF24 /* TaskService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3026B8027C26814007BDF24 /* TaskService.swift */; };
 		D3026B9E27C26814007BDF24 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3026B8227C26814007BDF24 /* AppDelegate.swift */; };
 		D3026B9F27C26814007BDF24 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3026B8327C26814007BDF24 /* SceneDelegate.swift */; };
+		D320AC7927CE2256002B16B5 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = D320AC7727CE2255002B16B5 /* Data.swift */; };
+		D320AC7A27CE2256002B16B5 /* Data.json in Resources */ = {isa = PBXBuildFile; fileRef = D320AC7827CE2255002B16B5 /* Data.json */; };
+		D320AC7C27CE22D1002B16B5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D320AC7B27CE22D0002B16B5 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +66,9 @@
 		D3026B8227C26814007BDF24 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3026B8327C26814007BDF24 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		D3026B8427C26814007BDF24 /* ToDoList.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = ToDoList.xcodeproj; sourceTree = "<group>"; };
+		D320AC7727CE2255002B16B5 /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		D320AC7827CE2255002B16B5 /* Data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Data.json; sourceTree = "<group>"; };
+		D320AC7B27CE22D0002B16B5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D3C53D3627BA5396000B6E26 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDD4244FF57F7028DD205125 /* Pods-ToDoList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoList.release.xcconfig"; path = "Target Support Files/Pods-ToDoList/Pods-ToDoList.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -110,6 +116,8 @@
 		D3026B6027C26814007BDF24 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D320AC7827CE2255002B16B5 /* Data.json */,
+				D320AC7727CE2255002B16B5 /* Data.swift */,
 				D3026B6127C26814007BDF24 /* Assets.xcassets */,
 				D3026B6227C26814007BDF24 /* LaunchScreen.storyboard */,
 				D3026B6427C26814007BDF24 /* Info.plist */,
@@ -124,6 +132,7 @@
 				D3026B6927C26814007BDF24 /* View */,
 				D3026B6D27C26814007BDF24 /* Flows */,
 				D3026B7E27C26814007BDF24 /* Services */,
+				D320AC7B27CE22D0002B16B5 /* Constants.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -296,6 +305,7 @@
 				D3026B8D27C26814007BDF24 /* TaskCell.xib in Resources */,
 				D3026B8727C26814007BDF24 /* Assets.xcassets in Resources */,
 				D3026B8827C26814007BDF24 /* LaunchScreen.storyboard in Resources */,
+				D320AC7A27CE2256002B16B5 /* Data.json in Resources */,
 				D3026B9627C26814007BDF24 /* Main.storyboard in Resources */,
 				D3026B9527C26814007BDF24 /* AddTaskViewController.xib in Resources */,
 			);
@@ -365,7 +375,9 @@
 				D3026B8C27C26814007BDF24 /* TaskCell.swift in Sources */,
 				D3026B9B27C26814007BDF24 /* TabBarController.swift in Sources */,
 				D3026B9C27C26814007BDF24 /* ConvertDate.swift in Sources */,
+				D320AC7C27CE22D1002B16B5 /* Constants.swift in Sources */,
 				D3026B9227C26814007BDF24 /* DetailTaskViewController.swift in Sources */,
+				D320AC7927CE2256002B16B5 /* Data.swift in Sources */,
 				D3026B9E27C26814007BDF24 /* AppDelegate.swift in Sources */,
 				D3026B8A27C26814007BDF24 /* Group.swift in Sources */,
 			);

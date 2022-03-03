@@ -13,7 +13,7 @@ class TabBarController: UITabBarController {
     private let name = ["InBox", "ToDay", "TaskList", "Search"]
     private let image = ["calendar", "flame", "list.dash", "magnifyingglass"]
     private var vcTabBar: [UIViewController] = []
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTabBar()
@@ -27,7 +27,7 @@ class TabBarController: UITabBarController {
 
         viewControllers = vcTabBar
     }
-    
+
     private func createNavController(vc: UIViewController, itemName: String, itemImage: UIImage) -> UINavigationController {
         let item = UITabBarItem(title: itemName,
                                 image: itemImage,

@@ -1,0 +1,105 @@
+[
+    {
+        "id": 0,
+        "name": "Inbox",
+        "list": [
+                    {
+                        "id": 0,
+                        "name": "task 0",
+                        "taskDeadline": "2022-02-25T13:45:00Z",
+                        "taskScheduledDate": "2022-02-24T12:45:00Z",
+                        "notes": "text",
+                        "status": true
+                    },
+                    {
+                        "id": 0,
+                        "name": "task 1",
+                        "taskScheduledDate": "2022-02-28T12:45:00Z",
+                        "notes": "text",
+                        "status": false
+                    }
+                ]
+    },
+    {
+        "id": 1,
+        "name": "Hobby",
+        "list": [
+                    {
+                        "id": 1,
+                        "name": "Собрать кухню",
+                        "taskScheduledDate": "2022-02-23T12:45:00Z",
+                        "notes": "Нет времени",
+                        "status": false
+                    }
+                ]
+    },
+    {
+        "id": 2,
+        "name": "Work",
+        "list": [
+                    {
+                        "id": 2,
+                        "name": "Написать тестовое задание",
+                        "taskScheduledDate": "2022-02-28T12:45:00Z",
+                        "notes": "Самообразование",
+                        "status": false
+                    },
+                    {
+                        "id": 2,
+                        "name": "Прочитать статьи по SwiftGen",
+                        "taskScheduledDate": "2022-02-20T12:45:00Z",
+                        "notes": "nnnnnn",
+                        "status": false
+                    },
+                    {
+                        "id": 2,
+                        "name": "Проверить задачи в JIRA",
+                        "taskScheduledDate": "2022-02-27T12:45:00Z",
+                        "notes": "Смотреть и наши и чешские",
+                        "status": false
+                    }
+                ]
+    },
+    {
+        "id": 3,
+        "name": "Films",
+        "list": [
+                    {
+                        "id": 3,
+                        "name": "Посмотреть Матрицу 4",
+                        "taskScheduledDate": "2022-02-16T12:45:00Z",
+                        "taskDeadline": "2022-02-25T13:45:00Z",
+                        "notes": "Советовали",
+                        "status": true
+                    },
+                    {
+                        "id": 3,
+                        "name": "Посмотреть Анчартед: На картах не значится",
+                        "taskScheduledDate": "2022-02-28T12:45:00Z",
+                        "notes": "Советовали",
+                        "status": false
+                    }
+                ]
+    },
+    {
+        "id": 4,
+        "name": "Building",
+        "list": [
+                    {
+                        "id": 4,
+                        "name": "Building - task 0",
+                        "taskScheduledDate": "2025-02-28T12:45:00Z",
+                        "taskDeadline": "2022-02-24T13:45:00Z",
+                        "notes": "text",
+                        "status": true
+                    },
+                    {
+                        "id": 4,
+                        "name": "Building - task 1",
+                        "taskScheduledDate": "2025-02-22T12:45:00Z",
+                        "notes": "text",
+                        "status": false
+                    }
+                ]
+    }
+]

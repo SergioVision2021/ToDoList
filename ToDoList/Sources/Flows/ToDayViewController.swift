@@ -10,7 +10,7 @@ import UIKit
 class ToDayViewController: UIViewController {
 
     // MARK: - Properties
-    private var taskService = TaskService()
+    private var taskService = TaskService(typeData: .json)
     private var data: [Group] = []
 
     // MARK: - Visual Component
@@ -20,7 +20,7 @@ class ToDayViewController: UIViewController {
         table.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         table.sectionFooterHeight = 0
         let nib = UINib(nibName: "TaskCell", bundle: nil)
-        table.register(nib, forCellReuseIdentifier: InBoxViewController.Constants.taskCellIdentifier)
+        table.register(nib, forCellReuseIdentifier: Constants.taskCellIdentifier)
         return table
     }()
 
@@ -86,7 +86,7 @@ extension ToDayViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: InBoxViewController.Constants.taskCellIdentifier, for: indexPath) as? TaskCell else { fatalError("Unexpected Index Path") }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.taskCellIdentifier, for: indexPath) as? TaskCell else { fatalError("Unexpected Index Path") }
         
         configureCell(cell, indexPath)
         

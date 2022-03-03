@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Group {
+struct Group: Codable {
     var id: Int?
     var name: String?
     var dateCreated: Date?      // Дата создания группы

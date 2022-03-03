@@ -7,16 +7,10 @@
 
 import UIKit
 
-extension InBoxViewController {
-    enum Constants {
-        static let taskCellIdentifier = "IdCell"
-    }
-}
-
 class InBoxViewController: UIViewController {
 
     // MARK: - Properties
-    private var taskService = TaskService()     //
+    private var taskService = TaskService(typeData: .json)     //
     private var data: [Group] = []
 
     // MARK: - Visual Component

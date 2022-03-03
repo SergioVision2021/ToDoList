@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Task {
+struct Task: Codable {
     var id: Int?
     var name: String?
     var taskDeadline: Date?           // Дата когда выполнил задачу

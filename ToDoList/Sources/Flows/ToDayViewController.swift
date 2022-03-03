@@ -10,7 +10,6 @@ import UIKit
 class ToDayViewController: UIViewController {
 
     // MARK: - Properties
-    private var taskService = TaskService(typeData: .json)
     private var data: [Group] = []
 
     // MARK: - Visual Component
@@ -31,7 +30,7 @@ class ToDayViewController: UIViewController {
     }
 
     private func fetchData() {
-        if let fetchData = taskService.filterToday(namePeriod: "ToDay") {
+        if let fetchData = InBoxViewController.shared.filterToday(namePeriod: "ToDay") {
             data = fetchData
             addTableView()
         } else {

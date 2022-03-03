@@ -10,7 +10,7 @@ import UIKit
 class InBoxViewController: UIViewController {
 
     // MARK: - Properties
-    private var taskService = TaskService(typeData: .json)     //
+    static var shared = TaskService(typeData: .json)
     private var data: [Group] = []
 
     // MARK: - Visual Component
@@ -33,21 +33,21 @@ class InBoxViewController: UIViewController {
     }
 
     private func fetchData() {
-        if let dataService = taskService.filterPeriod() {
-            data = dataService
+        if let fetchData = InBoxViewController.shared.filterPeriod() {
+            data = fetchData
         } else {
             print("Not data")
         }
     }
 
     private func appendNewTask(_ newTask: [Group]) {
-        taskService.appendTask(newTask)
+        InBoxViewController.shared.appendTask(newTask)
         fetchData()
         tableView.reloadData()
     }
 
     private func editSelectTask(_ editTask: Task) {
-        taskService.editTask(editTask)
+        InBoxViewController.shared.editTask(editTask)
         fetchData()
         tableView.reloadData()
     }

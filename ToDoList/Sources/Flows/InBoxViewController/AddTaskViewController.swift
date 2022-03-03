@@ -16,12 +16,15 @@ class AddTaskViewController: UIViewController {
 
     // MARK: - Properties
     private var newTask: [Group] = []
-    internal var delegate: AddTaskDelegate?
+    var delegate: AddTaskDelegate?
+    //private var nameGroup = String()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         addBarButtonItem()
+        nameTaskTextField.text = "New task \(Int.random(in: 1..<100))"
+        //addAlert()
     }
 
     // MARK: - IBAction
@@ -74,3 +77,30 @@ extension AddTaskViewController: SelectDateDelegate {
         scheduleDateButton.setTitle(date, for: .normal)
     }
 }
+
+//extension AddTaskViewController {
+//    func addAlert() {
+//        let alert = UIAlertController(title: "Add new group",
+//                                      message: "Input name new group",
+//                                      preferredStyle: .alert)
+//
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//
+//        let continueAction = UIAlertAction(title: "Continue", style: .default, handler: { _ in
+//            guard let name = alert.textFields?[0].text, !name.isEmpty else {
+//                return
+//            }
+//
+//            self.nameGroup = name
+//        })
+//
+//        alert.addAction(cancelAction)
+//        alert.addAction(continueAction)
+//
+//        alert.addTextField { (textField) in
+//            textField.placeholder = "Enter name group"
+//        }
+//
+//        present(alert, animated: true, completion: nil)
+//    }
+//}

@@ -41,8 +41,8 @@ class SearchViewController: UIViewController {
     }
 
     private func fetchData() {
-        if TaskService(typeData: .json).filterAllTasks().count != 0 {
-            data = TaskService(typeData: .json).filterAllTasks()
+        if InBoxViewController.shared.filterAllTasks().count != 0 {
+            data = InBoxViewController.shared.filterAllTasks()
             addTableView()
         } else {
             print("Not data")

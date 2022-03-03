@@ -30,8 +30,8 @@ class TaskListViewController: UIViewController {
     }
 
     private func fetchData() {
-        if TaskService(typeData: .json).filterGroup().count != 0 {
-            data = TaskService(typeData: .json).filterGroup()
+        if InBoxViewController.shared.filterGroup().count != 0 {
+            data = InBoxViewController.shared.filterGroup()
             addTableView()
         } else {
             print("Not data")

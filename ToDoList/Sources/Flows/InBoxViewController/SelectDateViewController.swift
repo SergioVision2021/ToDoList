@@ -12,13 +12,13 @@ class SelectDateViewController: UIViewController {
     @IBOutlet weak var scheduleDatePicker: UIDatePicker!
 
     internal var delegate: SelectDateDelegate?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
 
     @IBAction func doneBarButton(_ sender: UIBarButtonItem) {
-        delegate?.callback(self, ConvertDate().convert(from: scheduleDatePicker.date))
+        delegate?.selectDateDidTapDone(self, ConvertDate().convert(from: scheduleDatePicker.date))
         navigationController?.popViewController(animated: true)
     }
 }

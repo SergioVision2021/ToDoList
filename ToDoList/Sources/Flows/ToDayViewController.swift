@@ -48,6 +48,22 @@ class ToDayViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
+
+    func configureCell(_ cell: TaskCell, _ at: IndexPath) {
+        let task = data[at.section].list?[at.row]
+        if let name = task?.name, let status = task?.status {
+            cell.statusImageView.tintColor = status ? .systemGreen : .systemYellow
+            cell.nameLabel.text = name
+        }
+    }
+
+    func configureSection(_ section: Int) -> UIView {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))
+        let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 40))
+        lbl.text = data[section].name
+        view.addSubview(lbl)
+        return view
+    }
 }
 
 // MARK: - TableView DataSource
@@ -62,13 +78,11 @@ extension ToDayViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: InBoxViewController.Constants.taskCellIdentifier, for: indexPath) as? TaskCell
-        let task = data[indexPath.section].list?[indexPath.row]
-        if let name = task?.name, let status = task?.status {
-            cell?.statusImageView.tintColor = status ? .systemGreen : .systemYellow
-            cell?.nameLabel.text = name
-        }
-        return cell ?? TaskCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: InBoxViewController.Constants.taskCellIdentifier, for: indexPath) as? TaskCell else { fatalError("Unexpected Index Path") }
+        
+        configureCell(cell, indexPath)
+        
+        return cell
     }
 }
 
@@ -80,14 +94,10 @@ extension ToDayViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        40
+        return 40
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))
-        let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 40))
-        lbl.text = data[section].name
-        view.addSubview(lbl)
-        return view
+        return configureSection(section)
     }
 }

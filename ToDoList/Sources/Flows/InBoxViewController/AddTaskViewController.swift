@@ -41,12 +41,16 @@ class AddTaskViewController: UIViewController {
                             taskScheduledDate: ConvertDate().convert(from: text),
                             notes: notesTextView.text,
                             status: false)]
+
             let group = Group(id: 0,
                               name: "InBox",
                               dateCreated: Date(),
                               list: task)
+
             newTask.append(group)
-            delegate?.callback(self, newTask)
+
+            // Возврат новой задачи
+            delegate?.addTaskDidTapSave(self, newTask)
             navigationController?.popViewController(animated: true)
         }
     }
@@ -54,7 +58,7 @@ class AddTaskViewController: UIViewController {
 
 // MARK: - Delegate
 extension AddTaskViewController: SelectDateDelegate {
-    func callback(_ sender: UIViewController, _ date: String) {
+    func selectDateDidTapDone(_ sender: UIViewController, _ date: String) {
         scheduleDateButton.setTitle(date, for: .normal)
     }
 }

@@ -163,8 +163,9 @@
 			isa = PBXGroup;
 			children = (
 				D3026B7127C26814007BDF24 /* InBoxViewController.swift */,
-				D3026B7227C26814007BDF24 /* SelectDateViewController.swift */,
+				D3026B7927C26814007BDF24 /* AddTaskViewController.swift */,
 				D3026B7327C26814007BDF24 /* DetailTaskViewController.swift */,
+				D3026B7227C26814007BDF24 /* SelectDateViewController.swift */,
 				D3026B7727C26814007BDF24 /* Main.storyboard */,
 				D3026B7927C26814007BDF24 /* AddTaskViewController.swift */,
 				D3026B7427C26814007BDF24 /* AddTaskDelegate.swift */,

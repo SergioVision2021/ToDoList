@@ -41,6 +41,11 @@ class TaskListViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
     }
+
+    func configureCell(_ cell: TaskCell, _ at: IndexPath) {
+        let group = data[at.row]
+        cell.nameLabel.text = group
+    }
 }
 
 // MARK: - TableView DataSource
@@ -51,10 +56,11 @@ extension TaskListViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: InBoxViewController.Constants.taskCellIdentifier, for: indexPath) as? TaskCell
-        let group = data[indexPath.row]
-        cell?.nameLabel.text = group
-        return cell ?? TaskCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: InBoxViewController.Constants.taskCellIdentifier, for: indexPath) as? TaskCell  else { fatalError("Unexpected Index Path") }
+
+        configureCell(cell, indexPath)
+
+        return cell
     }
 }
 

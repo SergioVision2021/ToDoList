@@ -59,6 +59,18 @@ class SearchViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
     }
+
+    func configureCell(_ cell: TaskCell, _ at: IndexPath) {
+        var row: String
+
+        if isFiltering {
+            row = filteredData[at.row]
+        } else {
+            row = data[at.row]
+        }
+
+        cell.nameLabel.text = row
+    }
 }
 
 // MARK: - UISearchResultsUpdating
@@ -100,18 +112,11 @@ extension SearchViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: InBoxViewController.Constants.taskCellIdentifier, for: indexPath) as? TaskCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: InBoxViewController.Constants.taskCellIdentifier, for: indexPath) as? TaskCell  else { fatalError("Unexpected Index Path") }
 
-        var row: String
+        configureCell(cell, indexPath)
 
-        if isFiltering {
-            row = filteredData[indexPath.row]
-        } else {
-            row = data[indexPath.row]
-        }
-
-        cell?.nameLabel.text = row
-        return cell ?? TaskCell()
+        return cell
     }
 }
 

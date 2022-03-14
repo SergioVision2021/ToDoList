@@ -32,12 +32,13 @@ class DetailTaskViewController: UIViewController {
         groupTexField.text = nameSection
         nameTextField.text = task.name
         noteTextView.text = task.notes
-        if let dS = task.taskScheduledDate{
-            scheduleDatePicker.date = dS
+
+        if let dateS = task.taskScheduledDate {
+            scheduleDatePicker.date = dateS
         }
 
-        if let dD = task.taskDeadline{
-            deadlineDatePicker.date = dD
+        if let dateD = task.taskDeadline {
+            deadlineDatePicker.date = dateD
             navigationItem.rightBarButtonItem?.isEnabled = false
         } else {
             deadlineDatePicker.isHidden = true
@@ -57,7 +58,7 @@ private extension DetailTaskViewController {
     @objc
     func addActionButton(sender: UIBarButtonItem) {
         // Вернуть завершенную задачу
-        delegate?.callback(self, task)
+        delegate?.detailTaskDidTapDone(self, task)
         navigationController?.popViewController(animated: true)
     }
 }

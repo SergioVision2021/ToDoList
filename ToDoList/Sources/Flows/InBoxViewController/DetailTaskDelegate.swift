@@ -7,6 +7,6 @@
 
 import UIKit
 
-protocol DetailTaskDelegate{
-    func callback(_ sender: UIViewController, _ editTask: Task)
+protocol DetailTaskDelegate {
+    func detailTaskDidTapDone(_ sender: UIViewController, _ editTask: Task)
 }

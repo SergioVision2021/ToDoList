@@ -7,11 +7,11 @@
 
 import Foundation
 
-class TaskService{
+class TaskService {
     var source = [Group]()
 
     var current = [Group]()
-    
+
     init() {
         source.append(Group.init(
             id: 0, name: "Inbox", list: [Task.init(id: 0,
@@ -92,27 +92,26 @@ class TaskService{
                                                       notes: "nnnnnn",
                                                       status: false)]))
     }
-    
+
     // Для InBoxViewController
     func filterPeriod() -> [Group]? {
         current.removeAll()
-        
+
         var sections = [String]()
         var tasks = [(Int, Task)]()
-        // var tasksByPeriods = [Group]()
-        
+
         for sourceIndex in 0..<source.count {
             if let countL = source[sourceIndex].list?.count {
                 for listIndex in 0..<countL {
                     // Получить период до планируемой даты
                     let intervale = ConvertDate().intervaleString(end: source[sourceIndex].list?[listIndex].taskScheduledDate)
                     if !sections.contains(intervale) {
-                        //Массив всех периодов
+                        // Массив всех периодов
                         sections.append(intervale)
                     }
                     // Массив всех задач Id = section, Task = value
                     if  let task = source[sourceIndex].list?[listIndex],
-                        let id = sections.index {$0 == intervale} {
+                        let id = sections.index{ $0 == intervale } {
                             tasks.append((id, task))
                     }
                 }
@@ -121,16 +120,14 @@ class TaskService{
 
         for secIdx in 0..<sections.count {                 // Section
             var sectionTasks = [Task]()
-            for taskIdx in 0..<tasks.count {                // Task
-                if (secIdx == tasks[taskIdx].0) {
-                    sectionTasks.append(tasks[taskIdx].1)
-                }
+            for taskIdx in 0..<tasks.count where secIdx == tasks[taskIdx].0 {                // Task
+                sectionTasks.append(tasks[taskIdx].1)
             }
             current.append(Group.init(id: secIdx, name: sections[secIdx], list: sectionTasks))
         }
         return current
     }
-    
+
     // Для TodayViewController
     func filterToday(namePeriod: String) -> [Group]? {
         filterPeriod()
@@ -141,19 +138,19 @@ class TaskService{
 
         // Из всех секций (периодов) = получаем секцию ToDay
         var sectionToDay = [Group]()
-        
+
         for currentIdx in 0..<current.count where current[currentIdx].name == namePeriod {
                 sectionToDay = [current[currentIdx]]
                 break
         }
-        
+
         guard sectionToDay.count != 0 else {
             return nil
         }
 
         // Создаем 2е секции по статусу тасков из секции ToDay
         var statusToDay = [Group]()
-        
+
         if let taskCount = sectionToDay[0].list?.count {
             var taskCompleted = [Task]()
             var taskIncomplete = [Task]()
@@ -171,10 +168,10 @@ class TaskService{
         }
         return statusToDay
     }
-    
+
     func filterAllTasks() -> [String] {
         var allName = [String]()
-        
+
         for sourceIdx in 0..<source.count {
             if let countL = source[sourceIdx].list?.count {
                 for listIdx in 0..<countL {
@@ -184,29 +181,27 @@ class TaskService{
         }
         return allName
     }
-    
+
     func filterGroup() -> [String] {
         return source.map {str in str.name ?? ""}
     }
-    
+
     // AddTask - добавление новой задачи
     func appendTask(_ newTask: [Group]) {
         if let list = newTask[0].list {
             source[0].list?.append(contentsOf: list)
         }
     }
-    
+
     // DetailTask - завершение задачи
     func editTask(_ editTask: Task) {
         let idGroup = editTask.id ?? 0
         let count = source[idGroup].list?.count ?? 0
-        
-        for idx in 0..<count {
-            if source[idGroup].list?[idx].name == editTask.name {
-                source[idGroup].list?[idx].taskDeadline = Date()
-                source[idGroup].list?[idx].status = true
-                break
-            }
+
+        for idx in 0..<count where source[idGroup].list?[idx].name == editTask.name {
+            source[idGroup].list?[idx].taskDeadline = Date()
+            source[idGroup].list?[idx].status = true
+            break
         }
     }
 }

@@ -8,6 +8,5 @@
 import UIKit
 
 protocol AddTaskDelegate {
-    func callback(_ sender: UIViewController, _ newTask: [Group])
+    func addTaskDidTapSave(_ sender: UIViewController, _ newTask: [Group])
 }
-

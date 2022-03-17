@@ -17,14 +17,12 @@ class AddTaskViewController: UIViewController {
     // MARK: - Properties
     private var newTask: [Group] = []
     var delegate: AddTaskDelegate?
-    //private var nameGroup = String()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         addBarButtonItem()
         nameTaskTextField.text = "New task \(Int.random(in: 1..<100))"
-        //addAlert()
     }
 
     // MARK: - IBAction

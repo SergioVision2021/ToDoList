@@ -10,7 +10,9 @@ import UIKit
 class ToDayViewController: UIViewController {
 
     // MARK: - Properties
+    var service: TaskServiceProtocol?
     private var data: [Group] = []
+    var flag: Bool = false
 
     // MARK: - Visual Component
     private lazy var tableView: UITableView = {
@@ -23,14 +25,14 @@ class ToDayViewController: UIViewController {
         return table
     }()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         fetchData()
+        tableView.reloadData()
     }
 
     private func fetchData() {
-        if let fetchData = InBoxViewController.shared.filterToday(namePeriod: "ToDay") {
+        if let fetchData = service?.filterToday("ToDay") {
             data = fetchData
             addTableView()
         } else {
@@ -47,7 +49,7 @@ class ToDayViewController: UIViewController {
 
 // MARK: - TableView
 extension ToDayViewController {
-    
+
     func addTableView() {
         tableView.delegate = self
         tableView.dataSource = self
@@ -55,7 +57,7 @@ extension ToDayViewController {
         tableView.frame = view.bounds
         view.addSubview(tableView)
     }
-    
+
     func configureCell(_ cell: TaskCell, _ at: IndexPath) {
         let task = data[at.section].list?[at.row]
         if let name = task?.name, let status = task?.status {
@@ -88,7 +90,7 @@ extension ToDayViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.taskCellIdentifier, for: indexPath) as? TaskCell else { fatalError("Unexpected Index Path") }
         
         configureCell(cell, indexPath)
-        
+
         return cell
     }
 }

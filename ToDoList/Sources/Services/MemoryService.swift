@@ -1,17 +1,19 @@
 //
-//  Data.swift
+//  MemoryService.swift
 //  ToDoList
 //
-//  Created by Sergey Vysotsky on 23.02.2022.
+//  Created by Sergey Vysotsky on 14.03.2022.
 //
 
 import Foundation
 
-class DataSwift {
-    var source: [Group] = []
+class MemoryService: TaskService {
 
-    init() {
-        source.append(Group.init(
+    var taskService = TaskService()
+
+    // Загрузить готовый объект
+    func load() {
+        taskService.source.append(Group.init(
             id: 0, name: "Inbox", list: [Task.init(id: 0,
                                                    name: "task 0",
                                                    taskDeadline: ConvertDate().convert(from: "2022-02-15"),
@@ -28,13 +30,13 @@ class DataSwift {
                                                   taskDeadline: ConvertDate().convert(from: "2022-02-14"),
                                                   taskScheduledDate: ConvertDate().convert(from: "2022-02-14"),
                                                   notes: "nnnnnn", status: true)]))
-        source.append(Group.init(
+        taskService.source.append(Group.init(
             id: 1, name: "Hobby", list: [Task.init(id: 1,
                                                    name: "Собрать кухню",
                                                    taskScheduledDate: ConvertDate().convert(from: "2022-02-20"),
                                                    notes: "Нет времени",
                                                    status: false)]))
-        source.append(Group.init(
+        taskService.source.append(Group.init(
             id: 2, name: "Work", list: [Task.init(id: 2,
                                                   name: "Написать тестовое задание",
                                                   taskScheduledDate: Date(),
@@ -66,7 +68,7 @@ class DataSwift {
                                                    taskScheduledDate: ConvertDate().convert(from: "2022-02-19"),
                                                    notes: "Лежат в папке",
                                                    status: false)]))
-        source.append(Group.init(
+        taskService.source.append(Group.init(
             id: 3, name: "Films", list: [Task.init(id: 3,
                                                    name: "Посмотреть Матрицу 4",
                                                    taskDeadline: ConvertDate().convert(from: "2022-02-15"),
@@ -78,7 +80,7 @@ class DataSwift {
                                                    taskScheduledDate: ConvertDate().convert(from: "2022-02-18"),
                                                    notes: "Советовали",
                                                    status: false)]))
-        source.append(Group.init(
+        taskService.source.append(Group.init(
             id: 4, name: "Building", list: [Task.init(id: 4,
                                                       name: "task 0",
                                                       taskScheduledDate: ConvertDate().convert(from: "2022-02-17"),
@@ -89,5 +91,30 @@ class DataSwift {
                                                       taskScheduledDate: ConvertDate().convert(from: "2022-02-20"),
                                                       notes: "nnnnnn",
                                                       status: false)]))
+
+    }
+
+    override func add(_ newTask: [Group]) {
+        taskService.add(newTask)
+    }
+
+    override func edit(_ task: Task, _ status: Bool) {
+        taskService.edit(task, status)
+    }
+
+    override func filterPeriod() -> [Group]? {
+        return taskService.filterPeriod()
+    }
+
+    override func filterToday(_ namePeriod: String) -> [Group]? {
+        return taskService.filterToday(namePeriod)
+    }
+
+    override func filterAllTasks() -> [String] {
+        return taskService.filterAllTasks()
+    }
+
+    override func filterGroup() -> [String] {
+        return taskService.filterGroup()
     }
 }

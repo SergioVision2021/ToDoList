@@ -10,7 +10,7 @@ import UIKit
 class InBoxViewController: UIViewController {
 
     // MARK: - Properties
-    static var shared = TaskService(typeData: .json)
+    var service: TaskServiceProtocol?
     private var data: [Group] = []
 
     // MARK: - Visual Component
@@ -33,21 +33,21 @@ class InBoxViewController: UIViewController {
     }
 
     private func fetchData() {
-        if let fetchData = InBoxViewController.shared.filterPeriod() {
+        if let fetchData = service?.filterPeriod() {
             data = fetchData
         } else {
             print("Not data")
         }
     }
 
-    private func appendNewTask(_ newTask: [Group]) {
-        InBoxViewController.shared.appendTask(newTask)
+    private func add(_ task: [Group]) {
+        service?.add(task)
         fetchData()
         tableView.reloadData()
     }
 
-    private func editSelectTask(_ editTask: Task) {
-        InBoxViewController.shared.editTask(editTask)
+    private func edit(_ task: Task, _ status: Bool) {
+        service?.edit(task, status)
         fetchData()
         tableView.reloadData()
     }
@@ -109,6 +109,18 @@ extension InBoxViewController: UITableViewDataSource {
 
         return cell
     }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            tableView.beginUpdates()
+
+            guard let selectTask = data[indexPath.section].list?[indexPath.row] else { return }
+            edit(selectTask, true)
+
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.endUpdates()
+        }
+    }
 }
 
 // MARK: - TableView Delegate
@@ -134,6 +146,10 @@ extension InBoxViewController: UITableViewDelegate {
 
         configureViewController(vc, indexPath)
     }
+
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
 }
 
 // MARK: - BarButtonItem
@@ -155,12 +171,12 @@ extension InBoxViewController {
 
 // MARK: - Delegates
 extension InBoxViewController: AddTaskDelegate {
-    func addTaskDidTapSave(_ sender: UIViewController, _ newTask: [Group]) {
-        appendNewTask(newTask)
+    func addTaskDidTapSave(_ sender: UIViewController, _ task: [Group]) {
+        add(task)
     }
 }
 extension InBoxViewController: DetailTaskDelegate {
-    func detailTaskDidTapDone(_ sender: UIViewController, _ editTask: Task) {
-        editSelectTask(editTask)
+    func detailTaskDidTapDone(_ sender: UIViewController, _ task: Task) {
+        edit(task, false)
     }
 }

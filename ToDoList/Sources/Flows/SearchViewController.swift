@@ -10,6 +10,7 @@ import UIKit
 class SearchViewController: UIViewController {
 
     // MARK: - Properties
+    var service: TaskServiceProtocol?
     private var data: [String] = []
     private var filteredData: [String] = []
 
@@ -33,20 +34,19 @@ class SearchViewController: UIViewController {
         return search
     }()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        createSearchController()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         fetchData()
+        tableView.reloadData()
     }
 
     private func fetchData() {
-        if InBoxViewController.shared.filterAllTasks().count != 0 {
-            data = InBoxViewController.shared.filterAllTasks()
-            addTableView()
-        } else {
-            print("Not data")
-        }
+        guard let empty = service?.filterAllTasks().isEmpty,
+              let filterData = service?.filterAllTasks() else { return print("Not data")}
+
+        data = filterData
+        createSearchController()
+        addTableView()
     }
 
     private func createSearchController() {

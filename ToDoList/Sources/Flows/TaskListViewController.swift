@@ -10,6 +10,7 @@ import UIKit
 class TaskListViewController: UIViewController {
 
     // MARK: - Properties
+    var service: TaskServiceProtocol?
     private var data: [String] = []
 
     // MARK: - Visual Component
@@ -30,12 +31,11 @@ class TaskListViewController: UIViewController {
     }
 
     private func fetchData() {
-        if InBoxViewController.shared.filterGroup().count != 0 {
-            data = InBoxViewController.shared.filterGroup()
-            addTableView()
-        } else {
-            print("Not data")
-        }
+        guard let empty = service?.filterGroup().isEmpty,
+              let filterData = service?.filterGroup() else { return print("Not data")}
+
+        data = filterData
+        addTableView()
     }
 }
 

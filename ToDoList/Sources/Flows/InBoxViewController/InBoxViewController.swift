@@ -15,29 +15,20 @@ extension InBoxViewController {
 
 class InBoxViewController: UIViewController {
 
+    // MARK: - Outlet
+    @IBOutlet weak var tableView: UITableView!
+
     // MARK: - Properties
     private var taskService = TaskService()     //
     private var data: [Group] = []
 
-    // MARK: - Visual Component
-    private lazy var tableView: UITableView = {
-        let table = UITableView(frame: CGRect.zero, style: .insetGrouped)
-        table.translatesAutoresizingMaskIntoConstraints = false
-        table.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        table.sectionFooterHeight = 0
-        let nib = UINib(nibName: "TaskCell", bundle: nil)
-        table.register(nib, forCellReuseIdentifier: Constants.taskCellIdentifier)
-        return table
-    }()
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        addBarButtonItem()
         fetchData()
-        addTableView()
+        configureTableView()
     }
-
+    
     private func fetchData() {
         if let dataService = taskService.filterPeriod() {
             data = dataService
@@ -46,6 +37,18 @@ class InBoxViewController: UIViewController {
         }
     }
 
+    private func configureTableView() {
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
+        tableView.sectionFooterHeight = 0
+        let nib = UINib(nibName: "TaskCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: Constants.taskCellIdentifier)
+
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+    
     private func appendNewTask(_ newTask: [Group]) {
         taskService.appendTask(newTask)
         fetchData()
@@ -57,17 +60,11 @@ class InBoxViewController: UIViewController {
         fetchData()
         tableView.reloadData()
     }
-}
 
-// MARK: - TableView
-extension InBoxViewController {
-
-    func addTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
-
-        tableView.frame = view.bounds
-        view.addSubview(tableView)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == "IdAddTaskSeque" else { return }
+        guard let destination = segue.destination as? AddTaskViewController else { return }
+        destination.delegate = self
     }
 
     func configureCell(_ cell: TaskCell, _ at: IndexPath) {
@@ -142,29 +139,13 @@ extension InBoxViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - BarButtonItem
-extension InBoxViewController {
-    func addBarButtonItem() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
-                                                            target: self,
-                                                            action: #selector(addActionButton(sender:)))
-    }
-
-    @objc
-    func addActionButton(sender: UIBarButtonItem) {
-        let vc = AddTaskViewController(nibName: "AddTaskViewController", bundle: nil)
-        vc.delegate = self
-
-        show(vc, sender: self)
-    }
-}
-
 // MARK: - Delegates
 extension InBoxViewController: AddTaskDelegate {
     func addTaskDidTapSave(_ sender: UIViewController, _ newTask: [Group]) {
         appendNewTask(newTask)
     }
 }
+
 extension InBoxViewController: DetailTaskDelegate {
     func detailTaskDidTapDone(_ sender: UIViewController, _ editTask: Task) {
         editSelectTask(editTask)

@@ -20,32 +20,20 @@ class AddTaskViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        addBarButtonItem()
     }
 
     // MARK: - IBAction
     @IBAction func selectGroupButton(_ sender: UIButton) {
         selectGroupButton.setTitle("InBox", for: .normal)               // Default - Inbox
     }
-    @IBAction func selectDateButton(_ sender: UIButton) {
-        let vc = SelectDateViewController(nibName: "SelectDateViewController", bundle: nil)
-        vc.delegate = self
-        navigationController?.pushViewController(vc, animated: true)
-    }
-}
-
-// MARK: - BarButtonItem
-private extension AddTaskViewController {
-    func addBarButtonItem() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save,
-                                                            target: self,
-                                                            action: #selector(addActionButton(sender:)))
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == "IdSelectDate" else { return }
+        guard let destination = segue.destination as? SelectDateViewController else { return }
+        destination.delegate = self
     }
 
-    // Переход на предыдущий экран, сохранения таска и обновление таблицы
-    @objc
-    func addActionButton(sender: UIBarButtonItem) {
+    @IBAction func saveBarButton(_ sender: UIBarButtonItem) {
         if let text = scheduleDateButton.titleLabel?.text {
             let task = [Task(id: 0,
                             name: nameTaskTextField.text,

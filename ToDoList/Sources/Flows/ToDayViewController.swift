@@ -9,20 +9,12 @@ import UIKit
 
 class ToDayViewController: UIViewController {
 
+    // MARK: - Outlet
+    @IBOutlet weak var tableView: UITableView!
+    
     // MARK: - Properties
     private var taskService = TaskService()
     private var data: [Group] = []
-
-    // MARK: - Visual Component
-    private lazy var tableView: UITableView = {
-        let table = UITableView(frame: CGRect.zero, style: .insetGrouped)
-        table.translatesAutoresizingMaskIntoConstraints = false
-        table.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        table.sectionFooterHeight = 0
-        let nib = UINib(nibName: "TaskCell", bundle: nil)
-        table.register(nib, forCellReuseIdentifier: InBoxViewController.Constants.taskCellIdentifier)
-        return table
-    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,10 +25,22 @@ class ToDayViewController: UIViewController {
     private func fetchData() {
         if let fetchData = taskService.filterToday(namePeriod: "ToDay") {
             data = fetchData
-            addTableView()
+            configureTableView()
         } else {
             addAlert(title: "Warning", message: "No tasks for today!")
         }
+    }
+    
+    private func configureTableView() {
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
+        tableView.sectionFooterHeight = 0
+        let nib = UINib(nibName: "TaskCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: InBoxViewController.Constants.taskCellIdentifier)
+
+        tableView.delegate = self
+        tableView.dataSource = self
     }
 
     private func addAlert(title: String, message: String) {
@@ -44,19 +48,7 @@ class ToDayViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
-}
 
-// MARK: - TableView
-extension ToDayViewController {
-    
-    func addTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
-
-        tableView.frame = view.bounds
-        view.addSubview(tableView)
-    }
-    
     func configureCell(_ cell: TaskCell, _ at: IndexPath) {
         let task = data[at.section].list?[at.row]
         if let name = task?.name, let status = task?.status {

@@ -15,21 +15,9 @@ class SelectDateViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        addBarButtonItem()
-    }
-}
-
-private extension SelectDateViewController {
-    func addBarButtonItem() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done,
-                                                            target: self,
-                                                            action: #selector(addActionButton(sender:)))
     }
 
-    @objc
-    func addActionButton(sender: UIBarButtonItem) {
-        // Вернуть выбранную дату
+    @IBAction func doneBarButton(_ sender: UIBarButtonItem) {
         delegate?.selectDateDidTapDone(self, ConvertDate().convert(from: scheduleDatePicker.date))
         navigationController?.popViewController(animated: true)
     }

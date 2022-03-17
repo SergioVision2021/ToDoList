@@ -9,19 +9,11 @@ import UIKit
 
 class TaskListViewController: UIViewController {
 
+    // MARK: - Outlet
+    @IBOutlet weak var tableView: UITableView!
+    
     // MARK: - Properties
     private var data: [String] = []
-
-    // MARK: - Visual Component
-    private let tableView: UITableView = {
-        let table = UITableView(frame: CGRect.zero, style: .insetGrouped)
-        table.translatesAutoresizingMaskIntoConstraints = false
-        table.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        table.sectionFooterHeight = 0
-        let nib = UINib(nibName: "TaskCell", bundle: nil)
-        table.register(nib, forCellReuseIdentifier: InBoxViewController.Constants.taskCellIdentifier)
-        return table
-    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,34 +24,27 @@ class TaskListViewController: UIViewController {
     private func fetchData() {
         if TaskService().filterGroup().count != 0 {
             data = TaskService().filterGroup()
-            addTableView()
+            configureTableView()
         } else {
             print("Not data")
         }
     }
-}
 
-extension TaskListViewController {
+    private func configureTableView() {
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
-    private func addTableView() {
+        tableView.sectionFooterHeight = 0
+        let nib = UINib(nibName: "TaskCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: InBoxViewController.Constants.taskCellIdentifier)
+
         tableView.delegate = self
         tableView.dataSource = self
-
-        tableView.frame = view.bounds
-        view.addSubview(tableView)
     }
 
     func configureCell(_ cell: TaskCell, _ at: IndexPath) {
         let group = data[at.row]
         cell.nameLabel.text = group
-    }
-}
-
-// MARK: - TableView Delegate
-extension TaskListViewController: UITableViewDelegate {
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 40
     }
 }
 
@@ -76,5 +61,13 @@ extension TaskListViewController: UITableViewDataSource {
         configureCell(cell, indexPath)
 
         return cell
+    }
+}
+
+// MARK: - TableView Delegate
+extension TaskListViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        40
     }
 }

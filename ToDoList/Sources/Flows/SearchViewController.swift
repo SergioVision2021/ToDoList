@@ -9,20 +9,12 @@ import UIKit
 
 class SearchViewController: UIViewController {
 
+    // MARK: - Outlet
+    @IBOutlet weak var tableView: UITableView!
+
     // MARK: - Properties
     private var data: [String] = []
     private var filteredData: [String] = []
-
-    // MARK: - Visual Component
-    private lazy var tableView: UITableView = {
-        let table = UITableView(frame: CGRect.zero, style: .insetGrouped)
-        table.translatesAutoresizingMaskIntoConstraints = false
-        table.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        table.sectionFooterHeight = 0
-        let nib = UINib(nibName: "TaskCell", bundle: nil)
-        table.register(nib, forCellReuseIdentifier: InBoxViewController.Constants.taskCellIdentifier)
-        return table
-    }()
 
     private let searchController: UISearchController = {
         // Для отображения результата поиска использовать текущий VC (можно указать другой)
@@ -43,7 +35,7 @@ class SearchViewController: UIViewController {
     private func fetchData() {
         if TaskService().filterAllTasks().count != 0 {
             data = TaskService().filterAllTasks()
-            addTableView()
+            configureTableView()
         } else {
             print("Not data")
         }
@@ -55,17 +47,17 @@ class SearchViewController: UIViewController {
         searchController.searchResultsUpdater = self
         navigationItem.searchController = searchController
     }
-}
 
-// MARK: - TableView
-extension SearchViewController {
+    private func configureTableView() {
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
-    private func addTableView() {
+        tableView.sectionFooterHeight = 0
+        let nib = UINib(nibName: "TaskCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: InBoxViewController.Constants.taskCellIdentifier)
+
         tableView.delegate = self
         tableView.dataSource = self
-
-        tableView.frame = view.bounds
-        view.addSubview(tableView)
     }
 
     func configureCell(_ cell: TaskCell, _ at: IndexPath) {
@@ -104,15 +96,8 @@ extension SearchViewController: UISearchResultsUpdating {
         filteredData = data.filter({ (name: String) -> Bool in
             return name.lowercased().contains(searchText.lowercased())
         })
+
         tableView.reloadData()
-    }
-}
-
-// MARK: - TableView Delegate
-extension SearchViewController: UITableViewDelegate {
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 40
     }
 }
 
@@ -134,3 +119,12 @@ extension SearchViewController: UITableViewDataSource {
         return cell
     }
 }
+
+// MARK: - TableView Delegate
+extension SearchViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        40
+    }
+}
+

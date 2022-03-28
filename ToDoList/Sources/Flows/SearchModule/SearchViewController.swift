@@ -15,15 +15,7 @@ class SearchViewController: UIViewController {
     private var filteredData: [String] = []
 
     // MARK: - Visual Component
-    private lazy var tableView: UITableView = {
-        let table = UITableView(frame: CGRect.zero, style: .insetGrouped)
-        table.translatesAutoresizingMaskIntoConstraints = false
-        table.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        table.sectionFooterHeight = 0
-        let nib = UINib(nibName: "TaskCell", bundle: nil)
-        table.register(nib, forCellReuseIdentifier: Constants.taskCellIdentifier)
-        return table
-    }()
+    private lazy var tableView = makeTableView()
 
     private let searchController: UISearchController = {
         // Для отображения результата поиска использовать текущий VC (можно указать другой)
@@ -132,5 +124,20 @@ extension SearchViewController: UITableViewDataSource {
         configureCell(cell, indexPath)
 
         return cell
+    }
+}
+
+// MARK: - Factory
+extension SearchViewController {
+    func makeTableView() -> UITableView {
+        let table = UITableView(frame: CGRect.zero, style: .insetGrouped)
+        table.translatesAutoresizingMaskIntoConstraints = false
+        table.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        table.sectionFooterHeight = 0
+
+        let nib = UINib(nibName: "TaskCell", bundle: nil)
+        table.register(nib, forCellReuseIdentifier: Constants.taskCellIdentifier)
+
+        return table
     }
 }

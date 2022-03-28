@@ -1,64 +1,72 @@
-//
+//swiftlint:disable all
 //  TabBarController.swift
 //  ToDoList
 //
 //  Created by Sergey Vysotsky on 14.02.2022.
 //
-
 import UIKit
+
+extension TabBarController {
+    enum Image: String {
+        case calendar, flame, triangle, magnifyingglass
+    }
+
+    enum Title: String {
+        case InBox, ToDay, TaskList, Search
+    }
+}
 
 class TabBarController: UITabBarController {
 
-    private let inBoxVC = InBoxViewController()
-    private let toDayVC = ToDayViewController()
-    private let taskListVC = TaskListViewController()
-    private let searchVC = SearchViewController()
-
-    private var vc = [UIViewController]()
-
-    private let name = ["InBox", "ToDay", "TaskList", "Search"]
-    private let image = ["calendar", "flame", "list.dash", "magnifyingglass"]
-    private var vcTabBar: [UIViewController] = []
+    private lazy var fileService = FileService()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let fileService = FileService()
-        fileService.load()
-        inBoxVC.service = fileService
-        toDayVC.service = fileService
-        taskListVC.service = fileService
-        searchVC.service = fileService
+//        let todayModule = TodayModule().setService(fileService)
+//        let searchModule = TodayModule().setService(fileService)
 
-        vc.insert(inBoxVC, at: 0)
-        vc.insert(toDayVC, at: 1)
-        vc.insert(taskListVC, at: 2)
-        vc.insert(searchVC, at: 3)
-
-        setupTabBar()
+        viewControllers = [makeInboxView(), makeTodayView(), makeTaskListController(), makeSearchController()]
     }
 
-    private func setupTabBar() {
-
-        for idx in 0..<vc.count {
-            vc[idx].title = name[idx]
-
-            vcTabBar.append(createNavController(vc: vc[idx], itemName: name[idx], itemImage: UIImage(systemName: image[idx])!))
-        }
-
-        viewControllers = vcTabBar
-    }
-
-    private func createNavController(vc: UIViewController, itemName: String, itemImage: UIImage) -> UINavigationController {
-        let item = UITabBarItem(title: itemName,
-                                image: itemImage,
-                                tag: 0)
-
-        vc.view.backgroundColor = .white
-
+    private func makeNavController(vc: UIViewController, title: String, image: UIImage?, tag: Int) -> UINavigationController {
         let navController = UINavigationController(rootViewController: vc)
-        navController.tabBarItem = item
+        navController.tabBarItem = UITabBarItem(title: title, image: image, tag: tag)
         navController.navigationBar.prefersLargeTitles = true
         return navController
+    }
+}
+
+extension TabBarController {
+    func makeInboxView() -> UIViewController {
+        let vc = InBoxViewController()
+        vc.title = Title.InBox.rawValue
+        vc.service = fileService
+
+        return makeNavController(vc: vc, title: "InBox", image: UIImage(systemName: Image.calendar.rawValue), tag: 0)
+    }
+
+    func makeTodayView() -> UIViewController {
+        let vc = ToDayViewController()
+        vc.title = Title.ToDay.rawValue
+        vc.service = fileService
+
+        return makeNavController(vc: vc, title: "ToDay", image: UIImage(systemName: Image.flame.rawValue), tag: 1)
+    }
+
+    func makeTaskListController() -> UIViewController {
+        let vc = TaskListViewController()
+        vc.title = Title.TaskList.rawValue
+        vc.service = fileService
+
+        return makeNavController(vc: vc, title: "TaskList", image: UIImage(systemName: Image.triangle.rawValue), tag: 2)
+    }
+
+    func makeSearchController() -> UIViewController {
+        let vc = SearchViewController()
+        vc.title = Title.Search.rawValue
+        vc.service = fileService
+
+        return makeNavController(vc: vc, title: "Search", image: UIImage(systemName: Image.magnifyingglass.rawValue), tag: 3)
     }
 }

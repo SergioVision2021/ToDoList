@@ -12,18 +12,9 @@ class ToDayViewController: UIViewController {
     // MARK: - Properties
     var service: TaskServiceProtocol?
     private var data: [Group] = []
-    var flag: Bool = false
 
     // MARK: - Visual Component
-    private lazy var tableView: UITableView = {
-        let table = UITableView(frame: CGRect.zero, style: .insetGrouped)
-        table.translatesAutoresizingMaskIntoConstraints = false
-        table.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        table.sectionFooterHeight = 0
-        let nib = UINib(nibName: "TaskCell", bundle: nil)
-        table.register(nib, forCellReuseIdentifier: Constants.taskCellIdentifier)
-        return table
-    }()
+    private lazy var tableView = makeTableView()
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -88,7 +79,7 @@ extension ToDayViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.taskCellIdentifier, for: indexPath) as? TaskCell else { fatalError("Unexpected Index Path") }
-        
+
         configureCell(cell, indexPath)
 
         return cell
@@ -108,5 +99,20 @@ extension ToDayViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return configureSection(section)
+    }
+}
+
+// MARK: - Factory
+extension ToDayViewController {
+    func makeTableView() -> UITableView {
+        let table = UITableView(frame: CGRect.zero, style: .insetGrouped)
+        table.translatesAutoresizingMaskIntoConstraints = false
+        table.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        table.sectionFooterHeight = 0
+
+        let nib = UINib(nibName: "TaskCell", bundle: nil)
+        table.register(nib, forCellReuseIdentifier: Constants.taskCellIdentifier)
+
+        return table
     }
 }

@@ -1,4 +1,4 @@
-// swiftlint:disable all
+//swiftlint:disable all
 //  TaskService.swift
 //  ToDoList
 //
@@ -10,7 +10,7 @@ import Foundation
 protocol TaskServiceProtocol {
     func add(_ task: [Group])
     func edit(_ task: Task, _ status: Bool)
-    
+
     func filterPeriod() -> [Group]?
     func filterToday(_ namePeriod: String) -> [Group]?
     func filterAllTasks() -> [String]
@@ -31,31 +31,34 @@ class TaskService: TaskServiceProtocol {
         var sections = [String]()
         var tasks = [(Int, Task)]()
 
-        for sourceIndex in 0..<source.count {
-            if let countL = source[sourceIndex].list?.count {
-                for listIndex in 0..<countL {
-                    // Получить период до планируемой даты
-                    let intervale = ConvertDate().intervaleString(end: source[sourceIndex].list?[listIndex].taskScheduledDate)
-                    if !sections.contains(intervale) {
-                        // Массив всех периодов
-                        sections.append(intervale)
-                    }
-                    // Массив всех задач Id = section, Task = value
-                    if  let task = source[sourceIndex].list?[listIndex],
-                        let id = sections.firstIndex( where: { $0 == intervale } ) {
-                            tasks.append((id, task))
-                    }
+        source.forEach { group in
+            group.list?.forEach { task in
+                let intervale = ConvertDate().intervaleString(end: task.taskScheduledDate)
+
+                //Проверка на наличии дубликата
+                if !sections.contains(intervale) {
+                    // Массив всех периодов
+                    sections.append(intervale)
                 }
+
+                // Массив всех задач Id = section, Task = value
+                guard let id = sections.firstIndex( where: { $0 == intervale } ) else { return }
+                tasks.append((id, task))
             }
         }
 
-        for secIdx in 0..<sections.count {                 // Section
+        for (indexS, _) in sections.enumerated() {          // Section
             var sectionTasks = [Task]()
-            for taskIdx in 0..<tasks.count where secIdx == tasks[taskIdx].0 {                // Task
-                sectionTasks.append(tasks[taskIdx].1)
+
+            let filter = tasks.filter { $0.0 == indexS }
+
+            filter.forEach { task in
+                sectionTasks.append(task.1)
             }
-            filtredData.append(Group.init(id: secIdx, name: sections[secIdx], list: sectionTasks))
+
+            filtredData.append(Group.init(id: indexS, name: sections[indexS], list: sectionTasks))
         }
+
         return filtredData
     }
 
@@ -66,25 +69,24 @@ class TaskService: TaskServiceProtocol {
         guard !filtredData.isEmpty else { return nil }
 
         // Из всех секций (периодов) получить секцию ToDay
-        let sectionToDay = filtredData.filter { $0.name == namePeriod }
+        let groupPeriod = filtredData.filter { $0.name == namePeriod }
 
-        guard !sectionToDay.isEmpty else { return nil }
+        guard !groupPeriod.isEmpty else { return nil }
 
-        guard let tasks = sectionToDay.first else { return nil }
-        
-        // Создать 2е секции по статусу тасков из секции ToDay
+        guard let toDay = groupPeriod.first else { return nil }
+
+        // Создать 2 группы по статусу тасков из ToDay
         var statusToDay = [Group]()
 
-        if let taskCount = tasks.list?.count {
+        if let list = toDay.list {
             var taskCompleted = [Task]()
             var taskIncomplete = [Task]()
-            for taskIdx in 0..<taskCount {
-                if let task = tasks.list?[taskIdx] {
-                    switch task.status {
-                    case true: taskCompleted.append(task)
-                    case false: taskIncomplete.append(task)
-                    default: break
-                    }
+
+            for task in list {
+                switch task.status {
+                case true: taskCompleted.append(task)
+                case false: taskIncomplete.append(task)
+                default: break
                 }
             }
             statusToDay.append(Group.init(id: 0, name: "Completed", list: taskCompleted))
@@ -139,7 +141,7 @@ class TaskService: TaskServiceProtocol {
         source.insert(Group(id: 0,
                             name: "InBox",
                             dateCreated: Date(),
-                            list: nil),
+                            list: [Task(id: 0, name: "Task1", taskDeadline: nil, taskScheduledDate: Date(), notes: "aaaaa", status: false)]),
                       at: 0)
     }
 }

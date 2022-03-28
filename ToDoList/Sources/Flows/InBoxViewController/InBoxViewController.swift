@@ -14,16 +14,9 @@ class InBoxViewController: UIViewController {
     private var data: [Group] = []
 
     // MARK: - Visual Component
-    private lazy var tableView: UITableView = {
-        let table = UITableView(frame: CGRect.zero, style: .insetGrouped)
-        table.translatesAutoresizingMaskIntoConstraints = false
-        table.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        table.sectionFooterHeight = 0
-        let nib = UINib(nibName: "TaskCell", bundle: nil)
-        table.register(nib, forCellReuseIdentifier: Constants.taskCellIdentifier)
-        return table
-    }()
+    private lazy var tableView = makeTableView()
 
+    // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,11 +26,12 @@ class InBoxViewController: UIViewController {
     }
 
     private func fetchData() {
-        if let fetchData = service?.filterPeriod() {
-            data = fetchData
-        } else {
+        guard let fetchData = service?.filterPeriod() else {
             print("Not data")
+            return
         }
+
+        data = fetchData
     }
 
     private func add(_ task: [Group]) {
@@ -178,5 +172,20 @@ extension InBoxViewController: AddTaskDelegate {
 extension InBoxViewController: DetailTaskDelegate {
     func detailTaskDidTapDone(_ sender: UIViewController, _ task: Task) {
         edit(task, false)
+    }
+}
+
+// MARK: - Factory
+extension InBoxViewController {
+    func makeTableView() -> UITableView {
+        let table = UITableView(frame: CGRect.zero, style: .insetGrouped)
+        table.translatesAutoresizingMaskIntoConstraints = false
+        table.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        table.sectionFooterHeight = 0
+
+        let nib = UINib(nibName: "TaskCell", bundle: nil)
+        table.register(nib, forCellReuseIdentifier: Constants.taskCellIdentifier)
+
+        return table
     }
 }

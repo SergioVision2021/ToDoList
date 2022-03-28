@@ -21,7 +21,6 @@ class TaskService: TaskServiceProtocol {
 
     var source = [Group]()
     var filtredData = [Group]()
-    var empty = false
 
     // Для InBoxViewController
     func filterPeriod() -> [Group]? {
@@ -108,16 +107,11 @@ class TaskService: TaskServiceProtocol {
     // AddTask - добавить новую задачу (по умолчанию 0 групп)
     func add(_ group: [Group]) {
         guard let task = group[0].list else {
-            return print("Task data not")
+            return print("Task not data")
         }
 
-        guard empty else {
-            source[0].list?.append(contentsOf: task)
-            return
-        }
-        
-        source = group
-        empty = false
+        //На будущее - проверить на пустоту source!
+        source[0].list?.append(contentsOf: task)
     }
 
     // DetailTask - завершить задачу

@@ -10,29 +10,20 @@ import Foundation
 
 class FileService: TaskService {
 
-    //var storage = StorageHelper<Group>(folderName: "TodoList")
-
-    var storage = StorageHelper(folderName: "ToDoList", fileName: "Data")
+    var storage = StorageHelper<Group>(folderName: "ToDoList", fileName: "Data")
 
     override init() {
         super.init()
 
         guard let data = storage.getData() else { return }
-
-        // Нет данных
         guard !data.isEmpty else {
-            empty = true
             print("Data empty")
             saveDefaultData()
+            print("Save default data")
             return
         }
 
-        // Преобразовать данные в JSON
-        guard let group = storage.decoderJSON(data) else {
-            print("json decoder error")
-            return
-        }
-
+        guard let group: [Group] = storage.decoderJSON(data) else { return }
         source = group
     }
 

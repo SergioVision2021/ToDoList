@@ -12,7 +12,7 @@ enum Directory {
     case cached
 }
 
-class StorageHelper {
+class StorageHelper<T> {
 //    func getJsonData(fromPath: String)
 //    func saveJsonData(_ data: Data, byPath: String)
 //    func getJsonData(fromDirectory: Directory, fileName: String)
@@ -100,7 +100,7 @@ class StorageHelper {
 extension StorageHelper {
 
     // [Group] -> JSON -> сохранить в файл
-    func saveJsonToFile(_ source: [Group]) {
+    func saveJsonToFile<T: Encodable>(_ source: [T]) {
         guard let data = encoderJSON(source) else {
             return print("Json encoder error")
         }
@@ -108,19 +108,19 @@ extension StorageHelper {
         saveToFile(data)
     }
 
-    func decoderJSON(_ json: Data) -> [Group]? {
+    func decoderJSON<T: Decodable>(_ data: Data) -> [T]? {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
-
-        guard let group = try? decoder.decode([Group].self, from: json) else {
-            print("Decoder error")
+      
+        do {
+            return try decoder.decode([T].self, from: data)
+        } catch let error {
+            print(error.localizedDescription)
             return nil
         }
-
-        return group
     }
 
-    func encoderJSON(_ task: [Group]) -> Data? {
+    func encoderJSON<T: Encodable>(_ task: [T]) -> Data? {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
 
@@ -129,7 +129,7 @@ extension StorageHelper {
             return nil
         }
 
-        print(String(data: encodedData, encoding: .utf8))
+        print( String(data: encodedData, encoding: .utf8) )
 
         return encodedData
     }

@@ -22,7 +22,7 @@ class AddTaskViewController: UIViewController {
         super.viewDidLoad()
 
         addBarButtonItem()
-        nameTaskTextField.text = "New task \(Int.random(in: 1..<100))"
+        nameTaskTextField.text = "New task \(Int.random(in: 1..<1000))"
     }
 
     // MARK: - IBAction

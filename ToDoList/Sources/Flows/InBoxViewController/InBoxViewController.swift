@@ -7,29 +7,16 @@
 
 import UIKit
 
-extension InBoxViewController {
-    enum Constants {
-        static let taskCellIdentifier = "IdCell"
-    }
-}
-
 class InBoxViewController: UIViewController {
 
     // MARK: - Properties
-    private var taskService = TaskService()     //
+    var service: TaskServiceProtocol?
     private var data: [Group] = []
 
     // MARK: - Visual Component
-    private lazy var tableView: UITableView = {
-        let table = UITableView(frame: CGRect.zero, style: .insetGrouped)
-        table.translatesAutoresizingMaskIntoConstraints = false
-        table.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        table.sectionFooterHeight = 0
-        let nib = UINib(nibName: "TaskCell", bundle: nil)
-        table.register(nib, forCellReuseIdentifier: Constants.taskCellIdentifier)
-        return table
-    }()
+    private lazy var tableView = makeTableView()
 
+    // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -39,21 +26,22 @@ class InBoxViewController: UIViewController {
     }
 
     private func fetchData() {
-        if let dataService = taskService.filterPeriod() {
-            data = dataService
-        } else {
+        guard let fetchData = service?.filterPeriod() else {
             print("Not data")
+            return
         }
+
+        data = fetchData
     }
 
-    private func appendNewTask(_ newTask: [Group]) {
-        taskService.appendTask(newTask)
+    private func add(_ task: Task) {
+        service?.add(task)
         fetchData()
         tableView.reloadData()
     }
 
-    private func editSelectTask(_ editTask: Task) {
-        taskService.editTask(editTask)
+    private func edit(_ task: Task, _ status: Bool) {
+        service?.edit(task, status)
         fetchData()
         tableView.reloadData()
     }
@@ -115,6 +103,18 @@ extension InBoxViewController: UITableViewDataSource {
 
         return cell
     }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            tableView.beginUpdates()
+
+            guard let selectTask = data[indexPath.section].list?[indexPath.row] else { return }
+            edit(selectTask, true)
+
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.endUpdates()
+        }
+    }
 }
 
 // MARK: - TableView Delegate
@@ -140,6 +140,10 @@ extension InBoxViewController: UITableViewDelegate {
 
         configureViewController(vc, indexPath)
     }
+
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
 }
 
 // MARK: - BarButtonItem
@@ -161,12 +165,27 @@ extension InBoxViewController {
 
 // MARK: - Delegates
 extension InBoxViewController: AddTaskDelegate {
-    func addTaskDidTapSave(_ sender: UIViewController, _ newTask: [Group]) {
-        appendNewTask(newTask)
+    func addTaskDidTapSave(_ sender: UIViewController, _ task: Task) {
+        add(task)
     }
 }
 extension InBoxViewController: DetailTaskDelegate {
-    func detailTaskDidTapDone(_ sender: UIViewController, _ editTask: Task) {
-        editSelectTask(editTask)
+    func detailTaskDidTapDone(_ sender: UIViewController, _ task: Task) {
+        edit(task, false)
+    }
+}
+
+// MARK: - Factory
+extension InBoxViewController {
+    func makeTableView() -> UITableView {
+        let table = UITableView(frame: CGRect.zero, style: .insetGrouped)
+        table.translatesAutoresizingMaskIntoConstraints = false
+        table.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        table.sectionFooterHeight = 0
+
+        let nib = UINib(nibName: "TaskCell", bundle: nil)
+        table.register(nib, forCellReuseIdentifier: Constants.taskCellIdentifier)
+
+        return table
     }
 }

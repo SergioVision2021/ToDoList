@@ -59,7 +59,6 @@
                                             </label>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="-" textAlignment="natural" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Qu-TE-GP7">
                                                 <rect key="frame" x="0.0" y="169.5" width="394" height="33"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <color key="textColor" systemColor="labelColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -80,6 +79,9 @@
                                                         </constraints>
                                                     </datePicker>
                                                 </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="5gS-JL-20h" secondAttribute="trailing" id="s5a-Zu-GM4"/>
+                                                </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="23" translatesAutoresizingMaskIntoConstraints="NO" id="z3n-jg-HdY">
                                                 <rect key="frame" x="0.0" y="248.5" width="394" height="30"/>

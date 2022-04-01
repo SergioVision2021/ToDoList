@@ -10,19 +10,12 @@ import UIKit
 class SearchViewController: UIViewController {
 
     // MARK: - Properties
+    var service: TaskServiceProtocol?
     private var data: [String] = []
     private var filteredData: [String] = []
 
     // MARK: - Visual Component
-    private lazy var tableView: UITableView = {
-        let table = UITableView(frame: CGRect.zero, style: .insetGrouped)
-        table.translatesAutoresizingMaskIntoConstraints = false
-        table.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        table.sectionFooterHeight = 0
-        let nib = UINib(nibName: "TaskCell", bundle: nil)
-        table.register(nib, forCellReuseIdentifier: InBoxViewController.Constants.taskCellIdentifier)
-        return table
-    }()
+    private lazy var tableView = makeTableView()
 
     private let searchController: UISearchController = {
         // Для отображения результата поиска использовать текущий VC (можно указать другой)
@@ -33,20 +26,19 @@ class SearchViewController: UIViewController {
         return search
     }()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        createSearchController()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         fetchData()
+        tableView.reloadData()
     }
 
     private func fetchData() {
-        if TaskService().filterAllTasks().count != 0 {
-            data = TaskService().filterAllTasks()
-            addTableView()
-        } else {
-            print("Not data")
-        }
+        guard let empty = service?.filterAllTasks().isEmpty,
+              let filterData = service?.filterAllTasks() else { return print("Not data")}
+
+        data = filterData
+        createSearchController()
+        addTableView()
     }
 
     private func createSearchController() {
@@ -127,10 +119,25 @@ extension SearchViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: InBoxViewController.Constants.taskCellIdentifier, for: indexPath) as? TaskCell  else { fatalError("Unexpected Index Path") }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.taskCellIdentifier, for: indexPath) as? TaskCell  else { fatalError("Unexpected Index Path") }
 
         configureCell(cell, indexPath)
 
         return cell
+    }
+}
+
+// MARK: - Factory
+extension SearchViewController {
+    func makeTableView() -> UITableView {
+        let table = UITableView(frame: CGRect.zero, style: .insetGrouped)
+        table.translatesAutoresizingMaskIntoConstraints = false
+        table.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        table.sectionFooterHeight = 0
+
+        let nib = UINib(nibName: "TaskCell", bundle: nil)
+        table.register(nib, forCellReuseIdentifier: Constants.taskCellIdentifier)
+
+        return table
     }
 }

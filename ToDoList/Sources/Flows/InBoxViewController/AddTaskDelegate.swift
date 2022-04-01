@@ -8,5 +8,5 @@
 import UIKit
 
 protocol AddTaskDelegate {
-    func addTaskDidTapSave(_ sender: UIViewController, _ newTask: [Group])
+    func addTaskDidTapSave(_ sender: UIViewController, _ task: Task)
 }

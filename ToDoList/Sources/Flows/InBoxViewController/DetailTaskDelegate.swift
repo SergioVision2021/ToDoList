@@ -8,5 +8,5 @@
 import UIKit
 
 protocol DetailTaskDelegate {
-    func detailTaskDidTapDone(_ sender: UIViewController, _ editTask: Task)
+    func detailTaskDidTapDone(_ sender: UIViewController, _ task: Task)
 }

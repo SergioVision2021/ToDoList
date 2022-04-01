@@ -15,13 +15,13 @@ class AddTaskViewController: UIViewController {
     @IBOutlet weak var scheduleDateButton: UIButton!
 
     // MARK: - Properties
-    private var newTask: [Group] = []
-    internal var delegate: AddTaskDelegate?
+    var delegate: AddTaskDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         addBarButtonItem()
+        nameTaskTextField.text = "New task \(Int.random(in: 1..<1000))"
     }
 
     // MARK: - IBAction
@@ -47,22 +47,15 @@ private extension AddTaskViewController {
     @objc
     func addActionButton(sender: UIBarButtonItem) {
         if let text = scheduleDateButton.titleLabel?.text {
-            let task = [Task(id: 0,
+            let task = Task(id: 0,
                             name: nameTaskTextField.text,
                             taskDeadline: nil,
                             taskScheduledDate: ConvertDate().convert(from: text),
                             notes: notesTextView.text,
-                            status: false)]
-
-            let group = Group(id: 0,
-                              name: "InBox",
-                              dateCreated: Date(),
-                              list: task)
-
-            newTask.append(group)
+                            status: false)
 
             // Возврат новой задачи
-            delegate?.addTaskDidTapSave(self, newTask)
+            delegate?.addTaskDidTapSave(self, task)
             navigationController?.popViewController(animated: true)
         }
     }
@@ -74,3 +67,30 @@ extension AddTaskViewController: SelectDateDelegate {
         scheduleDateButton.setTitle(date, for: .normal)
     }
 }
+
+//extension AddTaskViewController {
+//    func addAlert() {
+//        let alert = UIAlertController(title: "Add new group",
+//                                      message: "Input name new group",
+//                                      preferredStyle: .alert)
+//
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//
+//        let continueAction = UIAlertAction(title: "Continue", style: .default, handler: { _ in
+//            guard let name = alert.textFields?[0].text, !name.isEmpty else {
+//                return
+//            }
+//
+//            self.nameGroup = name
+//        })
+//
+//        alert.addAction(cancelAction)
+//        alert.addAction(continueAction)
+//
+//        alert.addTextField { (textField) in
+//            textField.placeholder = "Enter name group"
+//        }
+//
+//        present(alert, animated: true, completion: nil)
+//    }
+//}

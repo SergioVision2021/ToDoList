@@ -10,28 +10,20 @@ import UIKit
 class ToDayViewController: UIViewController {
 
     // MARK: - Properties
-    private var taskService = TaskService()
+    var service: TaskServiceProtocol?
     private var data: [Group] = []
 
     // MARK: - Visual Component
-    private lazy var tableView: UITableView = {
-        let table = UITableView(frame: CGRect.zero, style: .insetGrouped)
-        table.translatesAutoresizingMaskIntoConstraints = false
-        table.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        table.sectionFooterHeight = 0
-        let nib = UINib(nibName: "TaskCell", bundle: nil)
-        table.register(nib, forCellReuseIdentifier: InBoxViewController.Constants.taskCellIdentifier)
-        return table
-    }()
+    private lazy var tableView = makeTableView()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         fetchData()
+        tableView.reloadData()
     }
 
     private func fetchData() {
-        if let fetchData = taskService.filterToday(namePeriod: "ToDay") {
+        if let fetchData = service?.filterToday("ToDay") {
             data = fetchData
             addTableView()
         } else {
@@ -48,7 +40,7 @@ class ToDayViewController: UIViewController {
 
 // MARK: - TableView
 extension ToDayViewController {
-    
+
     func addTableView() {
         tableView.delegate = self
         tableView.dataSource = self
@@ -56,7 +48,7 @@ extension ToDayViewController {
         tableView.frame = view.bounds
         view.addSubview(tableView)
     }
-    
+
     func configureCell(_ cell: TaskCell, _ at: IndexPath) {
         let task = data[at.section].list?[at.row]
         if let name = task?.name, let status = task?.status {
@@ -86,10 +78,10 @@ extension ToDayViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: InBoxViewController.Constants.taskCellIdentifier, for: indexPath) as? TaskCell else { fatalError("Unexpected Index Path") }
-        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.taskCellIdentifier, for: indexPath) as? TaskCell else { fatalError("Unexpected Index Path") }
+
         configureCell(cell, indexPath)
-        
+
         return cell
     }
 }
@@ -107,5 +99,20 @@ extension ToDayViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return configureSection(section)
+    }
+}
+
+// MARK: - Factory
+extension ToDayViewController {
+    func makeTableView() -> UITableView {
+        let table = UITableView(frame: CGRect.zero, style: .insetGrouped)
+        table.translatesAutoresizingMaskIntoConstraints = false
+        table.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        table.sectionFooterHeight = 0
+
+        let nib = UINib(nibName: "TaskCell", bundle: nil)
+        table.register(nib, forCellReuseIdentifier: Constants.taskCellIdentifier)
+
+        return table
     }
 }

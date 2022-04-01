@@ -1,3 +1,4 @@
+//swiftlint:disable all
 //  MemoryService.swift
 //  ToDoList
 //
@@ -15,25 +16,23 @@ class FileService: TaskService {
     override init() {
         super.init()
 
-        guard let data = storage.getData() else { return }
-        guard !data.isEmpty else {
-            print("Data empty")
+        guard let group : [Group] = storage.getData() else {
+            print("Group empty")
             saveDefaultData()
             print("Save default data")
             return
         }
 
-        guard let group: [Group] = storage.decoderJSON(data) else { return }
         source = group
     }
 
-    func saveDefaultData() {
+    private func saveDefaultData() {
         super.defaultGroup()
         storage.saveJsonToFile(source)
     }
 
-    override func add(_ group: [Group]) {
-        super.add(group)
+    override func add(_ task: Task) {
+        super.add(task)
         storage.saveJsonToFile(source)
     }
 

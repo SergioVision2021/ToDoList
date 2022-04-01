@@ -8,12 +8,10 @@ import UIKit
 
 extension TabBarController {
     enum Image: String {
-        case calendar, flame, triangle, magnifyingglass
-    }
+        case calendar, flame, triangle, magnifyingglass }
 
     enum Title: String {
-        case InBox, ToDay, TaskList, Search
-    }
+        case InBox, ToDay, TaskList, Search }
 }
 
 class TabBarController: UITabBarController {
@@ -28,22 +26,22 @@ class TabBarController: UITabBarController {
 
         viewControllers = [makeInboxView(), makeTodayView(), makeTaskListController(), makeSearchController()]
     }
+}
 
-    private func makeNavController(vc: UIViewController, title: String, image: UIImage?, tag: Int) -> UINavigationController {
+private extension TabBarController {
+    func makeNavController(vc: UIViewController, title: String, image: UIImage?, tag: Int) -> UINavigationController {
         let navController = UINavigationController(rootViewController: vc)
         navController.tabBarItem = UITabBarItem(title: title, image: image, tag: tag)
         navController.navigationBar.prefersLargeTitles = true
         return navController
     }
-}
-
-extension TabBarController {
+    
     func makeInboxView() -> UIViewController {
         let vc = InBoxViewController()
         vc.title = Title.InBox.rawValue
         vc.service = fileService
 
-        return makeNavController(vc: vc, title: "InBox", image: UIImage(systemName: Image.calendar.rawValue), tag: 0)
+        return makeNavController(vc: vc, title: Title.InBox.rawValue, image: UIImage(systemName: Image.calendar.rawValue), tag: 0)
     }
 
     func makeTodayView() -> UIViewController {
@@ -51,7 +49,7 @@ extension TabBarController {
         vc.title = Title.ToDay.rawValue
         vc.service = fileService
 
-        return makeNavController(vc: vc, title: "ToDay", image: UIImage(systemName: Image.flame.rawValue), tag: 1)
+        return makeNavController(vc: vc, title: Title.ToDay.rawValue, image: UIImage(systemName: Image.flame.rawValue), tag: 1)
     }
 
     func makeTaskListController() -> UIViewController {
@@ -59,7 +57,7 @@ extension TabBarController {
         vc.title = Title.TaskList.rawValue
         vc.service = fileService
 
-        return makeNavController(vc: vc, title: "TaskList", image: UIImage(systemName: Image.triangle.rawValue), tag: 2)
+        return makeNavController(vc: vc, title: Title.TaskList.rawValue, image: UIImage(systemName: Image.triangle.rawValue), tag: 2)
     }
 
     func makeSearchController() -> UIViewController {
@@ -67,6 +65,6 @@ extension TabBarController {
         vc.title = Title.Search.rawValue
         vc.service = fileService
 
-        return makeNavController(vc: vc, title: "Search", image: UIImage(systemName: Image.magnifyingglass.rawValue), tag: 3)
+        return makeNavController(vc: vc, title: Title.Search.rawValue, image: UIImage(systemName: Image.magnifyingglass.rawValue), tag: 3)
     }
 }

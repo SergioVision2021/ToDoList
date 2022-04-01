@@ -34,7 +34,7 @@ class InBoxViewController: UIViewController {
         data = fetchData
     }
 
-    private func add(_ task: [Group]) {
+    private func add(_ task: Task) {
         service?.add(task)
         fetchData()
         tableView.reloadData()
@@ -165,7 +165,7 @@ extension InBoxViewController {
 
 // MARK: - Delegates
 extension InBoxViewController: AddTaskDelegate {
-    func addTaskDidTapSave(_ sender: UIViewController, _ task: [Group]) {
+    func addTaskDidTapSave(_ sender: UIViewController, _ task: Task) {
         add(task)
     }
 }

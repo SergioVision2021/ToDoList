@@ -8,7 +8,7 @@
 import Foundation
 
 protocol TaskServiceProtocol {
-    func add(_ task: [Group])
+    func add(_ task: Task)
     func edit(_ task: Task, _ status: Bool)
 
     func filterPeriod() -> [Group]?
@@ -101,34 +101,26 @@ class TaskService: TaskServiceProtocol {
 
     // Для TaskListViewController
     func filterGroup() -> [String] {
-        return source.compactMap { $0.name }
+        source.compactMap { $0.name }
     }
 
     // AddTask - добавить новую задачу (по умолчанию 0 групп)
-    func add(_ group: [Group]) {
-        guard let task = group[0].list else {
-            return print("Task not data")
-        }
-
-        //На будущее - проверить на пустоту source!
-        source[0].list?.append(contentsOf: task)
+    func add(_ task: Task) {
+        guard let id = task.id else { return }
+        source[id].addTask(task)
     }
 
     // DetailTask - завершить задачу
     func edit(_ task: Task, _ status: Bool) {
-        guard let idGroup = task.id else { return }
-        guard let numberTask = source[idGroup].list?.firstIndex(where: { $0.name == task.name }) else { return }
-        
-        switch status {
-        // Edit
-        case false:
-            source[idGroup].list?[numberTask].taskDeadline = Date()
-            source[idGroup].list?[numberTask].status = true
-        // Delete
-        case true:
-            source[idGroup].list?.remove(at: Int(numberTask))
-        default: break
+        guard let id = task.id, let taskName = task.name else { return }
+
+        guard !status else {
+            source[id].removeTask(byName: taskName)
+            return
         }
+
+        guard let idTask = source[id].getTask(byName: taskName) else { return }
+        source[id].list?[idTask].setDeadline(Date())
     }
 
     func defaultGroup() {

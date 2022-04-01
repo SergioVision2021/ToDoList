@@ -15,3 +15,10 @@ struct Task: Codable {
     var notes: String?
     var status: Bool?
 }
+
+extension Task {
+    mutating func setDeadline(_ deadline: Date) {
+        taskDeadline = deadline
+        status = true
+    }
+}

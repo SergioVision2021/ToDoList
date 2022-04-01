@@ -15,7 +15,6 @@ class AddTaskViewController: UIViewController {
     @IBOutlet weak var scheduleDateButton: UIButton!
 
     // MARK: - Properties
-    private var newTask: [Group] = []
     var delegate: AddTaskDelegate?
 
     override func viewDidLoad() {
@@ -48,22 +47,15 @@ private extension AddTaskViewController {
     @objc
     func addActionButton(sender: UIBarButtonItem) {
         if let text = scheduleDateButton.titleLabel?.text {
-            let task = [Task(id: 0,
+            let task = Task(id: 0,
                             name: nameTaskTextField.text,
                             taskDeadline: nil,
                             taskScheduledDate: ConvertDate().convert(from: text),
                             notes: notesTextView.text,
-                            status: false)]
-
-            let group = Group(id: 0,
-                              name: "InBox",
-                              dateCreated: Date(),
-                              list: task)
-
-            newTask.append(group)
+                            status: false)
 
             // Возврат новой задачи
-            delegate?.addTaskDidTapSave(self, newTask)
+            delegate?.addTaskDidTapSave(self, task)
             navigationController?.popViewController(animated: true)
         }
     }

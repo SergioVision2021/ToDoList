@@ -1,4 +1,3 @@
-//swiftlint:disable all
 //  FileService.swift
 //  ToDoList
 //
@@ -17,37 +16,38 @@ class StorageHelper<T> {
 //    func saveJsonData(_ data: Data, byPath: String)
 //    func getJsonData(fromDirectory: Directory, fileName: String)
 //    func saveJsonData(_ data: Data, byPath: String)
-    
+
 //    func getJsonData(fileName: String) -> Data? {}
 //    func saveJsonData(_ data: Codable, fileName: String) {}
 
-    var folderName: String
-    var fileName: String
-    var fileURL: URL?
+    private var folderName: String
+    private var fileName: String
+    private var fileURL: URL?
 
     init(folderName: String, fileName: String) {
         self.folderName = folderName
         self.fileName = fileName
     }
 
-    func getData() -> Data? {
+    func getData<T: Codable>() -> [T]? {
+
         fileURL = existFolderFile()
 
         guard let url = fileURL else { return nil }
-        
+
         // Получить данные из файла
         guard let data = try? Data(contentsOf: url) else {
             print("Could not convert to data")
             return nil
         }
 
-        return data
+        return getModel(data)
     }
 
-    func saveToFile(_ data: Data) {
+    private func saveToFile(_ data: Data) {
 
         guard let url = fileURL else { return }
-        
+
         do {
             try data.write(to: url)
         } catch {
@@ -55,13 +55,13 @@ class StorageHelper<T> {
         }
     }
 
-    func existFolderFile() -> URL {
+    private func existFolderFile() -> URL {
         let manager = FileManager.default
 
         let paths = manager.urls(
             for: .documentDirectory,
             in: .userDomainMask)
-        
+
         let documentsDirectory = paths[0]
         print(documentsDirectory.path)
 
@@ -70,11 +70,11 @@ class StorageHelper<T> {
 
         manager.fileExists(atPath: newFolderUrl.path) ? print("Folder \(folderName) found") : createFolder(fm: manager, url: newFolderUrl)
         manager.fileExists(atPath: fileUrl.path) ? print("File \(fileName) found") : createFile(fm: manager, url: fileUrl)
-        
+
         return fileUrl
     }
 
-    func createFolder(fm: FileManager, url: URL) {
+    private func createFolder(fm: FileManager, url: URL) {
         do {
             try fm.createDirectory(
                 at: url,
@@ -86,7 +86,7 @@ class StorageHelper<T> {
         }
     }
 
-    func createFile(fm: FileManager, url: URL) {
+    private func createFile(fm: FileManager, url: URL) {
         fm.createFile(
             atPath: url.path,
             contents: nil,
@@ -108,10 +108,19 @@ extension StorageHelper {
         saveToFile(data)
     }
 
-    func decoderJSON<T: Decodable>(_ data: Data) -> [T]? {
+    private func getModel<T: Decodable>(_ data: Data) -> [T]? {
+        guard !data.isEmpty else {
+            print("Data empty")
+            return nil
+        }
+
+        return decoderJSON(data)
+    }
+
+    private func decoderJSON<T: Decodable>(_ data: Data) -> [T]? {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
-      
+
         do {
             return try decoder.decode([T].self, from: data)
         } catch let error {
@@ -120,7 +129,7 @@ extension StorageHelper {
         }
     }
 
-    func encoderJSON<T: Encodable>(_ task: [T]) -> Data? {
+    private func encoderJSON<T: Encodable>(_ task: [T]) -> Data? {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
 

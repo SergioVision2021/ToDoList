@@ -11,7 +11,7 @@ class MemoryService: TaskService {
 
     // Загрузить готовый объект
     func load() {
-        super.source.append(Group.init(
+        source.append(Group.init(
             id: 0, name: "Inbox", list: [Task.init(id: 0,
                                                    name: "task 0",
                                                    taskDeadline: ConvertDate().convert(from: "2022-02-15"),
@@ -28,13 +28,13 @@ class MemoryService: TaskService {
                                                   taskDeadline: ConvertDate().convert(from: "2022-02-14"),
                                                   taskScheduledDate: ConvertDate().convert(from: "2022-02-14"),
                                                   notes: "nnnnnn", status: true)]))
-        super.source.append(Group.init(
+        source.append(Group.init(
             id: 1, name: "Hobby", list: [Task.init(id: 1,
                                                    name: "Собрать кухню",
                                                    taskScheduledDate: ConvertDate().convert(from: "2022-02-20"),
                                                    notes: "Нет времени",
                                                    status: false)]))
-        super.source.append(Group.init(
+        source.append(Group.init(
             id: 2, name: "Work", list: [Task.init(id: 2,
                                                   name: "Написать тестовое задание",
                                                   taskScheduledDate: Date(),
@@ -66,7 +66,7 @@ class MemoryService: TaskService {
                                                    taskScheduledDate: ConvertDate().convert(from: "2022-02-19"),
                                                    notes: "Лежат в папке",
                                                    status: false)]))
-        super.source.append(Group.init(
+        source.append(Group.init(
             id: 3, name: "Films", list: [Task.init(id: 3,
                                                    name: "Посмотреть Матрицу 4",
                                                    taskDeadline: ConvertDate().convert(from: "2022-02-15"),
@@ -78,7 +78,7 @@ class MemoryService: TaskService {
                                                    taskScheduledDate: ConvertDate().convert(from: "2022-02-18"),
                                                    notes: "Советовали",
                                                    status: false)]))
-        super.source.append(Group.init(
+        source.append(Group.init(
             id: 4, name: "Building", list: [Task.init(id: 4,
                                                       name: "task 0",
                                                       taskScheduledDate: ConvertDate().convert(from: "2022-02-17"),
@@ -90,29 +90,5 @@ class MemoryService: TaskService {
                                                       notes: "nnnnnn",
                                                       status: false)]))
 
-    }
-
-    override func add(_ newTask: [Group]) {
-        super.add(newTask)
-    }
-
-    override func edit(_ task: Task, _ status: Bool) {
-        super.edit(task, status)
-    }
-
-    override func filterPeriod() -> [Group]? {
-        return super.filterPeriod()
-    }
-
-    override func filterToday(_ namePeriod: String) -> [Group]? {
-        return super.filterToday(namePeriod)
-    }
-
-    override func filterAllTasks() -> [String] {
-        return super.filterAllTasks()
-    }
-
-    override func filterGroup() -> [String] {
-        return super.filterGroup()
     }
 }

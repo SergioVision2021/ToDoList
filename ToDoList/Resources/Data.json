@@ -2,7 +2,8 @@
     {
         "id": 0,
         "name": "Inbox",
-        "list": [
+        "dateCreated": "2022-04-05T17:58:03Z",
+        "tasks": [
                     {
                         "id": 0,
                         "name": "task 0",
@@ -23,7 +24,8 @@
     {
         "id": 1,
         "name": "Hobby",
-        "list": [
+        "dateCreated": "2022-04-05T17:58:03Z",
+        "tasks": [
                     {
                         "id": 1,
                         "name": "Собрать кухню",
@@ -36,7 +38,8 @@
     {
         "id": 2,
         "name": "Work",
-        "list": [
+        "dateCreated": "2022-04-05T17:58:03Z",
+        "tasks": [
                     {
                         "id": 2,
                         "name": "Написать тестовое задание",
@@ -63,7 +66,8 @@
     {
         "id": 3,
         "name": "Films",
-        "list": [
+        "dateCreated": "2022-04-05T17:58:03Z",
+        "tasks": [
                     {
                         "id": 3,
                         "name": "Посмотреть Матрицу 4",
@@ -84,7 +88,8 @@
     {
         "id": 4,
         "name": "Building",
-        "list": [
+        "dateCreated": "2022-04-05T17:58:03Z",
+        "tasks": [
                     {
                         "id": 4,
                         "name": "Building - task 0",

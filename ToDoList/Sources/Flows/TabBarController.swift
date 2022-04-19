@@ -16,11 +16,16 @@ extension TabBarController {
 
 class TabBarController: UITabBarController {
 
-    private lazy var fileService = FileService()
+    //private lazy var fileService = FileService()
+    
+    private lazy var fileService = BackendService()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        //backendService.edit(backendService.handleSuccesstaskTest, true)
+        
 //        let todayModule = TodayModule().setService(fileService)
 //        let searchModule = TodayModule().setService(fileService)
 

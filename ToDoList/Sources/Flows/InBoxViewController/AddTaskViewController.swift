@@ -17,11 +17,13 @@ class AddTaskViewController: UIViewController {
     // MARK: - Properties
     var delegate: AddTaskDelegate?
 
+    let numberRandom = Int.random(in: 1..<1000)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         addBarButtonItem()
-        nameTaskTextField.text = "New task \(Int.random(in: 1..<1000))"
+        nameTaskTextField.text = "New task \(numberRandom)"
     }
 
     // MARK: - IBAction
@@ -47,7 +49,8 @@ private extension AddTaskViewController {
     @objc
     func addActionButton(sender: UIBarButtonItem) {
         if let text = scheduleDateButton.titleLabel?.text {
-            let task = Task(id: 0,
+            let task = Task(id: numberRandom,               //рандомно
+                            groupId: 0,
                             name: nameTaskTextField.text,
                             taskDeadline: nil,
                             taskScheduledDate: ConvertDate().convert(from: text),

@@ -8,6 +8,9 @@
 import Foundation
 
 protocol TaskServiceProtocol {
+
+    func fetch(_ callback: @escaping ([Any], Bool) -> Void)
+    
     func add(_ task: Task)
     func edit(_ task: Task, _ status: Bool)
 
@@ -21,6 +24,12 @@ class TaskService: TaskServiceProtocol {
 
     var source = [Group]()
     var filtredData = [Group]()
+    
+
+    func fetch(_ callback: @escaping ([Any], Bool) -> Void) {
+        callback(source, true)
+    }
+
 
     // Для InBoxViewController
     func filterPeriod() -> [Group]? {
@@ -31,7 +40,7 @@ class TaskService: TaskServiceProtocol {
         var tasks = [(Int, Task)]()
 
         source.forEach { group in
-            group.list?.forEach { task in
+            group.tasks?.forEach { task in
                 let intervale = ConvertDate().intervaleString(end: task.taskScheduledDate)
 
                 //Проверка на наличии дубликата
@@ -55,7 +64,7 @@ class TaskService: TaskServiceProtocol {
                 sectionTasks.append(task.1)
             }
 
-            filtredData.append(Group.init(id: indexS, name: sections[indexS], list: sectionTasks))
+            filtredData.append(Group.init(id: indexS, name: sections[indexS], tasks: sectionTasks))
         }
 
         return filtredData
@@ -77,7 +86,7 @@ class TaskService: TaskServiceProtocol {
         // Создать 2 группы по статусу тасков из ToDay
         var statusToDay = [Group]()
 
-        if let list = toDay.list {
+        if let list = toDay.tasks {
             var taskCompleted = [Task]()
             var taskIncomplete = [Task]()
 
@@ -88,15 +97,15 @@ class TaskService: TaskServiceProtocol {
                 default: break
                 }
             }
-            statusToDay.append(Group.init(id: 0, name: "Completed", list: taskCompleted))
-            statusToDay.append(Group.init(id: 1, name: "Incomplete", list: taskIncomplete))
+            statusToDay.append(Group.init(id: 0, name: "Completed", tasks: taskCompleted))
+            statusToDay.append(Group.init(id: 1, name: "Incomplete", tasks: taskIncomplete))
         }
         return statusToDay
     }
 
     // Для SearchViewController
     func filterAllTasks() -> [String] {
-        return source.compactMap { $0.list?.compactMap { $0.name }}.flatMap{ $0 }
+        return source.compactMap { $0.tasks?.compactMap { $0.name }}.flatMap{ $0 }
     }
 
     // Для TaskListViewController
@@ -106,13 +115,13 @@ class TaskService: TaskServiceProtocol {
 
     // AddTask - добавить новую задачу (по умолчанию 0 групп)
     func add(_ task: Task) {
-        guard let id = task.id else { return }
+        guard let id = task.groupId else { return }
         source[id].addTask(task)
     }
 
     // DetailTask - завершить задачу
     func edit(_ task: Task, _ status: Bool) {
-        guard let id = task.id, let taskName = task.name else { return }
+        guard let id = task.groupId, let taskName = task.name else { return }
 
         guard !status else {
             source[id].removeTask(byName: taskName)
@@ -120,14 +129,14 @@ class TaskService: TaskServiceProtocol {
         }
 
         guard let idTask = source[id].getTask(byName: taskName) else { return }
-        source[id].list?[idTask].setDeadline(Date())
+        source[id].tasks?[idTask].setDeadline(Date())
     }
 
     func defaultGroup() {
         source.insert(Group(id: 0,
                             name: "InBox",
                             dateCreated: Date(),
-                            list: [Task(id: 0, name: "Task1", taskDeadline: nil, taskScheduledDate: Date(), notes: "aaaaa", status: false)]),
+                            tasks: [Task(groupId: 0, name: "Task1", taskDeadline: nil, taskScheduledDate: Date(), notes: "aaaaa", status: false)]),
                       at: 0)
     }
 }

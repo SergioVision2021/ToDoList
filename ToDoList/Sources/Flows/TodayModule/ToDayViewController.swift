@@ -50,7 +50,7 @@ extension ToDayViewController {
     }
 
     func configureCell(_ cell: TaskCell, _ at: IndexPath) {
-        let task = data[at.section].list?[at.row]
+        let task = data[at.section].tasks?[at.row]
         if let name = task?.name, let status = task?.status {
             cell.statusImageView.tintColor = status ? .systemGreen : .systemYellow
             cell.nameLabel.text = name
@@ -74,7 +74,7 @@ extension ToDayViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data[section].list?.count ?? 0
+        return data[section].tasks?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

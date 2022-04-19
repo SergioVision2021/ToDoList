@@ -1,4 +1,4 @@
-//
+//swiftlint:disable all
 //  InBoxViewController.swift
 //  ToDoList
 //
@@ -21,29 +21,57 @@ class InBoxViewController: UIViewController {
         super.viewDidLoad()
 
         addBarButtonItem()
-        fetchData()
+        //fetchData()
         addTableView()
     }
-
-    private func fetchData() {
-        guard let fetchData = service?.filterPeriod() else {
-            print("Not data")
-            return
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if data.isEmpty {
+            fetchData()
         }
-
-        data = fetchData
     }
+    
+    func fetchData() {
+        service?.fetch { data, success in
+            
+            //
+            if !success{
+                DispatchQueue.main.async {
+                    let alertVC = UIAlertController(title: nil, message: data as? String, preferredStyle: .alert)
+                    let confinBth = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    alertVC.addAction(confinBth)
+                    self.present(alertVC, animated: true, completion: nil)
+                }
+                return
+            }
+
+            //local
+            guard let fetchData = self.service?.filterPeriod(), !fetchData.isEmpty else {
+                print("Not data")
+                return
+            }
+
+            self.data = fetchData
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
+
 
     private func add(_ task: Task) {
         service?.add(task)
         fetchData()
-        tableView.reloadData()
+        //tableView.reloadData()
     }
 
     private func edit(_ task: Task, _ status: Bool) {
         service?.edit(task, status)
         fetchData()
-        tableView.reloadData()
+        //tableView.reloadData()
     }
 }
 
@@ -60,7 +88,7 @@ extension InBoxViewController {
 
     func configureCell(_ cell: TaskCell, _ at: IndexPath) {
         cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-        let task = data[at.section].list?[at.row]
+        let task = data[at.section].tasks?[at.row]
         if let name = task?.name,
            let status = task?.status {
             cell.statusImageView.tintColor = status ? .systemGreen : .systemYellow
@@ -78,7 +106,7 @@ extension InBoxViewController {
     }
 
     func configureViewController(_ vc: DetailTaskViewController, _ at: IndexPath) {
-        vc.task = data[at.section].list?[at.row] ?? Task()
+        vc.task = data[at.section].tasks?[at.row] ?? Task()
         vc.nameSection = data[at.section].name ?? ""
         vc.delegate = self
         show(vc, sender: self)
@@ -93,7 +121,7 @@ extension InBoxViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data[section].list?.count ?? 0
+        return data[section].tasks?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -106,12 +134,17 @@ extension InBoxViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+
             tableView.beginUpdates()
 
-            guard let selectTask = data[indexPath.section].list?[indexPath.row] else { return }
+            guard let selectTask = data[indexPath.section].tasks?[indexPath.row] else { return }
             edit(selectTask, true)
-
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            //когда edit выполняется в потоке и fetch еще не вернул данные
+            //для обновления таблицы надо удалить строку локально
+            data[indexPath.section].tasks?.remove(at: indexPath.row)
+            
+            tableView.deleteRows(at: [indexPath], with: .none)
             tableView.endUpdates()
         }
     }

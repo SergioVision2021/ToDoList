@@ -42,27 +42,28 @@ class NetworkDispatcher {
         return request
     }
 
-    func sendRequest(_ urlRequest: URLRequest, _ callback: @escaping (Data?, Bool) -> Void) {
+    func sendRequest(_ urlRequest: URLRequest, callback: @escaping (Result<Data, Error>) -> Void) {
 
+        // Create URL session data task
         URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-            guard error == nil else {
+
+            if let error = error {
                 print("Error: error calling \(String(describing: urlRequest.httpMethod))")
-                callback(nil, false)
+                callback(.failure(error))
                 return
             }
+
             guard let data = data else {
                 print("Error: Did not receive data")
-                callback(nil, false)
                 return
             }
 
-            guard let resp = response as? HTTPURLResponse, (200 ..< 299) ~= resp.statusCode else {
+            guard let json = response as? HTTPURLResponse, (200 ..< 299) ~= json.statusCode else {
                 print("Error: HTTP request failed")
-                callback(nil, false)
                 return
             }
 
-            callback(data, true)
+            callback(.success(data))
         }.resume()
     }
 }

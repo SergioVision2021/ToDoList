@@ -21,57 +21,64 @@ class InBoxViewController: UIViewController {
         super.viewDidLoad()
 
         addBarButtonItem()
-        //fetchData()
         addTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         if data.isEmpty {
             fetchData()
         }
     }
     
     func fetchData() {
-        service?.fetch { data, success in
-            
-            //
-            if !success{
+
+        let ai = UIActivityIndicatorView(style: .large)
+        ai.center = view.center
+        view.addSubview(ai)
+        ai.startAnimating()
+
+        DispatchQueue.global(qos: .userInitiated).async {       //----
+            self.service?.fetch { data, success in
+
                 DispatchQueue.main.async {
-                    let alertVC = UIAlertController(title: nil, message: data as? String, preferredStyle: .alert)
-                    let confinBth = UIAlertAction(title: "OK", style: .default, handler: nil)
-                    alertVC.addAction(confinBth)
-                    self.present(alertVC, animated: true, completion: nil)
+                    ai.stopAnimating()
                 }
-                return
-            }
 
-            //local
-            guard let fetchData = self.service?.filterPeriod(), !fetchData.isEmpty else {
-                print("Not data")
-                return
-            }
+                if !success{
+                    DispatchQueue.main.async {
+                        let alertVC = UIAlertController(title: nil, message: data as? String, preferredStyle: .alert)
+                        let confinBth = UIAlertAction(title: "OK", style: .default, handler: nil)
+                        alertVC.addAction(confinBth)
+                        self.present(alertVC, animated: true, completion: nil)
+                    }
+                    return
+                }
 
-            self.data = fetchData
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+                //local
+                guard let fetchData = self.service?.filterPeriod(), !fetchData.isEmpty else {
+                    print("Not data")
+                    return
+                }
+
+                self.data = fetchData
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             }
         }
     }
 
-
     private func add(_ task: Task) {
         service?.add(task)
         fetchData()
-        //tableView.reloadData()
     }
 
     private func edit(_ task: Task, _ status: Bool) {
         service?.edit(task, status)
         fetchData()
-        //tableView.reloadData()
     }
 }
 

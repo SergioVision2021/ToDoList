@@ -28,30 +28,29 @@ class BackendService: TaskService {
     }
 
     override func fetch(_ callback: @escaping ([Any], Bool) -> Void) {
-
+    
         var baseURL = component
-        
         baseURL.path = "/groups/"
         baseURL.queryItems = [.init(name: "_embed", value: "tasks")]
-        
+    
         let dispatcher = NetworkDispatcher()
         guard let request = dispatcher.prepareRequest(baseURL, HTTPMethod.GET, nil) else { return }
- 
-        dispatcher.sendRequest(request) { data, success in
-            guard let data = data else {
-                print("Error data")
-                return
+
+        dispatcher.sendRequest(request) { result in
+            switch result {
+            case .success(let data):
+
+                //Data -> Swift object
+                guard let decodedResponse: [Group] = CoderJSON().decoderJSON(data) else { return }
+                self.source = decodedResponse
+                callback(decodedResponse, true)
+                
+            case .failure(let error):
+                print("Request failed with error: \(error)")
             }
-        
-            //Data -> Swift object
-            guard let decodedResponse: [Group] = CoderJSON().decoderJSON(data) else { return }
-            
-            self.source = decodedResponse
-            
-            callback(decodedResponse, true)
         }
     }
-    
+
     override func add(_ task: Task) {
         super.add(task)
 
@@ -65,16 +64,10 @@ class BackendService: TaskService {
         guard let uploadData: Data = CoderJSON().encoderJSON(task) else { return }
         guard let request = dispatcher.prepareRequest(baseURL, HTTPMethod.POST, uploadData) else { return }
         
-        dispatcher.sendRequest(request) { data, success in
-            guard let data = data else {
-                print("Error data")
-                return
-            }
-            
-            //guard let decodedResponse: Task = CoderJSON().decoderJSON(data) else { return }
-        }  
+        send(dispatcher, request)
     }
     
+    //delete = true | edit = false
     override func edit(_ task: Task, _ status: Bool) {
         super.edit(task, status)
         
@@ -86,32 +79,28 @@ class BackendService: TaskService {
         
         let dispatcher = NetworkDispatcher()
         
-        // DELETE
-        guard !status else {
- 
+        if status {
+            // DELETE
             guard let request = dispatcher.prepareRequest(baseURL, HTTPMethod.DELETE, nil) else { return }
+            send(dispatcher, request)
+        } else {
+            // EDIT = Завершить задачу
+            editTask.status = true
             
-            dispatcher.sendRequest(request) { data, success in
-                guard let data = data else {
-                    print("Error data")
-                    return
-                }
-            }
-            
-            return
+            guard let uploadData: Data = CoderJSON().encoderJSON(editTask) else { return }
+            guard let request = dispatcher.prepareRequest(baseURL, HTTPMethod.PUT, uploadData) else { return }
+            send(dispatcher, request)
         }
-        
-        // EDIT
-        // Завершить задачу
-        editTask.status = true
-        
-        guard let uploadData: Data = CoderJSON().encoderJSON(editTask) else { return }
-        guard let request = dispatcher.prepareRequest(baseURL, HTTPMethod.PUT, uploadData) else { return }
-        
-        dispatcher.sendRequest(request) { data, success in
-            guard let data = data else {
-                print("Error data")
+    }
+    
+    func send(_ dispatcher: NetworkDispatcher, _ request: URLRequest) {
+        dispatcher.sendRequest(request) { result in
+            switch result {
+            case .success(_):               //!!!!
+                print("Request success: \(request.httpMethod)")
                 return
+            case .failure(let error):
+                print("Request failed with error: \(error)")
             }
         }
     }

@@ -20,9 +20,9 @@ class BackendService: TaskService {
     var component = URLComponents()
     
     override init() {
-        component.scheme = "http"
-        component.host = "localhost"
-        component.port = 3000
+        component.scheme = Constants.SHEME
+        component.host = Constants.HOST
+        component.port = Constants.PORT
 
         super.init()
     }
@@ -30,7 +30,7 @@ class BackendService: TaskService {
     override func fetch(_ callback: @escaping ([Any], Bool) -> Void) {
     
         var baseURL = component
-        baseURL.path = "/groups/"
+        baseURL.path = "/\(Constants.PATH_GROUPS)/"
         baseURL.queryItems = [.init(name: "_embed", value: "tasks")]
     
         let dispatcher = NetworkDispatcher()
@@ -57,7 +57,7 @@ class BackendService: TaskService {
         //var test = Task(id: 10, groupId: 0, name: "task10", taskScheduledDate: Date(), notes: "text", status: false)
 
         var baseURL = component
-        baseURL.path = "/tasks"
+        baseURL.path = "/\(Constants.PATH_TASKS)"
 
         let dispatcher = NetworkDispatcher()
         
@@ -75,7 +75,7 @@ class BackendService: TaskService {
         guard let id = editTask.id else { return }
         
         var baseURL = component
-        baseURL.path = "/tasks/\(id)"
+        baseURL.path = "/\(Constants.PATH_TASKS)/\(id)"
         
         let dispatcher = NetworkDispatcher()
         

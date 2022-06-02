@@ -7,12 +7,19 @@
 
 import Foundation
 
+enum TaskServiceError: Error {
+    case localFetching
+    case localAdding
+    case localEditing
+    case localDeleting
+}
+
 protocol TaskServiceProtocol {
 
-    func fetch(_ callback: @escaping ([Any], Bool) -> Void)
-    
-    func add(_ task: Task)
-    func edit(_ task: Task, _ status: Bool)
+    func fetch(_ data: [Group]?, _ callback: @escaping (Error?) -> Void)
+    func add(_ task: Task, _ callback: @escaping (Error?) -> Void)
+    func edit(_ task: Task, _ callback: @escaping (Result<Task?, Error>) -> Void)
+    func delete(_ task: Task, _ callback: @escaping (Error?) -> Void)
 
     func filterPeriod() -> [Group]?
     func filterToday(_ namePeriod: String) -> [Group]?
@@ -24,12 +31,17 @@ class TaskService: TaskServiceProtocol {
 
     var source = [Group]()
     var filtredData = [Group]()
-    
 
-    func fetch(_ callback: @escaping ([Any], Bool) -> Void) {
-        callback(source, true)
+    func fetch(_ data: [Group]?, _ callback: @escaping (Error?) -> Void) {
+        
+        guard let data = data else {
+            callback(TaskServiceError.localFetching)
+            return
+        }
+        
+        source = data
+        callback(nil)
     }
-
 
     // Для InBoxViewController
     func filterPeriod() -> [Group]? {
@@ -114,22 +126,45 @@ class TaskService: TaskServiceProtocol {
     }
 
     // AddTask - добавить новую задачу (по умолчанию 0 групп)
-    func add(_ task: Task) {
-        guard let id = task.groupId else { return }
-        source[id].addTask(task)
-    }
-
-    // DetailTask - завершить задачу
-    func edit(_ task: Task, _ status: Bool) {
-        guard let id = task.groupId, let taskName = task.name else { return }
-
-        guard !status else {
-            source[id].removeTask(byName: taskName)
+    func add(_ task: Task, _ callback: @escaping (Error?) -> Void) {
+        guard let id = task.groupId else {
+            callback(TaskServiceError.localAdding)
             return
         }
 
-        guard let idTask = source[id].getTask(byName: taskName) else { return }
-        source[id].tasks?[idTask].setDeadline(Date())
+        source[id].addTask(task)
+        callback(nil)
+    }
+
+    // DetailTask - завершить задачу
+    func edit(_ task: Task, _ callback: @escaping (Result<Task?, Error>) -> Void) {
+
+        guard let id = task.groupId,
+              let taskName = task.name,
+              let idTask = source[id].getTask(byName: taskName) else {
+            callback(.failure(TaskServiceError.localEditing))
+            return
+        }
+
+        // Edit Deadline and Status
+        guard let editTask = source[id].tasks?[idTask].setDeadline(Date()) else {
+            callback(.failure(TaskServiceError.localEditing))
+            return
+        }
+        
+        callback(.success(editTask))
+    }
+    
+    func delete(_ task: Task, _ callback: @escaping (Error?) -> Void) {
+        
+        guard let id = task.groupId,
+              let taskName = task.name else {
+            callback(TaskServiceError.localDeleting)
+            return
+        }
+        
+        source[id].removeTask(byName: taskName)
+        callback(nil)
     }
 
     func defaultGroup() {

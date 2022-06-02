@@ -1,4 +1,4 @@
-//swiftlint:disable all
+//  swiftlint:disable all
 //  InBoxViewController.swift
 //  ToDoList
 //
@@ -15,6 +15,8 @@ class InBoxViewController: UIViewController {
 
     // MARK: - Visual Component
     private lazy var tableView = makeTableView()
+    private lazy var activitiIndicator = makeActivityIndicatorView()
+    private lazy var alertController = makeAlertController(nil)
 
     // MARK: - View life cycle
     override func viewDidLoad() {
@@ -34,50 +36,54 @@ class InBoxViewController: UIViewController {
     
     func fetchData() {
 
-        let ai = UIActivityIndicatorView(style: .large)
-        ai.center = view.center
-        view.addSubview(ai)
-        ai.startAnimating()
+        startAnimationAI()
 
-        DispatchQueue.global(qos: .userInitiated).async {       //----
-            self.service?.fetch { data, success in
+        service?.fetch(nil) { result in
+            self.stopAnimationAI(result?.localizedDescription)
 
-                DispatchQueue.main.async {
-                    ai.stopAnimating()
-                }
+            guard let fetchData = self.service?.filterPeriod(), !fetchData.isEmpty else {
+                print("Not data")
+                return
+            }
 
-                if !success{
-                    DispatchQueue.main.async {
-                        let alertVC = UIAlertController(title: nil, message: data as? String, preferredStyle: .alert)
-                        let confinBth = UIAlertAction(title: "OK", style: .default, handler: nil)
-                        alertVC.addAction(confinBth)
-                        self.present(alertVC, animated: true, completion: nil)
-                    }
-                    return
-                }
+            self.data = fetchData
 
-                //local
-                guard let fetchData = self.service?.filterPeriod(), !fetchData.isEmpty else {
-                    print("Not data")
-                    return
-                }
-
-                self.data = fetchData
-                
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
         }
     }
 
     private func add(_ task: Task) {
-        service?.add(task)
+        startAnimationAI()
+        
+        service?.add(task) { result in
+            self.stopAnimationAI(result?.localizedDescription)
+        }
         fetchData()
     }
 
-    private func edit(_ task: Task, _ status: Bool) {
-        service?.edit(task, status)
+    private func edit(_ task: Task) {
+        startAnimationAI()
+        
+        service?.edit(task) { result in
+            
+            switch result {
+            case .success(_):
+                break
+            case .failure(let error):
+                self.stopAnimationAI(error.localizedDescription)
+            }
+        }
+        fetchData()
+    }
+    
+    private func delete(_ task: Task) {
+        startAnimationAI()
+        
+        service?.delete(task) { result in
+            self.stopAnimationAI(result?.localizedDescription)
+        }
         fetchData()
     }
 }
@@ -145,8 +151,9 @@ extension InBoxViewController: UITableViewDataSource {
             tableView.beginUpdates()
 
             guard let selectTask = data[indexPath.section].tasks?[indexPath.row] else { return }
-            edit(selectTask, true)
-            
+
+            delete(selectTask)
+
             //когда edit выполняется в потоке и fetch еще не вернул данные
             //для обновления таблицы надо удалить строку локально
             data[indexPath.section].tasks?.remove(at: indexPath.row)
@@ -211,7 +218,7 @@ extension InBoxViewController: AddTaskDelegate {
 }
 extension InBoxViewController: DetailTaskDelegate {
     func detailTaskDidTapDone(_ sender: UIViewController, _ task: Task) {
-        edit(task, false)
+        edit(task)
     }
 }
 
@@ -227,5 +234,47 @@ extension InBoxViewController {
         table.register(nib, forCellReuseIdentifier: Constants.taskCellIdentifier)
 
         return table
+    }
+    
+    func makeActivityIndicatorView() -> UIActivityIndicatorView {
+        let ai = UIActivityIndicatorView()
+        ai.style = .large
+        ai.center = view.center
+        
+        return ai
+    }
+    
+    func makeAlertController(_ message: String?) -> UIAlertController {
+        let ac = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let button = UIAlertAction(title: "OK", style: .default, handler: nil)
+        ac.addAction(button)
+        return ac
+    }
+}
+
+//MARK: - ActivitiIndicator
+private extension InBoxViewController {
+    func startAnimationAI() {
+        
+        guard view.contains(activitiIndicator) else {
+            view.addSubview(activitiIndicator)
+            activitiIndicator.startAnimating()
+            return
+        }
+    
+        activitiIndicator.startAnimating()
+    }
+    
+    func stopAnimationAI(_ result: String?) {
+        DispatchQueue.main.async {
+            self.activitiIndicator.stopAnimating()
+            self.activitiIndicator.removeFromSuperview()
+            
+            guard let result = result else {
+                return
+            }
+            
+            self.present(self.makeAlertController(result), animated: true, completion: nil)
+        }
     }
 }

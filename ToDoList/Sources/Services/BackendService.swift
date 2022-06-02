@@ -27,10 +27,10 @@ class BackendService: TaskService {
         super.init()
     }
 
-    override func fetch(_ callback: @escaping ([Any], Bool) -> Void) {
+    override func fetch(_ data: [Group]?, _ callback: @escaping (Error?) -> Void) {
     
         var baseURL = component
-        baseURL.path = "/\(Constants.PATH_GROUPS)/"
+        baseURL.path = "/\(Constants.GROUPS)/"
         baseURL.queryItems = [.init(name: "_embed", value: "tasks")]
     
         let dispatcher = NetworkDispatcher()
@@ -39,68 +39,109 @@ class BackendService: TaskService {
         dispatcher.sendRequest(request) { result in
             switch result {
             case .success(let data):
-
                 //Data -> Swift object
                 guard let decodedResponse: [Group] = CoderJSON().decoderJSON(data) else { return }
-                self.source = decodedResponse
-                callback(decodedResponse, true)
+
+                super.fetch(decodedResponse) { callback($0) }
+                
+                callback(nil)
                 
             case .failure(let error):
                 print("Request failed with error: \(error)")
+                callback(error)
             }
         }
     }
 
-    override func add(_ task: Task) {
-        super.add(task)
-
-        //var test = Task(id: 10, groupId: 0, name: "task10", taskScheduledDate: Date(), notes: "text", status: false)
-
-        var baseURL = component
-        baseURL.path = "/\(Constants.PATH_TASKS)"
-
-        let dispatcher = NetworkDispatcher()
+    override func add(_ task: Task, _ callback: @escaping (Error?) -> Void) {
         
-        guard let uploadData: Data = CoderJSON().encoderJSON(task) else { return }
-        guard let request = dispatcher.prepareRequest(baseURL, HTTPMethod.POST, uploadData) else { return }
-        
-        send(dispatcher, request)
-    }
-    
-    //delete = true | edit = false
-    override func edit(_ task: Task, _ status: Bool) {
-        super.edit(task, status)
-        
-        var editTask = task
-        guard let id = editTask.id else { return }
-        
-        var baseURL = component
-        baseURL.path = "/\(Constants.PATH_TASKS)/\(id)"
-        
-        let dispatcher = NetworkDispatcher()
-        
-        if status {
-            // DELETE
-            guard let request = dispatcher.prepareRequest(baseURL, HTTPMethod.DELETE, nil) else { return }
-            send(dispatcher, request)
-        } else {
-            // EDIT = Завершить задачу
-            editTask.status = true
+        super.add(task) { result in
             
-            guard let uploadData: Data = CoderJSON().encoderJSON(editTask) else { return }
-            guard let request = dispatcher.prepareRequest(baseURL, HTTPMethod.PUT, uploadData) else { return }
-            send(dispatcher, request)
+            //var test = Task(id: 10, groupId: 0, name: "task10", taskScheduledDate: Date(), notes: "text", status: false)
+
+            guard let result = result else {
+
+                var baseURL = self.component
+                baseURL.path = "/" + Constants.TASKS
+
+                let dispatcher = NetworkDispatcher()
+
+                guard let uploadData: Data = CoderJSON().encoderJSON(task) else { return }
+                guard let request = dispatcher.prepareRequest(baseURL, HTTPMethod.POST, uploadData) else { return }
+
+                self.sendRequest(request, dispatcher) { callback($0) }
+
+                return
+            }
+            
+            callback(result)
         }
     }
-    
-    func send(_ dispatcher: NetworkDispatcher, _ request: URLRequest) {
-        dispatcher.sendRequest(request) { result in
+
+    override func edit(_ task: Task, _ callback: @escaping (Result<Task?, Error>) -> Void) {
+
+        super.edit(task) { result in
+
             switch result {
-            case .success(_):               //!!!!
-                print("Request success: \(request.httpMethod)")
+            case .success(let data):
+                
+                guard let data = data else { return }
+                
+                guard let id = data.id else { return }
+
+                var baseURL = self.component
+                baseURL.path = "/\(Constants.TASKS)/\(id)"
+
+                let dispatcher = NetworkDispatcher()
+
+                guard let uploadData: Data = CoderJSON().encoderJSON(data) else { return }
+                guard let request = dispatcher.prepareRequest(baseURL, HTTPMethod.PUT, uploadData) else { return }
+
+                self.sendRequest(request, dispatcher) { result in
+                    guard let result = result else {
+                        callback(.success(nil))
+                        return
+                    }
+                    callback(.failure(result))
+                }
+            case .failure(let error):
+                callback(.failure(error))
+            }
+        }
+    }
+
+    override func delete(_ task: Task, _ callback: @escaping (Error?) -> Void) {
+
+        super.delete(task) { result in
+
+            guard let result = result else {
+            
+                guard let id = task.id else { return }
+
+                var baseURL = self.component
+                baseURL.path = "/\(Constants.TASKS)/\(id)"
+
+                let dispatcher = NetworkDispatcher()
+
+                guard let request = dispatcher.prepareRequest(baseURL, HTTPMethod.DELETE, nil) else { return }
+
+                self.sendRequest(request, dispatcher) { callback($0) }
+                
                 return
+            }
+            callback(result)
+        }
+    }
+
+    private func sendRequest(_ request: URLRequest, _ inDispatcher: NetworkDispatcher, _ callback: @escaping (Error?) -> Void) {
+        inDispatcher.sendRequest(request) { result in
+            switch result {
+            case .success(_):
+                print("Request success: \(request.httpMethod)")
+                callback(nil)
             case .failure(let error):
                 print("Request failed with error: \(error)")
+                callback(error)
             }
         }
     }

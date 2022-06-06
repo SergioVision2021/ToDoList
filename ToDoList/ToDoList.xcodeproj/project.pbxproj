@@ -37,7 +37,10 @@
 		D356F6A727DF7ACC00604D34 /* StorageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D356F6A627DF7ACC00604D34 /* StorageHelper.swift */; };
 		D356F6A927DF7AE100604D34 /* FileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D356F6A827DF7AE100604D34 /* FileService.swift */; };
 		D356F6AE27DFD54500604D34 /* MemoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D356F6AD27DFD54500604D34 /* MemoryService.swift */; };
+		D36FC5B627F719F3008F87A9 /* BackendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36FC5B527F719F3008F87A9 /* BackendService.swift */; };
+		D36FC5B827F71A5D008F87A9 /* DatabaseTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36FC5B727F71A5D008F87A9 /* DatabaseTask.swift */; };
 		D3D95B7E27EB4059000F7715 /* TodayModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D95B7D27EB4059000F7715 /* TodayModule.swift */; };
+		D3E06BFD28030CDE0079923A /* CoderJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E06BFC28030CDE0079923A /* CoderJSON.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,8 +77,11 @@
 		D356F6A627DF7ACC00604D34 /* StorageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageHelper.swift; sourceTree = "<group>"; };
 		D356F6A827DF7AE100604D34 /* FileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileService.swift; sourceTree = "<group>"; };
 		D356F6AD27DFD54500604D34 /* MemoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryService.swift; sourceTree = "<group>"; };
+		D36FC5B527F719F3008F87A9 /* BackendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendService.swift; sourceTree = "<group>"; };
+		D36FC5B727F71A5D008F87A9 /* DatabaseTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseTask.swift; sourceTree = "<group>"; };
 		D3C53D3627BA5396000B6E26 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3D95B7D27EB4059000F7715 /* TodayModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayModule.swift; sourceTree = "<group>"; };
+		D3E06BFC28030CDE0079923A /* CoderJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CoderJSON.swift; path = ../../../../../CoderJSON.swift; sourceTree = "<group>"; };
 		FDD4244FF57F7028DD205125 /* Pods-ToDoList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoList.release.xcconfig"; path = "Target Support Files/Pods-ToDoList/Pods-ToDoList.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -125,6 +131,7 @@
 				D320AC7827CE2255002B16B5 /* Data.json */,
 				D3026B6127C26814007BDF24 /* Assets.xcassets */,
 				D3026B6227C26814007BDF24 /* LaunchScreen.storyboard */,
+				D3D95B7A27EB380C000F7715 /* Utils */,
 				D3026B6427C26814007BDF24 /* Info.plist */,
 			);
 			path = Resources;
@@ -133,7 +140,6 @@
 		D3026B6527C26814007BDF24 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				D3D95B7A27EB380C000F7715 /* Utils */,
 				D3026B6627C26814007BDF24 /* Model */,
 				D3026B6927C26814007BDF24 /* View */,
 				D3026B6D27C26814007BDF24 /* Flows */,
@@ -202,9 +208,11 @@
 			isa = PBXGroup;
 			children = (
 				D3026B8027C26814007BDF24 /* TaskService.swift */,
-				D356F6A627DF7ACC00604D34 /* StorageHelper.swift */,
-				D356F6A827DF7AE100604D34 /* FileService.swift */,
 				D356F6AD27DFD54500604D34 /* MemoryService.swift */,
+				D356F6A827DF7AE100604D34 /* FileService.swift */,
+				D356F6A627DF7ACC00604D34 /* StorageHelper.swift */,
+				D36FC5B527F719F3008F87A9 /* BackendService.swift */,
+				D36FC5B727F71A5D008F87A9 /* DatabaseTask.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -247,6 +255,7 @@
 			isa = PBXGroup;
 			children = (
 				D3026B7F27C26814007BDF24 /* ConvertDate.swift */,
+				D3E06BFC28030CDE0079923A /* CoderJSON.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -397,11 +406,13 @@
 				D3026B8F27C26814007BDF24 /* SearchViewController.swift in Sources */,
 				D3026B9A27C26814007BDF24 /* TaskListViewController.swift in Sources */,
 				D3026B9127C26814007BDF24 /* SelectDateViewController.swift in Sources */,
+				D36FC5B827F71A5D008F87A9 /* DatabaseTask.swift in Sources */,
 				D3026B8E27C26814007BDF24 /* ToDayViewController.swift in Sources */,
 				D3026B8B27C26814007BDF24 /* Task.swift in Sources */,
 				D3026B9827C26814007BDF24 /* DetailTaskDelegate.swift in Sources */,
 				D3026B9327C26814007BDF24 /* AddTaskDelegate.swift in Sources */,
 				D356F6A727DF7ACC00604D34 /* StorageHelper.swift in Sources */,
+				D36FC5B627F719F3008F87A9 /* BackendService.swift in Sources */,
 				D3026B9027C26814007BDF24 /* InBoxViewController.swift in Sources */,
 				D356F6AE27DFD54500604D34 /* MemoryService.swift in Sources */,
 				D3026B9727C26814007BDF24 /* AddTaskViewController.swift in Sources */,
@@ -416,6 +427,7 @@
 				D3026B9E27C26814007BDF24 /* AppDelegate.swift in Sources */,
 				D356F6A927DF7AE100604D34 /* FileService.swift in Sources */,
 				D3026B8A27C26814007BDF24 /* Group.swift in Sources */,
+				D3E06BFD28030CDE0079923A /* CoderJSON.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

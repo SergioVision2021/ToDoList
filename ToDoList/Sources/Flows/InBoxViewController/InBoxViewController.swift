@@ -1,4 +1,4 @@
-//
+//  swiftlint:disable all
 //  InBoxViewController.swift
 //  ToDoList
 //
@@ -15,35 +15,92 @@ class InBoxViewController: UIViewController {
 
     // MARK: - Visual Component
     private lazy var tableView = makeTableView()
+    private lazy var activitiIndicator = makeActivityIndicatorView()
+    private lazy var alertController = makeAlertController(nil)
 
     // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
         addBarButtonItem()
-        fetchData()
         addTableView()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
 
-    private func fetchData() {
-        guard let fetchData = service?.filterPeriod() else {
+        if data.isEmpty {
+            fetchData()
+        }
+    }
+    
+    func fetchData() {
+
+        startAnimationAI()
+
+        service?.fetch() { result in
+            self.stopAnimationAI(result?.localizedDescription)
+
+            self.fethLocalData()
+        }
+    }
+    
+    func fethLocalData() {
+        guard let fetchData = self.service?.filterPeriod(), !fetchData.isEmpty else {
             print("Not data")
             return
         }
 
-        data = fetchData
+        self.data = fetchData
+
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 
     private func add(_ task: Task) {
-        service?.add(task)
-        fetchData()
-        tableView.reloadData()
+        startAnimationAI()
+        
+        service?.add(task) { result in
+            //!!!!!!
+            guard result == nil else {
+                self.stopAnimationAI(result?.localizedDescription)
+                return
+            }
+
+            self.fethLocalData()
+            self.stopAnimationAI(nil)
+        }
     }
 
-    private func edit(_ task: Task, _ status: Bool) {
-        service?.edit(task, status)
-        fetchData()
-        tableView.reloadData()
+    private func edit(_ task: Task) {
+        startAnimationAI()
+        
+        service?.edit(task) { result in
+
+            guard result == nil else {
+                self.stopAnimationAI(result?.localizedDescription)
+                return
+            }
+
+            self.fethLocalData()
+            self.stopAnimationAI(nil)
+        }
+    }
+    
+    private func delete(_ task: Task) {
+        startAnimationAI()
+        
+        service?.delete(task) { result in
+            //!!!!!!
+            guard result == nil else {
+                self.stopAnimationAI(result?.localizedDescription)
+                return
+            }
+
+            self.fethLocalData()
+            self.stopAnimationAI(nil)
+        }
     }
 }
 
@@ -60,7 +117,7 @@ extension InBoxViewController {
 
     func configureCell(_ cell: TaskCell, _ at: IndexPath) {
         cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-        let task = data[at.section].list?[at.row]
+        let task = data[at.section].tasks?[at.row]
         if let name = task?.name,
            let status = task?.status {
             cell.statusImageView.tintColor = status ? .systemGreen : .systemYellow
@@ -78,7 +135,7 @@ extension InBoxViewController {
     }
 
     func configureViewController(_ vc: DetailTaskViewController, _ at: IndexPath) {
-        vc.task = data[at.section].list?[at.row] ?? Task()
+        vc.task = data[at.section].tasks?[at.row] ?? Task()
         vc.nameSection = data[at.section].name ?? ""
         vc.delegate = self
         show(vc, sender: self)
@@ -93,7 +150,7 @@ extension InBoxViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data[section].list?.count ?? 0
+        return data[section].tasks?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -106,12 +163,18 @@ extension InBoxViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+
             tableView.beginUpdates()
 
-            guard let selectTask = data[indexPath.section].list?[indexPath.row] else { return }
-            edit(selectTask, true)
+            guard let selectTask = data[indexPath.section].tasks?[indexPath.row] else { return }
 
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            delete(selectTask)
+
+            //когда edit выполняется в потоке и fetch еще не вернул данные
+            //для обновления таблицы надо удалить строку локально
+            data[indexPath.section].tasks?.remove(at: indexPath.row)
+            
+            tableView.deleteRows(at: [indexPath], with: .none)
             tableView.endUpdates()
         }
     }
@@ -171,7 +234,7 @@ extension InBoxViewController: AddTaskDelegate {
 }
 extension InBoxViewController: DetailTaskDelegate {
     func detailTaskDidTapDone(_ sender: UIViewController, _ task: Task) {
-        edit(task, false)
+        edit(task)
     }
 }
 
@@ -187,5 +250,47 @@ extension InBoxViewController {
         table.register(nib, forCellReuseIdentifier: Constants.taskCellIdentifier)
 
         return table
+    }
+    
+    func makeActivityIndicatorView() -> UIActivityIndicatorView {
+        let ai = UIActivityIndicatorView()
+        ai.style = .large
+        ai.center = view.center
+        
+        return ai
+    }
+    
+    func makeAlertController(_ message: String?) -> UIAlertController {
+        let ac = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let button = UIAlertAction(title: "OK", style: .default, handler: nil)
+        ac.addAction(button)
+        return ac
+    }
+}
+
+//MARK: - ActivitiIndicator
+private extension InBoxViewController {
+    func startAnimationAI() {
+        
+        guard view.contains(activitiIndicator) else {
+            view.addSubview(activitiIndicator)
+            activitiIndicator.startAnimating()
+            return
+        }
+    
+        activitiIndicator.startAnimating()
+    }
+    
+    func stopAnimationAI(_ result: String?) {
+        DispatchQueue.main.async {
+            self.activitiIndicator.stopAnimating()
+            self.activitiIndicator.removeFromSuperview()
+            
+            guard let result = result else {
+                return
+            }
+            
+            self.present(self.makeAlertController(result), animated: true, completion: nil)
+        }
     }
 }

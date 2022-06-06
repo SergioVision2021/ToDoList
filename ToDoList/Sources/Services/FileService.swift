@@ -31,13 +31,13 @@ class FileService: TaskService {
         storage.saveJsonToFile(source)
     }
 
-    override func add(_ task: Task) {
-        super.add(task)
-        storage.saveJsonToFile(source)
-    }
+//    override func add(_ task: Task) {
+//        super.add(task)
+//        storage.saveJsonToFile(source)
+//    }
 
-    override func edit(_ task: Task, _ status: Bool) {
-        super.edit(task, status)
-        storage.saveJsonToFile(source)
-    }
+//    override func edit(_ task: Task, _ status: Bool) {
+//        super.edit(task, status)
+//        storage.saveJsonToFile(source)
+//    }
 }

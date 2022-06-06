@@ -18,9 +18,8 @@ struct Task: Codable {
 }
 
 extension Task {
-    mutating func setDeadline(_ deadline: Date) -> Task {
-        taskDeadline = deadline
-        status = true
-        return self
+    mutating func setDeadlineTask() {
+        self.taskDeadline = Date()
+        self.status = true
     }
 }

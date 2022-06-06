@@ -19,12 +19,23 @@ extension Group {
         tasks?.append(task)
     }
 
+    mutating func editTask(_ task: Task) {
+        guard let id = findID(task) else { return }
+        tasks?[id] = task
+    }
+
     func getTask(byName name: String) -> Int? {
         tasks?.firstIndex(where: { $0.name == name })
     }
 
-    mutating func removeTask(byName: String) {
-        guard let id = tasks?.firstIndex(where: { $0.name == byName }) else { return }
+    mutating func removeTask(_ task: Task) {
+        guard let id = findID(task) else { return }
         tasks?.remove(at: id)
+    }
+
+    private func findID(_ task: Task) -> Int? {
+        guard let id = tasks?.firstIndex(where: { $0.name == task.name }) else { return nil }
+
+        return id
     }
 }

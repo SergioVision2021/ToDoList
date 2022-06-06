@@ -16,9 +16,9 @@ enum TaskServiceError: Error {
 
 protocol TaskServiceProtocol {
 
-    func fetch(_ data: [Group]?, _ callback: @escaping (Error?) -> Void)
+    func fetch(_ callback: @escaping (Error?) -> Void)
     func add(_ task: Task, _ callback: @escaping (Error?) -> Void)
-    func edit(_ task: Task, _ callback: @escaping (Result<Task?, Error>) -> Void)
+    func edit(_ task: Task, _ callback: @escaping (Error?) -> Void)
     func delete(_ task: Task, _ callback: @escaping (Error?) -> Void)
 
     func filterPeriod() -> [Group]?
@@ -32,17 +32,10 @@ class TaskService: TaskServiceProtocol {
     var source = [Group]()
     var filtredData = [Group]()
 
-    func fetch(_ data: [Group]?, _ callback: @escaping (Error?) -> Void) {
-        
-        guard let data = data else {
-            callback(TaskServiceError.localFetching)
-            return
-        }
-        
-        source = data
+    func fetch(_ callback: @escaping (Error?) -> Void) {
         callback(nil)
     }
-
+    
     // Для InBoxViewController
     func filterPeriod() -> [Group]? {
 
@@ -137,33 +130,26 @@ class TaskService: TaskServiceProtocol {
     }
 
     // DetailTask - завершить задачу
-    func edit(_ task: Task, _ callback: @escaping (Result<Task?, Error>) -> Void) {
+    func edit(_ task: Task, _ callback: @escaping (Error?) -> Void) {
 
-        guard let id = task.groupId,
-              let taskName = task.name,
-              let idTask = source[id].getTask(byName: taskName) else {
-            callback(.failure(TaskServiceError.localEditing))
+        guard let id = task.groupId else {
+            callback(TaskServiceError.localEditing)
             return
         }
 
-        // Edit Deadline and Status
-        guard let editTask = source[id].tasks?[idTask].setDeadline(Date()) else {
-            callback(.failure(TaskServiceError.localEditing))
-            return
-        }
-        
-        callback(.success(editTask))
+        source[id].editTask(task)
+
+        callback(nil)
     }
     
     func delete(_ task: Task, _ callback: @escaping (Error?) -> Void) {
         
-        guard let id = task.groupId,
-              let taskName = task.name else {
-            callback(TaskServiceError.localDeleting)
+        guard let id = task.groupId else {
+            callback(TaskServiceError.localEditing)
             return
         }
         
-        source[id].removeTask(byName: taskName)
+        source[id].removeTask(task)
         callback(nil)
     }
 

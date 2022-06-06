@@ -38,19 +38,23 @@ class InBoxViewController: UIViewController {
 
         startAnimationAI()
 
-        service?.fetch(nil) { result in
+        service?.fetch() { result in
             self.stopAnimationAI(result?.localizedDescription)
 
-            guard let fetchData = self.service?.filterPeriod(), !fetchData.isEmpty else {
-                print("Not data")
-                return
-            }
+            self.fethLocalData()
+        }
+    }
+    
+    func fethLocalData() {
+        guard let fetchData = self.service?.filterPeriod(), !fetchData.isEmpty else {
+            print("Not data")
+            return
+        }
 
-            self.data = fetchData
+        self.data = fetchData
 
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
         }
     }
 
@@ -58,33 +62,45 @@ class InBoxViewController: UIViewController {
         startAnimationAI()
         
         service?.add(task) { result in
-            self.stopAnimationAI(result?.localizedDescription)
+            //!!!!!!
+            guard result == nil else {
+                self.stopAnimationAI(result?.localizedDescription)
+                return
+            }
+
+            self.fethLocalData()
+            self.stopAnimationAI(nil)
         }
-        fetchData()
     }
 
     private func edit(_ task: Task) {
         startAnimationAI()
         
         service?.edit(task) { result in
-            
-            switch result {
-            case .success(_):
-                break
-            case .failure(let error):
-                self.stopAnimationAI(error.localizedDescription)
+
+            guard result == nil else {
+                self.stopAnimationAI(result?.localizedDescription)
+                return
             }
+
+            self.fethLocalData()
+            self.stopAnimationAI(nil)
         }
-        fetchData()
     }
     
     private func delete(_ task: Task) {
         startAnimationAI()
         
         service?.delete(task) { result in
-            self.stopAnimationAI(result?.localizedDescription)
+            //!!!!!!
+            guard result == nil else {
+                self.stopAnimationAI(result?.localizedDescription)
+                return
+            }
+
+            self.fethLocalData()
+            self.stopAnimationAI(nil)
         }
-        fetchData()
     }
 }
 

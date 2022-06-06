@@ -57,6 +57,8 @@ private extension DetailTaskViewController {
 
     @objc
     func addActionButton(sender: UIBarButtonItem) {
+        task.setDeadlineTask()
+
         // Вернуть завершенную задачу
         delegate?.detailTaskDidTapDone(self, task)
         navigationController?.popViewController(animated: true)

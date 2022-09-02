@@ -39,8 +39,8 @@
 		D356F6AE27DFD54500604D34 /* MemoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D356F6AD27DFD54500604D34 /* MemoryService.swift */; };
 		D36FC5B627F719F3008F87A9 /* BackendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36FC5B527F719F3008F87A9 /* BackendService.swift */; };
 		D36FC5B827F71A5D008F87A9 /* DatabaseTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36FC5B727F71A5D008F87A9 /* DatabaseTask.swift */; };
+		D3B0949628C28ACB00A2FD72 /* CoderJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B0949528C28ACB00A2FD72 /* CoderJSON.swift */; };
 		D3D95B7E27EB4059000F7715 /* TodayModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D95B7D27EB4059000F7715 /* TodayModule.swift */; };
-		D3E06BFD28030CDE0079923A /* CoderJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E06BFC28030CDE0079923A /* CoderJSON.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,7 +48,7 @@
 		C481F81795754EC5FD9F3EA8 /* Pods-ToDoList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoList.debug.xcconfig"; path = "Target Support Files/Pods-ToDoList/Pods-ToDoList.debug.xcconfig"; sourceTree = "<group>"; };
 		D3026B6127C26814007BDF24 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D3026B6327C26814007BDF24 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		D3026B6427C26814007BDF24 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D3026B6427C26814007BDF24 /* InfoPro.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = InfoPro.plist; sourceTree = "<group>"; };
 		D3026B6727C26814007BDF24 /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		D3026B6827C26814007BDF24 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		D3026B6B27C26814007BDF24 /* TaskCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
@@ -79,9 +79,9 @@
 		D356F6AD27DFD54500604D34 /* MemoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryService.swift; sourceTree = "<group>"; };
 		D36FC5B527F719F3008F87A9 /* BackendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendService.swift; sourceTree = "<group>"; };
 		D36FC5B727F71A5D008F87A9 /* DatabaseTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseTask.swift; sourceTree = "<group>"; };
+		D3B0949528C28ACB00A2FD72 /* CoderJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoderJSON.swift; sourceTree = "<group>"; };
 		D3C53D3627BA5396000B6E26 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3D95B7D27EB4059000F7715 /* TodayModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayModule.swift; sourceTree = "<group>"; };
-		D3E06BFC28030CDE0079923A /* CoderJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CoderJSON.swift; path = ../../../../../CoderJSON.swift; sourceTree = "<group>"; };
 		FDD4244FF57F7028DD205125 /* Pods-ToDoList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoList.release.xcconfig"; path = "Target Support Files/Pods-ToDoList/Pods-ToDoList.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -132,7 +132,7 @@
 				D3026B6127C26814007BDF24 /* Assets.xcassets */,
 				D3026B6227C26814007BDF24 /* LaunchScreen.storyboard */,
 				D3D95B7A27EB380C000F7715 /* Utils */,
-				D3026B6427C26814007BDF24 /* Info.plist */,
+				D3026B6427C26814007BDF24 /* InfoPro.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -255,7 +255,7 @@
 			isa = PBXGroup;
 			children = (
 				D3026B7F27C26814007BDF24 /* ConvertDate.swift */,
-				D3E06BFC28030CDE0079923A /* CoderJSON.swift */,
+				D3B0949528C28ACB00A2FD72 /* CoderJSON.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -412,6 +412,7 @@
 				D3026B9827C26814007BDF24 /* DetailTaskDelegate.swift in Sources */,
 				D3026B9327C26814007BDF24 /* AddTaskDelegate.swift in Sources */,
 				D356F6A727DF7ACC00604D34 /* StorageHelper.swift in Sources */,
+				D3B0949628C28ACB00A2FD72 /* CoderJSON.swift in Sources */,
 				D36FC5B627F719F3008F87A9 /* BackendService.swift in Sources */,
 				D3026B9027C26814007BDF24 /* InBoxViewController.swift in Sources */,
 				D356F6AE27DFD54500604D34 /* MemoryService.swift in Sources */,
@@ -427,7 +428,6 @@
 				D3026B9E27C26814007BDF24 /* AppDelegate.swift in Sources */,
 				D356F6A927DF7AE100604D34 /* FileService.swift in Sources */,
 				D3026B8A27C26814007BDF24 /* Group.swift in Sources */,
-				D3E06BFD28030CDE0079923A /* CoderJSON.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -579,7 +579,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7UX23FZ642;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Resources/Info.plist;
+				INFOPLIST_FILE = Resources/InfoPro.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -608,7 +608,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7UX23FZ642;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Resources/Info.plist;
+				INFOPLIST_FILE = Resources/InfoPro.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

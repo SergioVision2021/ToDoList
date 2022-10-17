@@ -40,12 +40,11 @@ class InBoxViewController: UIViewController {
 
         service?.fetch() { result in
             self.stopAnimationAI(result?.localizedDescription)
-
-            self.fethLocalData()
+            self.fetсhLocalData()
         }
     }
     
-    func fethLocalData() {
+    func fetсhLocalData() {
         guard let fetchData = self.service?.filterPeriod(), !fetchData.isEmpty else {
             print("Not data")
             return
@@ -62,13 +61,12 @@ class InBoxViewController: UIViewController {
         startAnimationAI()
         
         service?.add(task) { result in
-            //!!!!!!
             guard result == nil else {
                 self.stopAnimationAI(result?.localizedDescription)
                 return
             }
 
-            self.fethLocalData()
+            self.fetchData()
             self.stopAnimationAI(nil)
         }
     }
@@ -77,13 +75,12 @@ class InBoxViewController: UIViewController {
         startAnimationAI()
         
         service?.edit(task) { result in
-
             guard result == nil else {
                 self.stopAnimationAI(result?.localizedDescription)
                 return
             }
 
-            self.fethLocalData()
+            self.fetchData()
             self.stopAnimationAI(nil)
         }
     }
@@ -92,13 +89,12 @@ class InBoxViewController: UIViewController {
         startAnimationAI()
         
         service?.delete(task) { result in
-            //!!!!!!
             guard result == nil else {
                 self.stopAnimationAI(result?.localizedDescription)
                 return
             }
 
-            self.fethLocalData()
+            self.fetchData()
             self.stopAnimationAI(nil)
         }
     }

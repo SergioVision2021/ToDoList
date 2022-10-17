@@ -9,6 +9,7 @@ import Foundation
 
 struct Task: Codable {
     var id: Int?
+    var groupId: Int?
     var name: String?
     var taskDeadline: Date?           // Дата когда выполнил задачу
     var taskScheduledDate: Date?      // Дата когда должна быть выполнена задача
@@ -17,8 +18,8 @@ struct Task: Codable {
 }
 
 extension Task {
-    mutating func setDeadline(_ deadline: Date) {
-        taskDeadline = deadline
-        status = true
+    mutating func setDeadlineTask() {
+        self.taskDeadline = Date()
+        self.status = true
     }
 }

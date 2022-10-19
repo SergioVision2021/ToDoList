@@ -18,6 +18,7 @@ class AddTaskViewController: UIViewController {
     var delegate: AddTaskDelegate?
 
     let numberRandom = Int.random(in: 1..<1000)
+    var scheduleDate: Date?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,26 +49,25 @@ private extension AddTaskViewController {
     // Переход на предыдущий экран, сохранения таска и обновление таблицы
     @objc
     func addActionButton(sender: UIBarButtonItem) {
-        if let text = scheduleDateButton.titleLabel?.text {
-            let task = Task(id: numberRandom,               //рандомно
+        let task = Task(id: numberRandom,
                             groupId: 0,
                             name: nameTaskTextField.text,
                             taskDeadline: nil,
-                            taskScheduledDate: ConvertDate().convert(from: text),
+                            taskScheduledDate: scheduleDate,
                             notes: notesTextView.text,
                             status: false)
 
-            // Возврат новой задачи
-            delegate?.addTaskDidTapSave(self, task)
-            navigationController?.popViewController(animated: true)
-        }
+        // Возврат новой задачи
+        delegate?.addTaskDidTapSave(self, task)
+        navigationController?.popViewController(animated: true)
     }
 }
 
 // MARK: - Delegate
 extension AddTaskViewController: SelectDateDelegate {
-    func selectDateDidTapDone(_ sender: UIViewController, _ date: String) {
-        scheduleDateButton.setTitle(date, for: .normal)
+    func selectDateDidTapDone(_ sender: UIViewController, _ date: Date) {
+        scheduleDate = date
+        scheduleDateButton.setTitle(ConvertDate().convert(from: date), for: .normal)
     }
 }
 

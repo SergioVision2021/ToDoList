@@ -8,10 +8,10 @@
 import Foundation
 
 enum TaskServiceError: Error {
-    case localFetching
-    case localAdding
-    case localEditing
-    case localDeleting
+    case cacheFetching
+    case cacheAdding
+    case cacheEditing
+    case cacheDeleting
 }
 
 protocol TaskServiceProtocol {
@@ -121,7 +121,7 @@ class TaskService: TaskServiceProtocol {
     // AddTask - добавить новую задачу (по умолчанию 0 групп)
     func add(_ task: Task, _ callback: @escaping (Error?) -> Void) {
         guard let id = task.groupId else {
-            callback(TaskServiceError.localAdding)
+            callback(TaskServiceError.cacheAdding)
             return
         }
 
@@ -133,7 +133,7 @@ class TaskService: TaskServiceProtocol {
     func edit(_ task: Task, _ callback: @escaping (Error?) -> Void) {
 
         guard let id = task.groupId else {
-            callback(TaskServiceError.localEditing)
+            callback(TaskServiceError.cacheEditing)
             return
         }
 
@@ -145,7 +145,7 @@ class TaskService: TaskServiceProtocol {
     func delete(_ task: Task, _ callback: @escaping (Error?) -> Void) {
         
         guard let id = task.groupId else {
-            callback(TaskServiceError.localEditing)
+            callback(TaskServiceError.cacheEditing)
             return
         }
         

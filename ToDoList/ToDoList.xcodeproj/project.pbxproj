@@ -210,8 +210,8 @@
 				D3026B8027C26814007BDF24 /* TaskService.swift */,
 				D356F6AD27DFD54500604D34 /* MemoryService.swift */,
 				D356F6A827DF7AE100604D34 /* FileService.swift */,
-				D356F6A627DF7ACC00604D34 /* StorageHelper.swift */,
 				D36FC5B527F719F3008F87A9 /* BackendService.swift */,
+				D356F6A627DF7ACC00604D34 /* StorageHelper.swift */,
 				D36FC5B727F71A5D008F87A9 /* DatabaseTask.swift */,
 			);
 			path = Services;
@@ -589,7 +589,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.intervale.ToDoList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -618,7 +618,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.intervale.ToDoList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

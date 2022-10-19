@@ -16,9 +16,9 @@ extension TabBarController {
 
 class TabBarController: UITabBarController {
 
-    //private lazy var fileService = FileService()
+    private lazy var fileService = FileService()
     
-    private lazy var fileService = BackendService()
+    //private lazy var fileService = BackendService()
     
 
     override func viewDidLoad() {

@@ -7,6 +7,12 @@
 
 import UIKit
 
+enum Operations {
+    case add
+    case edit
+    case delete
+}
+
 class InBoxViewController: UIViewController {
 
     // MARK: - Properties
@@ -40,67 +46,58 @@ class InBoxViewController: UIViewController {
 
         service?.fetch() { result in
             self.stopAnimationAI(result?.localizedDescription)
-
-            self.fethLocalData()
+            self.fetсhСacheData()
         }
     }
     
-    func fethLocalData() {
-        guard let fetchData = self.service?.filterPeriod(), !fetchData.isEmpty else {
+    func fetсhСacheData() {
+        guard let casheData = self.service?.filterPeriod(), !casheData.isEmpty else {
             print("Not data")
             return
         }
 
-        self.data = fetchData
+        self.data = casheData
 
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
     }
 
-    private func add(_ task: Task) {
+    private func beginOperation(operation: Operations, _ task: Task) {
+        
         startAnimationAI()
         
-        service?.add(task) { result in
-            //!!!!!!
-            guard result == nil else {
-                self.stopAnimationAI(result?.localizedDescription)
-                return
+        switch operation {
+        case .add:
+            service?.add(task) { result in
+                guard result == nil else {
+                    self.stopAnimationAI(result?.localizedDescription)
+                    return
+                }
+                self.completeOperation()
             }
-
-            self.fethLocalData()
-            self.stopAnimationAI(nil)
-        }
-    }
-
-    private func edit(_ task: Task) {
-        startAnimationAI()
-        
-        service?.edit(task) { result in
-
-            guard result == nil else {
-                self.stopAnimationAI(result?.localizedDescription)
-                return
+        case .edit:
+            service?.edit(task) { result in
+                guard result == nil else {
+                    self.stopAnimationAI(result?.localizedDescription)
+                    return
+                }
+                self.completeOperation()
             }
-
-            self.fethLocalData()
-            self.stopAnimationAI(nil)
+        case .delete:
+            service?.delete(task) { result in
+                guard result == nil else {
+                    self.stopAnimationAI(result?.localizedDescription)
+                    return
+                }
+                self.completeOperation()
+            }
         }
     }
     
-    private func delete(_ task: Task) {
-        startAnimationAI()
-        
-        service?.delete(task) { result in
-            //!!!!!!
-            guard result == nil else {
-                self.stopAnimationAI(result?.localizedDescription)
-                return
-            }
-
-            self.fethLocalData()
-            self.stopAnimationAI(nil)
-        }
+    private func completeOperation() {
+        fetchData()
+        stopAnimationAI(nil)
     }
 }
 
@@ -164,18 +161,17 @@ extension InBoxViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
 
-            tableView.beginUpdates()
-
             guard let selectTask = data[indexPath.section].tasks?[indexPath.row] else { return }
-
-            delete(selectTask)
 
             //когда edit выполняется в потоке и fetch еще не вернул данные
             //для обновления таблицы надо удалить строку локально
             data[indexPath.section].tasks?.remove(at: indexPath.row)
             
+            tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .none)
             tableView.endUpdates()
+            
+            beginOperation(operation: .delete, selectTask)
         }
     }
 }
@@ -229,12 +225,12 @@ extension InBoxViewController {
 // MARK: - Delegates
 extension InBoxViewController: AddTaskDelegate {
     func addTaskDidTapSave(_ sender: UIViewController, _ task: Task) {
-        add(task)
+        beginOperation(operation: .add, task)
     }
 }
 extension InBoxViewController: DetailTaskDelegate {
     func detailTaskDidTapDone(_ sender: UIViewController, _ task: Task) {
-        edit(task)
+        beginOperation(operation: .edit, task)
     }
 }
 

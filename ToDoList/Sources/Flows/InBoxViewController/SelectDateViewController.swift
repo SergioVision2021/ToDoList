@@ -30,7 +30,7 @@ private extension SelectDateViewController {
     @objc
     func addActionButton(sender: UIBarButtonItem) {
         // Вернуть выбранную дату
-        delegate?.selectDateDidTapDone(self, ConvertDate().convert(from: scheduleDatePicker.date))
+        delegate?.selectDateDidTapDone(self, scheduleDatePicker.date)
         navigationController?.popViewController(animated: true)
     }
 }

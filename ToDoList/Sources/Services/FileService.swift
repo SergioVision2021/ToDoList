@@ -15,29 +15,70 @@ class FileService: TaskService {
 
     override init() {
         super.init()
+    }
+    
+    override func fetch(_ callback: @escaping (Error?) -> Void) {
 
-        guard let group : [Group] = storage.getData() else {
-            print("Group empty")
-            saveDefaultData()
-            print("Save default data")
-            return
+        super.fetch() {
+            guard let group : [Group] = self.storage.getData() else {
+                print("Group empty")
+                self.saveDefaultData()
+                print("Save default data")
+                return
+            }
+
+            self.source = group
+
+            callback($0)
         }
-
-        source = group
     }
 
     private func saveDefaultData() {
         super.defaultGroup()
-        storage.saveJsonToFile(source)
+        
+        storage.saveJsonToFile(source) { _ in }
     }
+    
+    override func add(_ task: Task, _ callback: @escaping (Error?) -> Void) {
+        
+        // add task in cash
+        super.add(task) {
+            self.save() {
+                callback($0) }
+            callback($0)
+        }
+    }
+    
+    override func edit(_ task: Task, _ callback: @escaping (Error?) -> Void) {
+        
+        // edit task in cash
+        super.edit(task) {
+            self.save() {
+                callback($0) }
+            callback($0)
+        }
+    }
+    
+    override func delete(_ task: Task, _ callback: @escaping (Error?) -> Void) {
+        
+        // edit task in cash
+        super.delete(task) {
+            self.save() {
+                callback($0) }
+            callback($0)
+        }
+    }
+    
+    private func save(_ callback: @escaping (Error?) -> Void) {
 
-//    override func add(_ task: Task) {
-//        super.add(task)
-//        storage.saveJsonToFile(source)
-//    }
-
-//    override func edit(_ task: Task, _ status: Bool) {
-//        super.edit(task, status)
-//        storage.saveJsonToFile(source)
-//    }
+        // save all tasks from cash in local file
+        self.storage.saveJsonToFile(self.source) { result in
+            guard result == nil else {
+                callback(result)
+                return
+            }
+            
+            callback(nil)
+        }
+    }
 }

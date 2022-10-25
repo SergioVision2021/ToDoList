@@ -115,6 +115,8 @@ extension StorageHelper {
         }
 
         saveToFile(data)
+
+        callback(nil)
     }
 
     private func getModel<T: Decodable>(_ data: Data) -> [T]? {

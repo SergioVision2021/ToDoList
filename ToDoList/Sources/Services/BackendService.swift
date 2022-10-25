@@ -6,28 +6,23 @@
 //
 
 import Foundation
-import UIKit
-import Pods_ToDoList
 
-enum JSONObject: String {
-    case groups, tasks
-}
+class BackendService: RemoteDataSource {
 
-class BackendService: TaskService {
-
-    var task: Task?
-
-    var component = URLComponents()
+    var component: URLComponents
     
-    override init() {
+    init() {
+        component = URLComponents()
+        configureComponent()
+    }
+    
+    func configureComponent() {
         component.scheme = Constants.SHEME
         component.host = Constants.HOST
         component.port = Constants.PORT
-
-        super.init()
     }
-
-    override func fetch(_ callback: @escaping (Error?) -> Void) {
+    
+    func fetch(_ completionHandler: @escaping FetchCompletionHandler) {
         var baseURL = component
         baseURL.path = "/\(Constants.GROUPS)/"
         baseURL.queryItems = [.init(name: "_embed", value: "tasks")]
@@ -41,92 +36,61 @@ class BackendService: TaskService {
                 //Data -> Swift object
                 guard let decodedResponse: [Group] = CoderJSON().decoderJSON(data) else { return }
 
-                self.source = decodedResponse
-                
-                callback(nil)
+                completionHandler(Result.success(decodedResponse))
+
             case .failure(let error):
                 print("Request failed with error: \(error)")
-                callback(error)
+                completionHandler(Result.failure(RemoteDataSourceError.requestFailed))
             }
         }
     }
-
     
-    override func add(_ task: Task, _ callback: @escaping (Error?) -> Void) {
-
-        var baseURL = self.component
-        baseURL.path = "/" + Constants.TASKS
-
-        let dispatcher = NetworkDispatcher()
-
-        guard let uploadData: Data = CoderJSON().encoderJSON(task) else { return }
-        guard let request = dispatcher.prepareRequest(baseURL, HTTPMethod.POST, uploadData) else { return }
-
-        self.sendRequest(request, dispatcher) { result in
-
-            guard result != nil else {
-                callback(result)
-                return
-            }
-            
-            super.add(task) { callback($0) }
-        }
-    }
-
     
-    override func edit(_ task: Task, _ callback: @escaping (Error?) -> Void) {
-
-        guard let id = task.id else { return }
+    func update(operation: Operations, _ task: Task, _ completionHandler: @escaping (Error?) -> ()) {
         
-        var baseURL = self.component
-        baseURL.path = "/\(Constants.TASKS)/\(id)"
-
         let dispatcher = NetworkDispatcher()
+        var baseURL = component
         
-        guard let uploadData: Data = CoderJSON().encoderJSON(task) else { return }
-        guard let request = dispatcher.prepareRequest(baseURL, HTTPMethod.PUT, uploadData) else { return }
-
-        self.sendRequest(request, dispatcher) { result in
+        guard let url = baseURL.url else { return }
+        
+        var request = URLRequest(url: url)
+        
+        switch operation {
+        case .add:
+            baseURL.path = "/" + Constants.TASKS
             
-            guard result == nil else {
-                callback(result)
-                return
-            }
+            guard let uploadData: Data = CoderJSON().encoderJSON(task) else { return }
 
-            super.edit(task) { callback($0) }
+            guard let req = dispatcher.prepareRequest(baseURL, HTTPMethod.POST, uploadData) else { return }
+            request = req
+        case .edit:
+            guard let id = task.id else { return }
+
+            baseURL.path = "/\(Constants.TASKS)/\(id)"
+            
+            guard let uploadData: Data = CoderJSON().encoderJSON(task) else { return }
+
+            guard let req = dispatcher.prepareRequest(baseURL, HTTPMethod.PUT, uploadData) else { return }
+            request = req
+        case .delete:
+            guard let id = task.id else { return }
+
+            baseURL.path = "/\(Constants.TASKS)/\(id)"
+            
+            guard let req = dispatcher.prepareRequest(baseURL, HTTPMethod.DELETE, nil) else { return }
+            request = req
+        case .def:
+            break
         }
-    }
-
-    override func delete(_ task: Task, _ callback: @escaping (Error?) -> Void) {
-
-        guard let id = task.id else { return }
-
-        var baseURL = self.component
-        baseURL.path = "/\(Constants.TASKS)/\(id)"
-
-        let dispatcher = NetworkDispatcher()
-
-        guard let request = dispatcher.prepareRequest(baseURL, HTTPMethod.DELETE, nil) else { return }
-
-        self.sendRequest(request, dispatcher) { result in
-            guard result == nil else {
-                callback(result)
-                return
-            }
-
-            super.delete(task) { callback($0) }
-        }
-    }
-
-    private func sendRequest(_ request: URLRequest, _ inDispatcher: NetworkDispatcher, _ callback: @escaping (Error?) -> Void) {
-        inDispatcher.sendRequest(request) { result in
+        
+        dispatcher.sendRequest(request) { result in
             switch result {
             case .success(_):
                 print("Request success: \(request.httpMethod)")
-                callback(nil)
+                completionHandler(nil)
             case .failure(let error):
-                print("Request failed with error: \(error)")
-                callback(error)
+                print("Request \(request.httpMethod) failed with error: \(error)")
+                completionHandler(error)
             }
         }
     }

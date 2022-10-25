@@ -11,12 +11,15 @@ enum Operations {
     case add
     case edit
     case delete
+    case def
 }
 
 class InBoxViewController: UIViewController {
 
     // MARK: - Properties
-    var service: TaskServiceProtocol?
+    var managerRepository = ManagerRepository(remoteDataSource: BackendService(), casheDataSource: FileService())
+
+    var service: TaskService?
     private var data: [Group] = []
 
     // MARK: - Visual Component
@@ -35,69 +38,82 @@ class InBoxViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        if data.isEmpty {
-            fetchData()
-        }
+        fetch()
     }
     
-    func fetchData() {
+    func fetch() {
 
-        startAnimationAI()
+        //REPOSITORY
+        managerRepository.fetch() { result in
+            switch result {
+            case.success(let dataModel):
 
-        service?.fetch() { result in
-            self.stopAnimationAI(result?.localizedDescription)
-            self.fetсhСacheData()
+                //TASK SERVICE
+                self.service?.source = dataModel
+                
+                self.service?.fetch() { (result) in
+                    switch result {
+                    case .success(let data):
+                        
+                        DispatchQueue.main.async {
+                            self.data = data
+                            print(data)
+                            self.tableView.reloadData()
+                        }
+                    case .failure(_):
+                        break
+                    }
+                }
+                
+            case.failure(let error):
+                if error as! CasheDataSourceError == CasheDataSourceError.emptyData {
+                    self.execute(operation: Operations.def,
+                                 Task(groupId: 0,
+                                      name: "Task1",
+                                      taskDeadline: nil,
+                                      taskScheduledDate: Date(),
+                                      notes: "aaaaa",
+                                      status: false))
+                }
+            }
         }
     }
-    
-    func fetсhСacheData() {
-        guard let casheData = self.service?.filterPeriod(), !casheData.isEmpty else {
-            print("Not data")
-            return
-        }
 
-        self.data = casheData
+    private func execute(operation: Operations, _ task: Task) {
 
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
-    }
-
-    private func beginOperation(operation: Operations, _ task: Task) {
-        
-        startAnimationAI()
+        service?.update(operation, task) { _ in }
+        guard let source = service?.source else { return }
         
         switch operation {
         case .add:
-            service?.add(task) { result in
+            managerRepository.update(Operations.add, task, source) { result in
                 guard result == nil else {
-                    self.stopAnimationAI(result?.localizedDescription)
                     return
                 }
-                self.completeOperation()
+                self.fetch()
             }
         case .edit:
-            service?.edit(task) { result in
+            managerRepository.update(Operations.edit, task, source) { result in
                 guard result == nil else {
-                    self.stopAnimationAI(result?.localizedDescription)
                     return
                 }
-                self.completeOperation()
+                self.fetch()
             }
         case .delete:
-            service?.delete(task) { result in
+            managerRepository.update(Operations.delete, task, source) { result in
                 guard result == nil else {
-                    self.stopAnimationAI(result?.localizedDescription)
                     return
                 }
-                self.completeOperation()
+                self.fetch()
+            }
+        case .def:
+            managerRepository.update(Operations.def, task, source) { result in
+                guard result == nil else {
+                    return
+                }
+                self.fetch()
             }
         }
-    }
-    
-    private func completeOperation() {
-        fetchData()
-        stopAnimationAI(nil)
     }
 }
 
@@ -143,6 +159,9 @@ extension InBoxViewController {
 extension InBoxViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
+        
+        print("Coutn: \(data.count)")
+        
         return data.count
     }
 
@@ -171,7 +190,7 @@ extension InBoxViewController: UITableViewDataSource {
             tableView.deleteRows(at: [indexPath], with: .none)
             tableView.endUpdates()
             
-            beginOperation(operation: .delete, selectTask)
+            execute(operation: .delete, selectTask)
         }
     }
 }
@@ -225,12 +244,12 @@ extension InBoxViewController {
 // MARK: - Delegates
 extension InBoxViewController: AddTaskDelegate {
     func addTaskDidTapSave(_ sender: UIViewController, _ task: Task) {
-        beginOperation(operation: .add, task)
+        execute(operation: .add, task)
     }
 }
 extension InBoxViewController: DetailTaskDelegate {
     func detailTaskDidTapDone(_ sender: UIViewController, _ task: Task) {
-        beginOperation(operation: .edit, task)
+        execute(operation: .edit, task)
     }
 }
 

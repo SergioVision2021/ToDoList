@@ -40,7 +40,10 @@
 		D36FC5B627F719F3008F87A9 /* BackendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36FC5B527F719F3008F87A9 /* BackendService.swift */; };
 		D36FC5B827F71A5D008F87A9 /* DatabaseTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36FC5B727F71A5D008F87A9 /* DatabaseTask.swift */; };
 		D3B0949628C28ACB00A2FD72 /* CoderJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B0949528C28ACB00A2FD72 /* CoderJSON.swift */; };
-		D3D95B7E27EB4059000F7715 /* TodayModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D95B7D27EB4059000F7715 /* TodayModule.swift */; };
+		D3BC6D6328FFFA43002DDC8D /* ManagereRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC6D6228FFFA43002DDC8D /* ManagereRepository.swift */; };
+		D3BC6D6728FFFC0B002DDC8D /* RemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC6D6628FFFC0B002DDC8D /* RemoteDataSource.swift */; };
+		D3BC6D6B28FFFEAC002DDC8D /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC6D6A28FFFEAC002DDC8D /* Repository.swift */; };
+		D3BC6D8729015B61002DDC8D /* CasheDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC6D8629015B61002DDC8D /* CasheDataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,8 +83,11 @@
 		D36FC5B527F719F3008F87A9 /* BackendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendService.swift; sourceTree = "<group>"; };
 		D36FC5B727F71A5D008F87A9 /* DatabaseTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseTask.swift; sourceTree = "<group>"; };
 		D3B0949528C28ACB00A2FD72 /* CoderJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoderJSON.swift; sourceTree = "<group>"; };
+		D3BC6D6228FFFA43002DDC8D /* ManagereRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagereRepository.swift; sourceTree = "<group>"; };
+		D3BC6D6628FFFC0B002DDC8D /* RemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataSource.swift; sourceTree = "<group>"; };
+		D3BC6D6A28FFFEAC002DDC8D /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		D3BC6D8629015B61002DDC8D /* CasheDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasheDataSource.swift; sourceTree = "<group>"; };
 		D3C53D3627BA5396000B6E26 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D3D95B7D27EB4059000F7715 /* TodayModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayModule.swift; sourceTree = "<group>"; };
 		FDD4244FF57F7028DD205125 /* Pods-ToDoList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoList.release.xcconfig"; path = "Target Support Files/Pods-ToDoList/Pods-ToDoList.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -140,6 +146,8 @@
 		D3026B6527C26814007BDF24 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				D3BC6D6928FFFE8F002DDC8D /* DomainLayer */,
+				D3BC6D5B28FFE42E002DDC8D /* DataLayer */,
 				D3026B6627C26814007BDF24 /* Model */,
 				D3026B6927C26814007BDF24 /* View */,
 				D3026B6D27C26814007BDF24 /* Flows */,
@@ -152,8 +160,6 @@
 		D3026B6627C26814007BDF24 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				D3026B6727C26814007BDF24 /* Group.swift */,
-				D3026B6827C26814007BDF24 /* Task.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -178,10 +184,10 @@
 		D3026B6D27C26814007BDF24 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
-				D3D95B7C27EB403F000F7715 /* SearchModule */,
-				D3D95B7B27EB4034000F7715 /* TodayModule */,
 				D3026B7027C26814007BDF24 /* InBoxViewController */,
+				D3026B6E27C26814007BDF24 /* ToDayViewController.swift */,
 				D3026B7C27C26814007BDF24 /* TaskListViewController.swift */,
+				D3026B6F27C26814007BDF24 /* SearchViewController.swift */,
 				D3026B7D27C26814007BDF24 /* TabBarController.swift */,
 			);
 			path = Flows;
@@ -233,6 +239,42 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		D3BC6D5B28FFE42E002DDC8D /* DataLayer */ = {
+			isa = PBXGroup;
+			children = (
+				D3BC6D5E28FFF969002DDC8D /* Repositories */,
+			);
+			path = DataLayer;
+			sourceTree = "<group>";
+		};
+		D3BC6D5E28FFF969002DDC8D /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				D3BC6D6228FFFA43002DDC8D /* ManagereRepository.swift */,
+				D3BC6D8629015B61002DDC8D /* CasheDataSource.swift */,
+				D3BC6D6628FFFC0B002DDC8D /* RemoteDataSource.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		D3BC6D6928FFFE8F002DDC8D /* DomainLayer */ = {
+			isa = PBXGroup;
+			children = (
+				D3BC6D6D28FFFFB8002DDC8D /* DataModel */,
+				D3BC6D6A28FFFEAC002DDC8D /* Repository.swift */,
+			);
+			path = DomainLayer;
+			sourceTree = "<group>";
+		};
+		D3BC6D6D28FFFFB8002DDC8D /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				D3026B6727C26814007BDF24 /* Group.swift */,
+				D3026B6827C26814007BDF24 /* Task.swift */,
+			);
+			path = DataModel;
+			sourceTree = "<group>";
+		};
 		D3C53D2D27BA5396000B6E26 = {
 			isa = PBXGroup;
 			children = (
@@ -258,23 +300,6 @@
 				D3B0949528C28ACB00A2FD72 /* CoderJSON.swift */,
 			);
 			path = Utils;
-			sourceTree = "<group>";
-		};
-		D3D95B7B27EB4034000F7715 /* TodayModule */ = {
-			isa = PBXGroup;
-			children = (
-				D3D95B7D27EB4059000F7715 /* TodayModule.swift */,
-				D3026B6E27C26814007BDF24 /* ToDayViewController.swift */,
-			);
-			path = TodayModule;
-			sourceTree = "<group>";
-		};
-		D3D95B7C27EB403F000F7715 /* SearchModule */ = {
-			isa = PBXGroup;
-			children = (
-				D3026B6F27C26814007BDF24 /* SearchViewController.swift */,
-			);
-			path = SearchModule;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -402,6 +427,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3BC6D6728FFFC0B002DDC8D /* RemoteDataSource.swift in Sources */,
 				D3026B9D27C26814007BDF24 /* TaskService.swift in Sources */,
 				D3026B8F27C26814007BDF24 /* SearchViewController.swift in Sources */,
 				D3026B9A27C26814007BDF24 /* TaskListViewController.swift in Sources */,
@@ -417,14 +443,16 @@
 				D3026B9027C26814007BDF24 /* InBoxViewController.swift in Sources */,
 				D356F6AE27DFD54500604D34 /* MemoryService.swift in Sources */,
 				D3026B9727C26814007BDF24 /* AddTaskViewController.swift in Sources */,
-				D3D95B7E27EB4059000F7715 /* TodayModule.swift in Sources */,
+				D3BC6D8729015B61002DDC8D /* CasheDataSource.swift in Sources */,
 				D3026B9427C26814007BDF24 /* SelectDateDelegate.swift in Sources */,
 				D3026B9F27C26814007BDF24 /* SceneDelegate.swift in Sources */,
 				D3026B8C27C26814007BDF24 /* TaskCell.swift in Sources */,
 				D3026B9B27C26814007BDF24 /* TabBarController.swift in Sources */,
 				D3026B9C27C26814007BDF24 /* ConvertDate.swift in Sources */,
 				D320AC7C27CE22D1002B16B5 /* Constants.swift in Sources */,
+				D3BC6D6B28FFFEAC002DDC8D /* Repository.swift in Sources */,
 				D3026B9227C26814007BDF24 /* DetailTaskViewController.swift in Sources */,
+				D3BC6D6328FFFA43002DDC8D /* ManagereRepository.swift in Sources */,
 				D3026B9E27C26814007BDF24 /* AppDelegate.swift in Sources */,
 				D356F6A927DF7AE100604D34 /* FileService.swift in Sources */,
 				D3026B8A27C26814007BDF24 /* Group.swift in Sources */,

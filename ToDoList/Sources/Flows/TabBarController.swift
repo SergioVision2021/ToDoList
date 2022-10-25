@@ -16,18 +16,10 @@ extension TabBarController {
 
 class TabBarController: UITabBarController {
 
-    private lazy var fileService = FileService()
-    
-    //private lazy var fileService = BackendService()
-    
+    private lazy var taskService = TaskService()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //backendService.edit(backendService.handleSuccesstaskTest, true)
-        
-//        let todayModule = TodayModule().setService(fileService)
-//        let searchModule = TodayModule().setService(fileService)
 
         viewControllers = [makeInboxView(), makeTodayView(), makeTaskListController(), makeSearchController()]
     }
@@ -44,7 +36,7 @@ private extension TabBarController {
     func makeInboxView() -> UIViewController {
         let vc = InBoxViewController()
         vc.title = Title.InBox.rawValue
-        vc.service = fileService
+        vc.service = taskService
 
         return makeNavController(vc: vc, title: Title.InBox.rawValue, image: UIImage(systemName: Image.calendar.rawValue), tag: 0)
     }
@@ -52,7 +44,7 @@ private extension TabBarController {
     func makeTodayView() -> UIViewController {
         let vc = ToDayViewController()
         vc.title = Title.ToDay.rawValue
-        vc.service = fileService
+        vc.service = taskService
 
         return makeNavController(vc: vc, title: Title.ToDay.rawValue, image: UIImage(systemName: Image.flame.rawValue), tag: 1)
     }
@@ -60,7 +52,7 @@ private extension TabBarController {
     func makeTaskListController() -> UIViewController {
         let vc = TaskListViewController()
         vc.title = Title.TaskList.rawValue
-        vc.service = fileService
+        vc.service = taskService
 
         return makeNavController(vc: vc, title: Title.TaskList.rawValue, image: UIImage(systemName: Image.triangle.rawValue), tag: 2)
     }
@@ -68,7 +60,7 @@ private extension TabBarController {
     func makeSearchController() -> UIViewController {
         let vc = SearchViewController()
         vc.title = Title.Search.rawValue
-        vc.service = fileService
+        vc.service = taskService
 
         return makeNavController(vc: vc, title: Title.Search.rawValue, image: UIImage(systemName: Image.magnifyingglass.rawValue), tag: 3)
     }

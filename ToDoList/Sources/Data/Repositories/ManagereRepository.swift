@@ -15,32 +15,31 @@ enum TypeRepository {
 class ManagerRepository: Repository {
 
     private var currentType = TypeRepository.remote
-    private var currentRepository: Repository
-    private var remoteDataSource: RemoteDataSource
-    private var casheDataSource: CasheDataSource
-    
-    init(remoteDataSource: RemoteDataSource, casheDataSource: CasheDataSource) {
+    private var remoteDataSource: NetworkService
+    private var localDataSource: LocalStorage
+
+    init(remoteDataSource: NetworkService, localDataSource: LocalStorage) {
         self.remoteDataSource = remoteDataSource
-        self.casheDataSource = casheDataSource
-        self.currentRepository = remoteDataSource
+        self.localDataSource = localDataSource
     }
 
     func fetch(_ completionHandler: @escaping FetchCompletionHandler) {
 
-        currentRepository.fetch { (result) in
+        remoteDataSource.fetch { (result) in
             switch result {
             case .success(let dataModel):
                 completionHandler(Result.success(dataModel))
             case .failure(let error):
+                print("< Remote not access! >")
                 
                 self.currentType = .cache
-                self.currentRepository = self.casheDataSource
                 
-                self.currentRepository.fetch { (result) in
+                self.localDataSource.fetch { (result) in
                     switch result {
                     case .success(let dataModel):
                         completionHandler(Result.success(dataModel))
                     case .failure(let error):
+                        self.currentType = .cache
                         completionHandler(Result.failure(error))
                     }
                 }
@@ -56,7 +55,7 @@ class ManagerRepository: Repository {
                 completionHandler($0)
             }
         case .cache:
-            casheDataSource.save(data) {
+            localDataSource.save(data) {
                 completionHandler($0)
             }
         }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class FileService: CasheDataSource {
+class FileService: LocalStorage {
     
     var storage: StorageHelper<Group>
 
@@ -15,11 +15,11 @@ class FileService: CasheDataSource {
         self.storage = StorageHelper(folderName: "ToDoList", fileName: "Data")
     }
     
-    func fetch(_ completionHandler: @escaping FetchCompletionHandler) {
+    func fetch(_ completionHandler: @escaping (Result<[Group], Error>) -> ()) {
 
         guard let model: [Group] = storage.getData() else {
             print("Group empty")
-            completionHandler(Result.failure(CasheDataSourceError.emptyData))
+            completionHandler(Result.failure(LocalStorageError.emptyData))
             return
         }
         
@@ -34,7 +34,7 @@ class FileService: CasheDataSource {
         }
     }
     
-    func removeAll(_ task: [Group], completionHandler: @escaping CompletionHandler) {
+    func removeAll(_ task: [Group], completionHandler: @escaping (Result<Void, Error>) -> ()) {
         //
     }
 }

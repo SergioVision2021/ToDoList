@@ -7,7 +7,11 @@
 
 import Foundation
 
-class BackendService: RemoteDataSource {
+enum NetworkServiceError: Error {
+    case requestFailed
+}
+
+class NetworkService {
 
     var component: URLComponents
     
@@ -22,7 +26,7 @@ class BackendService: RemoteDataSource {
         component.port = Constants.PORT
     }
     
-    func fetch(_ completionHandler: @escaping FetchCompletionHandler) {
+    func fetch(_ completionHandler: @escaping (Result<[Group], Error>) -> ()) {
         var baseURL = component
         baseURL.path = "/\(Constants.GROUPS)/"
         baseURL.queryItems = [.init(name: "_embed", value: "tasks")]
@@ -40,7 +44,7 @@ class BackendService: RemoteDataSource {
 
             case .failure(let error):
                 print("Request failed with error: \(error)")
-                completionHandler(Result.failure(RemoteDataSourceError.requestFailed))
+                completionHandler(Result.failure(NetworkServiceError.requestFailed))
             }
         }
     }

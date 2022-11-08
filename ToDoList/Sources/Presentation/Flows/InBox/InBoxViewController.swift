@@ -17,7 +17,7 @@ enum Operations {
 class InBoxViewController: UIViewController {
 
     // MARK: - Properties
-    var managerRepository = ManagerRepository(remoteDataSource: BackendService(), casheDataSource: FileService())
+    var repository = AppDI.makeTaskRepository()
 
     var service: TaskService?
     private var data: [Group] = []
@@ -43,8 +43,7 @@ class InBoxViewController: UIViewController {
     
     func fetch() {
 
-        //REPOSITORY
-        managerRepository.fetch() { result in
+        repository.fetch() { result in
             switch result {
             case.success(let dataModel):
 
@@ -66,7 +65,7 @@ class InBoxViewController: UIViewController {
                 }
                 
             case.failure(let error):
-                if error as! CasheDataSourceError == CasheDataSourceError.emptyData {
+                if error as! LocalStorageError == LocalStorageError.emptyData {
                     self.execute(operation: Operations.def,
                                  Task(groupId: 0,
                                       name: "Task1",
@@ -86,28 +85,28 @@ class InBoxViewController: UIViewController {
         
         switch operation {
         case .add:
-            managerRepository.update(Operations.add, task, source) { result in
+            repository.update(Operations.add, task, source) { result in
                 guard result == nil else {
                     return
                 }
                 self.fetch()
             }
         case .edit:
-            managerRepository.update(Operations.edit, task, source) { result in
+            repository.update(Operations.edit, task, source) { result in
                 guard result == nil else {
                     return
                 }
                 self.fetch()
             }
         case .delete:
-            managerRepository.update(Operations.delete, task, source) { result in
+            repository.update(Operations.delete, task, source) { result in
                 guard result == nil else {
                     return
                 }
                 self.fetch()
             }
         case .def:
-            managerRepository.update(Operations.def, task, source) { result in
+            repository.update(Operations.def, task, source) { result in
                 guard result == nil else {
                     return
                 }
@@ -145,13 +144,6 @@ extension InBoxViewController {
         lbl.text = data[section].name
         view.addSubview(lbl)
         return view
-    }
-
-    func configureViewController(_ vc: DetailTaskViewController, _ at: IndexPath) {
-        vc.task = data[at.section].tasks?[at.row] ?? Task()
-        vc.nameSection = data[at.section].name ?? ""
-        vc.delegate = self
-        show(vc, sender: self)
     }
 }
 
@@ -212,11 +204,10 @@ extension InBoxViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Связь му 2 VC (без segues)
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-
-        guard let vc = storyBoard.instantiateViewController(withIdentifier: "IdDetailTask") as? DetailTaskViewController else { fatalError("Unexpected Index Path") }
-
-        configureViewController(vc, indexPath)
+        let vc = DetailTaskModuleBuilder().build(task: data[indexPath.section].tasks?[indexPath.row] ?? Task(),
+                                                nameSection: data[indexPath.section].name ?? "",
+                                                delegate: self)
+        show(vc, sender: self)
     }
 
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
@@ -234,9 +225,7 @@ extension InBoxViewController {
 
     @objc
     func addActionButton(sender: UIBarButtonItem) {
-        let vc = AddTaskViewController(nibName: "AddTaskViewController", bundle: nil)
-        vc.delegate = self
-
+        let vc = AddTaskModuleBuilder().build(delegate: self)
         show(vc, sender: self)
     }
 }

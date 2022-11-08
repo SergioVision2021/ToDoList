@@ -7,15 +7,13 @@
 
 import Foundation
 
-enum CasheDataSourceError: Error {
+enum LocalStorageError: Error {
     case emptyData
     case saveData
 }
 
-protocol CasheDataSource: Repository {
-
-    typealias CompletionHandler = (Result<Void, Error>) -> ()
-
+protocol LocalStorage {
+    func fetch(_ completionHandler: @escaping (Result<[Group], Error>) -> ())
     func save(_ task: [Group], completionHandler: @escaping (Error?) -> ())
-    func removeAll(_ task: [Group], completionHandler: @escaping CompletionHandler)
+    func removeAll(_ task: [Group], completionHandler: @escaping (Result<Void, Error>) -> ())
 }

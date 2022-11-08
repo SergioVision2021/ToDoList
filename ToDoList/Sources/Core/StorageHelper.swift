@@ -16,13 +16,6 @@ enum StorageHelperError: Error {
 }
 
 class StorageHelper<T> {
-//    func getJsonData(fromPath: String)
-//    func saveJsonData(_ data: Data, byPath: String)
-//    func getJsonData(fromDirectory: Directory, fileName: String)
-//    func saveJsonData(_ data: Data, byPath: String)
-
-//    func getJsonData(fileName: String) -> Data? {}
-//    func saveJsonData(_ data: Codable, fileName: String) {}
 
     private var folderName: String
     private var fileName: String

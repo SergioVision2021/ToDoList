@@ -7,9 +7,15 @@
 
 import Foundation
 
-final class AddTaskModuleBuilder {
+final class AddTaskModuleBuilder: ModuleBuilder {
 
-    func build(delegate: AddTaskDelegate?) -> AddTaskViewController {
+    let delegate: AddTaskDelegate?
+
+    init(delegate: AddTaskDelegate?) {
+        self.delegate = delegate
+    }
+
+    func build() -> AddTaskViewController {
 
         let view = AddTaskViewController(nibName: Constants.addTaskVCIdentifier, bundle: nil)
         view.delegate = delegate

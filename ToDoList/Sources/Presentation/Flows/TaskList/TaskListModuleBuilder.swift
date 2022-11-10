@@ -7,9 +7,15 @@
 
 import Foundation
 
-final class TaskListModuleBuilder {
+final class TaskListModuleBuilder: ModuleBuilder {
 
-    public func build(service: TaskService) -> TaskListViewController {
+    let service: TaskService
+
+    init(service: TaskService) {
+        self.service = service
+    }
+
+    public func build() -> TaskListViewController {
 
         let view = TaskListViewController()
         view.title = "TaskList"

@@ -7,9 +7,15 @@
 
 import Foundation
 
-final class InBoxModuleBuilder {
+final class InBoxModuleBuilder: ModuleBuilder {
 
-    public func build(service: TaskService) -> InBoxViewController {
+    let service: TaskService
+
+    init(service: TaskService) {
+        self.service = service
+    }
+
+    public func build() -> InBoxViewController {
 
         let view = InBoxViewController()
         view.title = "InBox"

@@ -7,9 +7,15 @@
 
 import Foundation
 
-final class ToDayModuleBuilder {
+final class ToDayModuleBuilder: ModuleBuilder {
 
-    public func build(service: TaskService) -> ToDayViewController {
+    let service: TaskService
+
+    init(service: TaskService) {
+        self.service = service
+    }
+
+    public func build() -> ToDayViewController {
 
         let view = ToDayViewController()
         view.title = "ToDay"

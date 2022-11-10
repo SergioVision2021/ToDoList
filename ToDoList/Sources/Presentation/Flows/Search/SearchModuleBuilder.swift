@@ -7,9 +7,15 @@
 
 import Foundation
 
-final class SearchModuleBuilder {
+final class SearchModuleBuilder: ModuleBuilder {
 
-    public func build(service: TaskService) -> SearchViewController {
+    let service: TaskService
+
+    init(service: TaskService) {
+        self.service = service
+    }
+
+    public func build() -> SearchViewController {
 
         let view = SearchViewController()
         view.title = "Search"

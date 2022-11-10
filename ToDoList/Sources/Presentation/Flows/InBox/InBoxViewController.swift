@@ -204,9 +204,10 @@ extension InBoxViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Связь му 2 VC (без segues)
-        let vc = DetailTaskModuleBuilder().build(task: data[indexPath.section].tasks?[indexPath.row] ?? Task(),
-                                                nameSection: data[indexPath.section].name ?? "",
-                                                delegate: self)
+        let vc = DetailTaskModuleBuilder(task: data[indexPath.section].tasks?[indexPath.row] ?? Task(),
+                                         nameSection: data[indexPath.section].name ?? "",
+                                         delegate: self)
+            .build()
         show(vc, sender: self)
     }
 
@@ -225,7 +226,7 @@ extension InBoxViewController {
 
     @objc
     func addActionButton(sender: UIBarButtonItem) {
-        let vc = AddTaskModuleBuilder().build(delegate: self)
+        let vc = AddTaskModuleBuilder(delegate: self).build()
         show(vc, sender: self)
     }
 }

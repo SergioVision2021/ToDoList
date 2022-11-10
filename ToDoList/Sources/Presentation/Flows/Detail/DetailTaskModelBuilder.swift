@@ -8,9 +8,19 @@
 import Foundation
 import UIKit
 
-final class DetailTaskModuleBuilder {
+final class DetailTaskModuleBuilder: ModuleBuilder {
 
-    func build(task: Task, nameSection: String, delegate: DetailTaskDelegate?) -> DetailTaskViewController {
+    let task: Task
+    let nameSection: String
+    let delegate: DetailTaskDelegate?
+
+    init(task: Task, nameSection: String, delegate: DetailTaskDelegate?) {
+        self.task = task
+        self.nameSection = nameSection
+        self.delegate = delegate
+    }
+
+    func build() -> DetailTaskViewController {
 
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         guard let view = storyBoard.instantiateViewController(withIdentifier: Constants.detailTaskVCIdentifier) as? DetailTaskViewController else {

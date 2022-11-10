@@ -23,7 +23,7 @@ class AppDI {
     //  static func makeTaskNetworkService() {}
 
     // MARK: - Repository
-    static func makeTaskRepository() -> Repository {
-        ManagerRepository(remoteDataSource: NetworkService(), localDataSource: makeTaskStorageService())
+    static func makeTaskRepository() -> TaskRepository {
+        ManagereRepositoryImpl(remoteDataSource: NetworkService(), localDataSource: makeTaskStorageService())
     }
 }

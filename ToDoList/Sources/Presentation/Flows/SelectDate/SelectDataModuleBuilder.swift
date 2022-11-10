@@ -7,9 +7,15 @@
 
 import Foundation
 
-final class SelectDataModuleBuilder {
+final class SelectDataModuleBuilder: ModuleBuilder {
 
-    func build(delegate: SelectDateDelegate?) -> SelectDateViewController {
+    let delegate: SelectDateDelegate?
+
+    init(delegate: SelectDateDelegate?) {
+        self.delegate = delegate
+    }
+
+    func build() -> SelectDateViewController {
 
         let view = SelectDateViewController(nibName: Constants.selectDataVCIdentifier, bundle: nil)
         view.delegate = delegate

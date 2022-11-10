@@ -31,22 +31,22 @@ private extension TabBarController {
     }
     
     func makeInboxView() -> UIViewController {
-        let vc = InBoxModuleBuilder().build(service: taskService)
+        let vc = InBoxModuleBuilder(service: taskService).build()
         return makeNavController(vc: vc, title: vc.title ?? "", image: UIImage(systemName: Image.calendar.rawValue), tag: 0)
     }
 
     func makeTodayView() -> UIViewController {
-        let vc = ToDayModuleBuilder().build(service: taskService)
+        let vc = ToDayModuleBuilder(service: taskService).build()
         return makeNavController(vc: vc, title: vc.title ?? "", image: UIImage(systemName: Image.flame.rawValue), tag: 1)
     }
 
     func makeTaskListController() -> UIViewController {
-        let vc = TaskListModuleBuilder().build(service: taskService)
+        let vc = TaskListModuleBuilder(service: taskService).build()
         return makeNavController(vc: vc, title: vc.title ?? "", image: UIImage(systemName: Image.triangle.rawValue), tag: 2)
     }
 
     func makeSearchController() -> UIViewController {
-        let vc = SearchModuleBuilder().build(service: taskService)
+        let vc = SearchModuleBuilder(service: taskService).build()
         return makeNavController(vc: vc, title: vc.title ?? "", image: UIImage(systemName: Image.magnifyingglass.rawValue), tag: 3)
     }
 }

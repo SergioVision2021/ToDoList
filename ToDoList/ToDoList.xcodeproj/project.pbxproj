@@ -47,9 +47,10 @@
 		D356F6AE27DFD54500604D34 /* MemoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D356F6AD27DFD54500604D34 /* MemoryService.swift */; };
 		D36FC5B627F719F3008F87A9 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36FC5B527F719F3008F87A9 /* NetworkService.swift */; };
 		D36FC5B827F71A5D008F87A9 /* DatabaseTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36FC5B727F71A5D008F87A9 /* DatabaseTask.swift */; };
+		D370E1EF291CE5BA0090DF47 /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D370E1EE291CE5BA0090DF47 /* ModuleBuilder.swift */; };
 		D3B0949628C28ACB00A2FD72 /* CoderJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B0949528C28ACB00A2FD72 /* CoderJSON.swift */; };
-		D3BC6D6328FFFA43002DDC8D /* ManagereRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC6D6228FFFA43002DDC8D /* ManagereRepository.swift */; };
-		D3BC6D6B28FFFEAC002DDC8D /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC6D6A28FFFEAC002DDC8D /* Repository.swift */; };
+		D3BC6D6328FFFA43002DDC8D /* ManagereRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC6D6228FFFA43002DDC8D /* ManagereRepositoryImpl.swift */; };
+		D3BC6D6B28FFFEAC002DDC8D /* TaskRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC6D6A28FFFEAC002DDC8D /* TaskRepository.swift */; };
 		D3BC6D8729015B61002DDC8D /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC6D8629015B61002DDC8D /* LocalStorage.swift */; };
 /* End PBXBuildFile section */
 
@@ -97,9 +98,10 @@
 		D356F6AD27DFD54500604D34 /* MemoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryService.swift; sourceTree = "<group>"; };
 		D36FC5B527F719F3008F87A9 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		D36FC5B727F71A5D008F87A9 /* DatabaseTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseTask.swift; sourceTree = "<group>"; };
+		D370E1EE291CE5BA0090DF47 /* ModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
 		D3B0949528C28ACB00A2FD72 /* CoderJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoderJSON.swift; sourceTree = "<group>"; };
-		D3BC6D6228FFFA43002DDC8D /* ManagereRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagereRepository.swift; sourceTree = "<group>"; };
-		D3BC6D6A28FFFEAC002DDC8D /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		D3BC6D6228FFFA43002DDC8D /* ManagereRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagereRepositoryImpl.swift; sourceTree = "<group>"; };
+		D3BC6D6A28FFFEAC002DDC8D /* TaskRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRepository.swift; sourceTree = "<group>"; };
 		D3BC6D8629015B61002DDC8D /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		D3C53D3627BA5396000B6E26 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDD4244FF57F7028DD205125 /* Pods-ToDoList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoList.release.xcconfig"; path = "Target Support Files/Pods-ToDoList/Pods-ToDoList.release.xcconfig"; sourceTree = "<group>"; };
@@ -163,7 +165,6 @@
 				D318E833291A509500C89C48 /* Presentation */,
 				D3BC6D6928FFFE8F002DDC8D /* Domain */,
 				D3BC6D5B28FFE42E002DDC8D /* Data */,
-				D3026B7E27C26814007BDF24 /* Services */,
 				D318E83F291A6AA900C89C48 /* Core */,
 				D3D95B7A27EB380C000F7715 /* Utils */,
 				D320AC7B27CE22D0002B16B5 /* Constants.swift */,
@@ -233,7 +234,7 @@
 		D318E832291A4F1000C89C48 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				D3BC6D6A28FFFEAC002DDC8D /* Repository.swift */,
+				D3BC6D6A28FFFEAC002DDC8D /* TaskRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -329,6 +330,7 @@
 			children = (
 				D356F6A627DF7ACC00604D34 /* StorageHelper.swift */,
 				D36FC5B727F71A5D008F87A9 /* DatabaseTask.swift */,
+				D370E1EE291CE5BA0090DF47 /* ModuleBuilder.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -337,6 +339,7 @@
 			isa = PBXGroup;
 			children = (
 				D3BC6D5E28FFF969002DDC8D /* Repositories */,
+				D3026B7E27C26814007BDF24 /* Services */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -344,7 +347,7 @@
 		D3BC6D5E28FFF969002DDC8D /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
-				D3BC6D6228FFFA43002DDC8D /* ManagereRepository.swift */,
+				D3BC6D6228FFFA43002DDC8D /* ManagereRepositoryImpl.swift */,
 				D3BC6D8629015B61002DDC8D /* LocalStorage.swift */,
 			);
 			path = Repositories;
@@ -532,6 +535,7 @@
 				D3026B9327C26814007BDF24 /* AddTaskDelegate.swift in Sources */,
 				D356F6A727DF7ACC00604D34 /* StorageHelper.swift in Sources */,
 				D318E84A291A772000C89C48 /* SearchModuleBuilder.swift in Sources */,
+				D370E1EF291CE5BA0090DF47 /* ModuleBuilder.swift in Sources */,
 				D318E850291A94EC00C89C48 /* AddTaskModuleBuilder.swift in Sources */,
 				D3B0949628C28ACB00A2FD72 /* CoderJSON.swift in Sources */,
 				D36FC5B627F719F3008F87A9 /* NetworkService.swift in Sources */,
@@ -549,9 +553,9 @@
 				D3026B9C27C26814007BDF24 /* ConvertDate.swift in Sources */,
 				D318E852291A964A00C89C48 /* SelectDataModuleBuilder.swift in Sources */,
 				D320AC7C27CE22D1002B16B5 /* Constants.swift in Sources */,
-				D3BC6D6B28FFFEAC002DDC8D /* Repository.swift in Sources */,
+				D3BC6D6B28FFFEAC002DDC8D /* TaskRepository.swift in Sources */,
 				D3026B9227C26814007BDF24 /* DetailTaskViewController.swift in Sources */,
-				D3BC6D6328FFFA43002DDC8D /* ManagereRepository.swift in Sources */,
+				D3BC6D6328FFFA43002DDC8D /* ManagereRepositoryImpl.swift in Sources */,
 				D3026B9E27C26814007BDF24 /* AppDelegate.swift in Sources */,
 				D356F6A927DF7AE100604D34 /* FileService.swift in Sources */,
 				D3026B8A27C26814007BDF24 /* Group.swift in Sources */,

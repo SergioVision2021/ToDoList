@@ -12,7 +12,7 @@ enum TypeRepository {
     case cache
 }
 
-class ManagerRepository: Repository {
+class ManagereRepositoryImpl: TaskRepository {
 
     private var currentType = TypeRepository.remote
     private var remoteDataSource: NetworkService

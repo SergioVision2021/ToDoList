@@ -97,3 +97,14 @@ class NetworkService {
         }
     }
 }
+
+extension NetworkService {
+    func mock() -> Group {
+        return Group.init(
+            id: 0, name: "Inbox", tasks: [Task.init(groupId: 0,
+                                                    name: "Task default",
+                                                    taskDeadline: Date.now,
+                                                    notes: "Notes task",
+                                                    status: false)])
+    }
+}

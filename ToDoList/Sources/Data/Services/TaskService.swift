@@ -50,12 +50,6 @@ class TaskService: TaskServiceProtocol {
             source[id].editTask(task)
         case .delete:
             source[id].removeTask(task)
-            // Default data
-        case .def:
-            source[0] = Group(id: 0,
-                              name: "InBox",
-                              dateCreated: Date(),
-                              tasks: [task])
         }
     }
     

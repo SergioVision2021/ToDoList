@@ -11,7 +11,6 @@ enum Operations {
     case add
     case edit
     case delete
-    case def
 }
 
 class InBoxViewController: UIViewController {
@@ -65,53 +64,39 @@ class InBoxViewController: UIViewController {
                 }
                 
             case.failure(let error):
-                if error as! LocalStorageError == LocalStorageError.emptyData {
-                    self.execute(operation: Operations.def,
-                                 Task(groupId: 0,
-                                      name: "Task1",
-                                      taskDeadline: nil,
-                                      taskScheduledDate: Date(),
-                                      notes: "aaaaa",
-                                      status: false))
+                guard error == nil else {
+                    DispatchQueue.main.async {
+                        self.present(self.makeAlertController(error.localizedDescription), animated: true, completion: nil)
+                    }
+                    return
                 }
             }
         }
     }
-
+    
     private func execute(operation: Operations, _ task: Task) {
 
         service?.update(operation, task) { _ in }
         guard let source = service?.source else { return }
         
-        switch operation {
-        case .add:
-            repository.update(Operations.add, task, source) { result in
-                guard result == nil else {
+        repository.update(operation, task) { error in
+            guard error == nil else {
+                DispatchQueue.main.async {
+                    self.present(self.makeAlertController(error?.localizedDescription), animated: true, completion: nil)
+                }
+                return
+            }
+
+            self.repository.save(source) { error in
+                guard error == nil else {
+                    DispatchQueue.main.async {
+                        self.present(self.makeAlertController(error?.localizedDescription), animated: true, completion: nil)
+                    }
                     return
                 }
-                self.fetch()
             }
-        case .edit:
-            repository.update(Operations.edit, task, source) { result in
-                guard result == nil else {
-                    return
-                }
-                self.fetch()
-            }
-        case .delete:
-            repository.update(Operations.delete, task, source) { result in
-                guard result == nil else {
-                    return
-                }
-                self.fetch()
-            }
-        case .def:
-            repository.update(Operations.def, task, source) { result in
-                guard result == nil else {
-                    return
-                }
-                self.fetch()
-            }
+
+            self.fetch()
         }
     }
 }

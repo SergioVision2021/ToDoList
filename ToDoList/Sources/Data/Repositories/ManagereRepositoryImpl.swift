@@ -7,14 +7,8 @@
 
 import Foundation
 
-enum TypeRepository {
-    case remote
-    case cache
-}
+class TaskRepositoryImpl: TaskRepository {
 
-class ManagereRepositoryImpl: TaskRepository {
-
-    private var currentType = TypeRepository.remote
     private var remoteDataSource: NetworkService
     private var localDataSource: LocalStorage
 
@@ -25,21 +19,26 @@ class ManagereRepositoryImpl: TaskRepository {
 
     func fetch(_ completionHandler: @escaping FetchCompletionHandler) {
 
-        remoteDataSource.fetch { (result) in
+        localDataSource.fetch { (result) in
             switch result {
             case .success(let dataModel):
                 completionHandler(Result.success(dataModel))
             case .failure(let error):
-                print("< Remote not access! >")
-                
-                self.currentType = .cache
-                
-                self.localDataSource.fetch { (result) in
+                print(error.localizedDescription)
+
+                self.remoteDataSource.fetch { (result) in
                     switch result {
                     case .success(let dataModel):
+                        
+                        self.save(dataModel) { result in
+                            guard result == nil else {
+                                completionHandler(Result.failure(result!))
+                                return
+                            }
+                        }
+                        
                         completionHandler(Result.success(dataModel))
                     case .failure(let error):
-                        self.currentType = .cache
                         completionHandler(Result.failure(error))
                     }
                 }
@@ -47,17 +46,15 @@ class ManagereRepositoryImpl: TaskRepository {
         }
     }
 
-    func update(_ operation: Operations, _ task: Task, _ data: [Group], completionHandler: @escaping (Error?) -> ()) {
- 
-        switch currentType {
-        case .remote:
-            remoteDataSource.update(operation: operation, task) {
-                completionHandler($0)
-            }
-        case .cache:
-            localDataSource.save(data) {
-                completionHandler($0)
-            }
+    func update(_ operation: Operations, _ task: Task, completionHandler: @escaping (Error?) -> ()) {
+        remoteDataSource.update(operation: operation, task) {
+            completionHandler($0)
+        }
+    }
+
+    func save( _ data: [Group], completionHandler: @escaping (Error?) -> ()) {
+        localDataSource.save(data) {
+            completionHandler($0)
         }
     }
 }

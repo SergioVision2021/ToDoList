@@ -83,8 +83,6 @@ class NetworkService {
             
             guard let req = dispatcher.prepareRequest(baseURL, HTTPMethod.DELETE, nil) else { return }
             request = req
-        case .def:
-            break
         }
         
         dispatcher.sendRequest(request) { result in

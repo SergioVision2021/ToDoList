@@ -10,6 +10,5 @@ import Foundation
 protocol TaskRepository {
     typealias FetchCompletionHandler = (Result<[Group], Error>) -> Void
     func fetch(_ completionHandler: @escaping FetchCompletionHandler)
-    func update(_ operation: Operations, _ task: Task, completionHandler: @escaping (Error?) -> Void)
-    func save(_ data: [Group], completionHandler: @escaping (Error?) -> Void)
+    func update(_ operation: Operations, _ task: Task, data: [Group], completionHandler: @escaping (Error?) -> Void)
 }

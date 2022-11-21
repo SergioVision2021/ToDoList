@@ -19,7 +19,9 @@ class TaskRepositoryImpl: TaskRepository {
 
     func fetch(_ completionHandler: @escaping FetchCompletionHandler) {
 
-        localDataSource.fetch { (result) in
+        localDataSource.fetch { [weak self] (result) in
+            guard let self = self else { return }
+
             switch result {
             case .success(let dataModel):
                 completionHandler(Result.success(dataModel))
@@ -30,7 +32,7 @@ class TaskRepositoryImpl: TaskRepository {
                     switch result {
                     case .success(let dataModel):
                         
-                        self.save(dataModel) { result in
+                        self.localDataSource.saveAll(dataModel) { (result) in
                             guard result == nil else {
                                 completionHandler(Result.failure(result!))
                                 return
@@ -46,15 +48,19 @@ class TaskRepositoryImpl: TaskRepository {
         }
     }
 
-    func update(_ operation: Operations, _ task: Task, completionHandler: @escaping (Error?) -> ()) {
-        remoteDataSource.update(operation: operation, task) {
-            completionHandler($0)
-        }
-    }
+    func update(_ operation: Operations, _ task: Task, data: [Group], completionHandler: @escaping (Error?) -> ()) {
 
-    func save( _ data: [Group], completionHandler: @escaping (Error?) -> ()) {
-        localDataSource.save(data) {
-            completionHandler($0)
+        remoteDataSource.update(operation: operation, task) { [weak self] result in
+            guard let self = self else { return }
+
+            guard result == nil else {
+                completionHandler(result)
+                return
+            }
+            
+            self.localDataSource.saveAll(data) {
+                completionHandler($0)
+            }
         }
     }
 }

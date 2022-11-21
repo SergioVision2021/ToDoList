@@ -26,7 +26,7 @@ class FileService: LocalStorage {
         completionHandler(Result.success(model))
     }
     
-    func save(_ task: [Group], completionHandler: @escaping (Error?) -> ()) {
+    func saveAll(_ task: [Group], completionHandler: @escaping (Error?) -> ()) {
         
         // save all tasks from cash in local file
         storage.saveJsonToFile(task) {

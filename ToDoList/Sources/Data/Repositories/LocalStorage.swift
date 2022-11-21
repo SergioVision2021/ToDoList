@@ -14,6 +14,6 @@ enum LocalStorageError: Error {
 
 protocol LocalStorage {
     func fetch(_ completionHandler: @escaping (Result<[Group], Error>) -> ())
-    func save(_ task: [Group], completionHandler: @escaping (Error?) -> ())
+    func saveAll(_ task: [Group], completionHandler: @escaping (Error?) -> ())
     func removeAll(_ task: [Group], completionHandler: @escaping (Result<Void, Error>) -> ())
 }

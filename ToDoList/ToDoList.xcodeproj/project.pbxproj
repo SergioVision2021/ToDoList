@@ -48,7 +48,7 @@
 		D36FC5B827F71A5D008F87A9 /* DatabaseTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36FC5B727F71A5D008F87A9 /* DatabaseTask.swift */; };
 		D370E1EF291CE5BA0090DF47 /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D370E1EE291CE5BA0090DF47 /* ModuleBuilder.swift */; };
 		D3B0949628C28ACB00A2FD72 /* CoderJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B0949528C28ACB00A2FD72 /* CoderJSON.swift */; };
-		D3BC6D6328FFFA43002DDC8D /* ManagereRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC6D6228FFFA43002DDC8D /* ManagereRepositoryImpl.swift */; };
+		D3BC6D6328FFFA43002DDC8D /* TaskRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC6D6228FFFA43002DDC8D /* TaskRepositoryImpl.swift */; };
 		D3BC6D6B28FFFEAC002DDC8D /* TaskRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC6D6A28FFFEAC002DDC8D /* TaskRepository.swift */; };
 		D3BC6D8729015B61002DDC8D /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC6D8629015B61002DDC8D /* LocalStorage.swift */; };
 /* End PBXBuildFile section */
@@ -98,7 +98,7 @@
 		D36FC5B727F71A5D008F87A9 /* DatabaseTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseTask.swift; sourceTree = "<group>"; };
 		D370E1EE291CE5BA0090DF47 /* ModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
 		D3B0949528C28ACB00A2FD72 /* CoderJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoderJSON.swift; sourceTree = "<group>"; };
-		D3BC6D6228FFFA43002DDC8D /* ManagereRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagereRepositoryImpl.swift; sourceTree = "<group>"; };
+		D3BC6D6228FFFA43002DDC8D /* TaskRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRepositoryImpl.swift; sourceTree = "<group>"; };
 		D3BC6D6A28FFFEAC002DDC8D /* TaskRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRepository.swift; sourceTree = "<group>"; };
 		D3BC6D8629015B61002DDC8D /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		D3C53D3627BA5396000B6E26 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -344,7 +344,7 @@
 		D3BC6D5E28FFF969002DDC8D /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
-				D3BC6D6228FFFA43002DDC8D /* ManagereRepositoryImpl.swift */,
+				D3BC6D6228FFFA43002DDC8D /* TaskRepositoryImpl.swift */,
 				D3BC6D8629015B61002DDC8D /* LocalStorage.swift */,
 			);
 			path = Repositories;
@@ -551,7 +551,7 @@
 				D320AC7C27CE22D1002B16B5 /* Constants.swift in Sources */,
 				D3BC6D6B28FFFEAC002DDC8D /* TaskRepository.swift in Sources */,
 				D3026B9227C26814007BDF24 /* DetailTaskViewController.swift in Sources */,
-				D3BC6D6328FFFA43002DDC8D /* ManagereRepositoryImpl.swift in Sources */,
+				D3BC6D6328FFFA43002DDC8D /* TaskRepositoryImpl.swift in Sources */,
 				D3026B9E27C26814007BDF24 /* AppDelegate.swift in Sources */,
 				D356F6A927DF7AE100604D34 /* FileService.swift in Sources */,
 				D3026B8A27C26814007BDF24 /* Group.swift in Sources */,

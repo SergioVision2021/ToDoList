@@ -42,7 +42,9 @@ class InBoxViewController: UIViewController {
     
     func fetch() {
 
-        repository.fetch() { result in
+        repository.fetch() { [weak self] (result) in
+            guard let self = self else { return }
+            
             switch result {
             case.success(let dataModel):
 
@@ -52,7 +54,6 @@ class InBoxViewController: UIViewController {
                 self.service?.fetch() { (result) in
                     switch result {
                     case .success(let data):
-                        
                         DispatchQueue.main.async {
                             self.data = data
                             print(data)
@@ -62,13 +63,9 @@ class InBoxViewController: UIViewController {
                         break
                     }
                 }
-                
             case.failure(let error):
-                guard error == nil else {
-                    DispatchQueue.main.async {
-                        self.present(self.makeAlertController(error.localizedDescription), animated: true, completion: nil)
-                    }
-                    return
+                DispatchQueue.main.async {
+                    self.present(self.makeAlertController(error.localizedDescription), animated: true, completion: nil)
                 }
             }
         }
@@ -79,23 +76,16 @@ class InBoxViewController: UIViewController {
         service?.update(operation, task) { _ in }
         guard let source = service?.source else { return }
         
-        repository.update(operation, task) { error in
+        repository.update(operation, task, data: source) { [weak self] error in
+            guard let self = self else { return }
+            
             guard error == nil else {
                 DispatchQueue.main.async {
                     self.present(self.makeAlertController(error?.localizedDescription), animated: true, completion: nil)
                 }
                 return
             }
-
-            self.repository.save(source) { error in
-                guard error == nil else {
-                    DispatchQueue.main.async {
-                        self.present(self.makeAlertController(error?.localizedDescription), animated: true, completion: nil)
-                    }
-                    return
-                }
-            }
-
+            
             self.fetch()
         }
     }

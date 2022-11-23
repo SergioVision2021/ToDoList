@@ -42,6 +42,8 @@
 		D318E852291A964A00C89C48 /* SelectDataModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D318E851291A964A00C89C48 /* SelectDataModuleBuilder.swift */; };
 		D320AC7A27CE2256002B16B5 /* Data.json in Resources */ = {isa = PBXBuildFile; fileRef = D320AC7827CE2255002B16B5 /* Data.json */; };
 		D320AC7C27CE22D1002B16B5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D320AC7B27CE22D0002B16B5 /* Constants.swift */; };
+		D34DE544292E20B6001549C4 /* InBoxRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34DE543292E20B6001549C4 /* InBoxRouter.swift */; };
+		D34DE546292E20BE001549C4 /* AddTaskRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34DE545292E20BE001549C4 /* AddTaskRouter.swift */; };
 		D356F6A727DF7ACC00604D34 /* StorageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D356F6A627DF7ACC00604D34 /* StorageHelper.swift */; };
 		D356F6A927DF7AE100604D34 /* FileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D356F6A827DF7AE100604D34 /* FileService.swift */; };
 		D36FC5B627F719F3008F87A9 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36FC5B527F719F3008F87A9 /* NetworkService.swift */; };
@@ -92,6 +94,8 @@
 		D318E851291A964A00C89C48 /* SelectDataModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDataModuleBuilder.swift; sourceTree = "<group>"; };
 		D320AC7827CE2255002B16B5 /* Data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Data.json; sourceTree = "<group>"; };
 		D320AC7B27CE22D0002B16B5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D34DE543292E20B6001549C4 /* InBoxRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InBoxRouter.swift; sourceTree = "<group>"; };
+		D34DE545292E20BE001549C4 /* AddTaskRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTaskRouter.swift; sourceTree = "<group>"; };
 		D356F6A627DF7ACC00604D34 /* StorageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageHelper.swift; sourceTree = "<group>"; };
 		D356F6A827DF7AE100604D34 /* FileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileService.swift; sourceTree = "<group>"; };
 		D36FC5B527F719F3008F87A9 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
@@ -250,6 +254,7 @@
 			children = (
 				D3026B7127C26814007BDF24 /* InBoxViewController.swift */,
 				D318E841291A6B7E00C89C48 /* InBoxModuleBuilder.swift */,
+				D34DE543292E20B6001549C4 /* InBoxRouter.swift */,
 			);
 			path = InBox;
 			sourceTree = "<group>";
@@ -261,6 +266,7 @@
 				D3026B7627C26814007BDF24 /* AddTaskViewController.xib */,
 				D3026B7427C26814007BDF24 /* AddTaskDelegate.swift */,
 				D318E84F291A94EC00C89C48 /* AddTaskModuleBuilder.swift */,
+				D34DE545292E20BE001549C4 /* AddTaskRouter.swift */,
 			);
 			path = Add;
 			sourceTree = "<group>";
@@ -523,6 +529,7 @@
 				D3026B9D27C26814007BDF24 /* TaskService.swift in Sources */,
 				D3026B8F27C26814007BDF24 /* SearchViewController.swift in Sources */,
 				D3026B9A27C26814007BDF24 /* TaskListViewController.swift in Sources */,
+				D34DE546292E20BE001549C4 /* AddTaskRouter.swift in Sources */,
 				D3026B9127C26814007BDF24 /* SelectDateViewController.swift in Sources */,
 				D36FC5B827F71A5D008F87A9 /* DatabaseTask.swift in Sources */,
 				D3026B8E27C26814007BDF24 /* ToDayViewController.swift in Sources */,
@@ -535,6 +542,7 @@
 				D370E1EF291CE5BA0090DF47 /* ModuleBuilder.swift in Sources */,
 				D318E850291A94EC00C89C48 /* AddTaskModuleBuilder.swift in Sources */,
 				D3B0949628C28ACB00A2FD72 /* CoderJSON.swift in Sources */,
+				D34DE544292E20B6001549C4 /* InBoxRouter.swift in Sources */,
 				D36FC5B627F719F3008F87A9 /* NetworkService.swift in Sources */,
 				D3026B9027C26814007BDF24 /* InBoxViewController.swift in Sources */,
 				D3026B9727C26814007BDF24 /* AddTaskViewController.swift in Sources */,
@@ -717,7 +725,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.intervale.ToDoList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -746,7 +754,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.intervale.ToDoList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

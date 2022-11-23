@@ -7,7 +7,12 @@
 
 import UIKit
 
-class AddTaskViewController: UIViewController {
+protocol AddTaskViewLogic: ViewProtocol {
+    var router: AddTaskRoutingLogic? { get set }
+    var delegate: AddTaskDelegate? { get set }
+}
+
+class AddTaskViewController: UIViewController, AddTaskViewLogic {
     // MARK: - IBOutlet
     @IBOutlet weak var selectGroupButton: UIButton!
     @IBOutlet weak var nameTaskTextField: UITextField!
@@ -15,11 +20,12 @@ class AddTaskViewController: UIViewController {
     @IBOutlet weak var scheduleDateButton: UIButton!
 
     // MARK: - Properties
-    var delegate: AddTaskDelegate?
+    public var router: AddTaskRoutingLogic?
+    public var delegate: AddTaskDelegate?
 
-    let numberRandom = Int.random(in: 1..<1000)
-    var scheduleDate: Date?
-    
+    private let numberRandom = Int.random(in: 1..<1000)
+    private var scheduleDate: Date?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,8 +38,7 @@ class AddTaskViewController: UIViewController {
         selectGroupButton.setTitle("InBox", for: .normal)               // Default - Inbox
     }
     @IBAction func selectDateButton(_ sender: UIButton) {
-        let vc = SelectDataModuleBuilder(delegate: self).build()
-        navigationController?.pushViewController(vc, animated: true)
+        router?.navigationToSelectDate(sender: self)
     }
 }
 

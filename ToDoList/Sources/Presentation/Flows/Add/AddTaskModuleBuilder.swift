@@ -19,6 +19,11 @@ final class AddTaskModuleBuilder: ModuleBuilder {
 
         let view = AddTaskViewController(nibName: Constants.addTaskVCIdentifier, bundle: nil)
         view.delegate = delegate
+
+        let router = AddTaskRouter(view: view)
+
+        view.router = router
+
         return view
     }
 }

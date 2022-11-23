@@ -8,6 +8,7 @@
 import Foundation
 
 enum TaskServiceError: Error {
+    case cashe
     case cacheFetching
     case cacheAdding
     case cacheEditing
@@ -15,29 +16,45 @@ enum TaskServiceError: Error {
 }
 
 protocol TaskServiceProtocol {
-
-    func fetch(_ callback: @escaping (Error?) -> Void)
-    func add(_ task: Task, _ callback: @escaping (Error?) -> Void)
-    func edit(_ task: Task, _ callback: @escaping (Error?) -> Void)
-    func delete(_ task: Task, _ callback: @escaping (Error?) -> Void)
-
-    func filterPeriod() -> [Group]?
+    func fetch(_ completionHandler: @escaping (Result<[Group], Error>) -> ())
+    func update(_ operation: Operations, _ task: Task, completionHandler: @escaping (Result<Void, Error>) -> ())
+    
+    func filterPeriod()
     func filterToday(_ namePeriod: String) -> [Group]?
     func filterAllTasks() -> [String]
-    func filterGroup() -> [String]
 }
 
 class TaskService: TaskServiceProtocol {
 
-    var source = [Group]()
-    var filtredData = [Group]()
+    internal var source = [Group]()
+    private var filtredData = [Group]()
 
-    func fetch(_ callback: @escaping (Error?) -> Void) {
-        callback(nil)
+    public func fetch(_ completionHandler: @escaping (Result<[Group], Error>) -> ()) {
+        filterPeriod()
+        completionHandler(Result.success(filtredData))
+    }
+
+    public func update(_ operation: Operations, _ task: Task, completionHandler: @escaping (Result<Void, Error>) -> ()) {
+        
+        guard let id = task.groupId else {
+            completionHandler(Result.failure(TaskServiceError.cashe))
+            return
+        }
+
+        switch operation {
+        case .add:
+            // AddTask - добавить новую задачу (по умолчанию 0 групп)
+            source[id].addTask(task)
+        case .edit:
+            // DetailTask - завершить задачу
+            source[id].editTask(task)
+        case .delete:
+            source[id].removeTask(task)
+        }
     }
     
-    // Для InBoxViewController
-    func filterPeriod() -> [Group]? {
+    // For InBoxViewController
+    func filterPeriod() {
 
         filtredData.removeAll()
 
@@ -71,11 +88,9 @@ class TaskService: TaskServiceProtocol {
 
             filtredData.append(Group.init(id: indexS, name: sections[indexS], tasks: sectionTasks))
         }
-
-        return filtredData
     }
 
-    // Для TodayViewController
+    // For TodayViewController
     func filterToday(_ namePeriod: String) -> [Group]? {
         filterPeriod()
 
@@ -108,56 +123,13 @@ class TaskService: TaskServiceProtocol {
         return statusToDay
     }
 
-    // Для SearchViewController
+    // For SearchViewController
     func filterAllTasks() -> [String] {
         return source.compactMap { $0.tasks?.compactMap { $0.name }}.flatMap{ $0 }
     }
 
-    // Для TaskListViewController
+    // For TaskListViewController
     func filterGroup() -> [String] {
         source.compactMap { $0.name }
-    }
-
-    // AddTask - добавить новую задачу (по умолчанию 0 групп)
-    func add(_ task: Task, _ callback: @escaping (Error?) -> Void) {
-        guard let id = task.groupId else {
-            callback(TaskServiceError.cacheAdding)
-            return
-        }
-
-        source[id].addTask(task)
-        callback(nil)
-    }
-
-    // DetailTask - завершить задачу
-    func edit(_ task: Task, _ callback: @escaping (Error?) -> Void) {
-
-        guard let id = task.groupId else {
-            callback(TaskServiceError.cacheEditing)
-            return
-        }
-
-        source[id].editTask(task)
-
-        callback(nil)
-    }
-    
-    func delete(_ task: Task, _ callback: @escaping (Error?) -> Void) {
-        
-        guard let id = task.groupId else {
-            callback(TaskServiceError.cacheEditing)
-            return
-        }
-        
-        source[id].removeTask(task)
-        callback(nil)
-    }
-
-    func defaultGroup() {
-        source.insert(Group(id: 0,
-                            name: "InBox",
-                            dateCreated: Date(),
-                            tasks: [Task(groupId: 0, name: "Task1", taskDeadline: nil, taskScheduledDate: Date(), notes: "aaaaa", status: false)]),
-                      at: 0)
     }
 }

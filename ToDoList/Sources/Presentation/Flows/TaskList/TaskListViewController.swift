@@ -10,7 +10,7 @@ import UIKit
 class TaskListViewController: UIViewController {
 
     // MARK: - Properties
-    var service: TaskServiceProtocol?
+    var service: TaskService?
     private var data: [String] = []
 
     // MARK: - Visual Component

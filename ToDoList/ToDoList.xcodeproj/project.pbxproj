@@ -32,15 +32,25 @@
 		D3026B9D27C26814007BDF24 /* TaskService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3026B8027C26814007BDF24 /* TaskService.swift */; };
 		D3026B9E27C26814007BDF24 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3026B8227C26814007BDF24 /* AppDelegate.swift */; };
 		D3026B9F27C26814007BDF24 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3026B8327C26814007BDF24 /* SceneDelegate.swift */; };
+		D318E83B291A663000C89C48 /* AppDI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D318E83A291A663000C89C48 /* AppDI.swift */; };
+		D318E842291A6B7F00C89C48 /* InBoxModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D318E841291A6B7E00C89C48 /* InBoxModuleBuilder.swift */; };
+		D318E846291A753100C89C48 /* ToDayModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D318E845291A753000C89C48 /* ToDayModuleBuilder.swift */; };
+		D318E848291A76AE00C89C48 /* TaskListModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D318E847291A76AE00C89C48 /* TaskListModuleBuilder.swift */; };
+		D318E84A291A772000C89C48 /* SearchModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D318E849291A772000C89C48 /* SearchModuleBuilder.swift */; };
+		D318E84E291A8FD800C89C48 /* DetailTaskModelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D318E84D291A8FD800C89C48 /* DetailTaskModelBuilder.swift */; };
+		D318E850291A94EC00C89C48 /* AddTaskModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D318E84F291A94EC00C89C48 /* AddTaskModuleBuilder.swift */; };
+		D318E852291A964A00C89C48 /* SelectDataModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D318E851291A964A00C89C48 /* SelectDataModuleBuilder.swift */; };
 		D320AC7A27CE2256002B16B5 /* Data.json in Resources */ = {isa = PBXBuildFile; fileRef = D320AC7827CE2255002B16B5 /* Data.json */; };
 		D320AC7C27CE22D1002B16B5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D320AC7B27CE22D0002B16B5 /* Constants.swift */; };
 		D356F6A727DF7ACC00604D34 /* StorageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D356F6A627DF7ACC00604D34 /* StorageHelper.swift */; };
 		D356F6A927DF7AE100604D34 /* FileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D356F6A827DF7AE100604D34 /* FileService.swift */; };
-		D356F6AE27DFD54500604D34 /* MemoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D356F6AD27DFD54500604D34 /* MemoryService.swift */; };
-		D36FC5B627F719F3008F87A9 /* BackendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36FC5B527F719F3008F87A9 /* BackendService.swift */; };
+		D36FC5B627F719F3008F87A9 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36FC5B527F719F3008F87A9 /* NetworkService.swift */; };
 		D36FC5B827F71A5D008F87A9 /* DatabaseTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36FC5B727F71A5D008F87A9 /* DatabaseTask.swift */; };
+		D370E1EF291CE5BA0090DF47 /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D370E1EE291CE5BA0090DF47 /* ModuleBuilder.swift */; };
 		D3B0949628C28ACB00A2FD72 /* CoderJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B0949528C28ACB00A2FD72 /* CoderJSON.swift */; };
-		D3D95B7E27EB4059000F7715 /* TodayModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D95B7D27EB4059000F7715 /* TodayModule.swift */; };
+		D3BC6D6328FFFA43002DDC8D /* TaskRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC6D6228FFFA43002DDC8D /* TaskRepositoryImpl.swift */; };
+		D3BC6D6B28FFFEAC002DDC8D /* TaskRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC6D6A28FFFEAC002DDC8D /* TaskRepository.swift */; };
+		D3BC6D8729015B61002DDC8D /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC6D8629015B61002DDC8D /* LocalStorage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,16 +82,26 @@
 		D3026B8227C26814007BDF24 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3026B8327C26814007BDF24 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		D3026B8427C26814007BDF24 /* ToDoList.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = ToDoList.xcodeproj; sourceTree = "<group>"; };
+		D318E83A291A663000C89C48 /* AppDI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDI.swift; sourceTree = "<group>"; };
+		D318E841291A6B7E00C89C48 /* InBoxModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InBoxModuleBuilder.swift; sourceTree = "<group>"; };
+		D318E845291A753000C89C48 /* ToDayModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDayModuleBuilder.swift; sourceTree = "<group>"; };
+		D318E847291A76AE00C89C48 /* TaskListModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListModuleBuilder.swift; sourceTree = "<group>"; };
+		D318E849291A772000C89C48 /* SearchModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModuleBuilder.swift; sourceTree = "<group>"; };
+		D318E84D291A8FD800C89C48 /* DetailTaskModelBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTaskModelBuilder.swift; sourceTree = "<group>"; };
+		D318E84F291A94EC00C89C48 /* AddTaskModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskModuleBuilder.swift; sourceTree = "<group>"; };
+		D318E851291A964A00C89C48 /* SelectDataModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDataModuleBuilder.swift; sourceTree = "<group>"; };
 		D320AC7827CE2255002B16B5 /* Data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Data.json; sourceTree = "<group>"; };
 		D320AC7B27CE22D0002B16B5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D356F6A627DF7ACC00604D34 /* StorageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageHelper.swift; sourceTree = "<group>"; };
 		D356F6A827DF7AE100604D34 /* FileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileService.swift; sourceTree = "<group>"; };
-		D356F6AD27DFD54500604D34 /* MemoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryService.swift; sourceTree = "<group>"; };
-		D36FC5B527F719F3008F87A9 /* BackendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendService.swift; sourceTree = "<group>"; };
+		D36FC5B527F719F3008F87A9 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		D36FC5B727F71A5D008F87A9 /* DatabaseTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseTask.swift; sourceTree = "<group>"; };
+		D370E1EE291CE5BA0090DF47 /* ModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
 		D3B0949528C28ACB00A2FD72 /* CoderJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoderJSON.swift; sourceTree = "<group>"; };
+		D3BC6D6228FFFA43002DDC8D /* TaskRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRepositoryImpl.swift; sourceTree = "<group>"; };
+		D3BC6D6A28FFFEAC002DDC8D /* TaskRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRepository.swift; sourceTree = "<group>"; };
+		D3BC6D8629015B61002DDC8D /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		D3C53D3627BA5396000B6E26 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D3D95B7D27EB4059000F7715 /* TodayModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayModule.swift; sourceTree = "<group>"; };
 		FDD4244FF57F7028DD205125 /* Pods-ToDoList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoList.release.xcconfig"; path = "Target Support Files/Pods-ToDoList/Pods-ToDoList.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -117,8 +137,8 @@
 		D3026B5F27C26814007BDF24 /* ToDoList */ = {
 			isa = PBXGroup;
 			children = (
-				D3026B6027C26814007BDF24 /* Resources */,
 				D3026B6527C26814007BDF24 /* Sources */,
+				D3026B6027C26814007BDF24 /* Resources */,
 				D3026B8127C26814007BDF24 /* Application */,
 				D3026B8427C26814007BDF24 /* ToDoList.xcodeproj */,
 			);
@@ -131,7 +151,6 @@
 				D320AC7827CE2255002B16B5 /* Data.json */,
 				D3026B6127C26814007BDF24 /* Assets.xcassets */,
 				D3026B6227C26814007BDF24 /* LaunchScreen.storyboard */,
-				D3D95B7A27EB380C000F7715 /* Utils */,
 				D3026B6427C26814007BDF24 /* InfoPro.plist */,
 			);
 			path = Resources;
@@ -140,22 +159,15 @@
 		D3026B6527C26814007BDF24 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				D3026B6627C26814007BDF24 /* Model */,
-				D3026B6927C26814007BDF24 /* View */,
-				D3026B6D27C26814007BDF24 /* Flows */,
-				D3026B7E27C26814007BDF24 /* Services */,
+				D318E839291A661700C89C48 /* DI */,
+				D318E833291A509500C89C48 /* Presentation */,
+				D3BC6D6928FFFE8F002DDC8D /* Domain */,
+				D3BC6D5B28FFE42E002DDC8D /* Data */,
+				D318E83F291A6AA900C89C48 /* Core */,
+				D3D95B7A27EB380C000F7715 /* Utils */,
 				D320AC7B27CE22D0002B16B5 /* Constants.swift */,
 			);
 			path = Sources;
-			sourceTree = "<group>";
-		};
-		D3026B6627C26814007BDF24 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				D3026B6727C26814007BDF24 /* Group.swift */,
-				D3026B6827C26814007BDF24 /* Task.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		D3026B6927C26814007BDF24 /* View */ = {
@@ -178,41 +190,24 @@
 		D3026B6D27C26814007BDF24 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
-				D3D95B7C27EB403F000F7715 /* SearchModule */,
-				D3D95B7B27EB4034000F7715 /* TodayModule */,
-				D3026B7027C26814007BDF24 /* InBoxViewController */,
-				D3026B7C27C26814007BDF24 /* TaskListViewController.swift */,
 				D3026B7D27C26814007BDF24 /* TabBarController.swift */,
+				D318E834291A512400C89C48 /* InBox */,
+				D318E83C291A696600C89C48 /* ToDay */,
+				D318E83D291A69B900C89C48 /* TaskList */,
+				D318E83E291A69C500C89C48 /* Search */,
+				D318E836291A523500C89C48 /* Detail */,
+				D318E835291A520900C89C48 /* Add */,
+				D318E837291A524B00C89C48 /* SelectDate */,
 			);
 			path = Flows;
-			sourceTree = "<group>";
-		};
-		D3026B7027C26814007BDF24 /* InBoxViewController */ = {
-			isa = PBXGroup;
-			children = (
-				D3026B7127C26814007BDF24 /* InBoxViewController.swift */,
-				D3026B7927C26814007BDF24 /* AddTaskViewController.swift */,
-				D3026B7327C26814007BDF24 /* DetailTaskViewController.swift */,
-				D3026B7227C26814007BDF24 /* SelectDateViewController.swift */,
-				D3026B7627C26814007BDF24 /* AddTaskViewController.xib */,
-				D3026B7B27C26814007BDF24 /* SelectDateViewController.xib */,
-				D3026B7727C26814007BDF24 /* Main.storyboard */,
-				D3026B7427C26814007BDF24 /* AddTaskDelegate.swift */,
-				D3026B7527C26814007BDF24 /* SelectDateDelegate.swift */,
-				D3026B7A27C26814007BDF24 /* DetailTaskDelegate.swift */,
-			);
-			path = InBoxViewController;
 			sourceTree = "<group>";
 		};
 		D3026B7E27C26814007BDF24 /* Services */ = {
 			isa = PBXGroup;
 			children = (
 				D3026B8027C26814007BDF24 /* TaskService.swift */,
-				D356F6AD27DFD54500604D34 /* MemoryService.swift */,
 				D356F6A827DF7AE100604D34 /* FileService.swift */,
-				D36FC5B527F719F3008F87A9 /* BackendService.swift */,
-				D356F6A627DF7ACC00604D34 /* StorageHelper.swift */,
-				D36FC5B727F71A5D008F87A9 /* DatabaseTask.swift */,
+				D36FC5B527F719F3008F87A9 /* NetworkService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -231,6 +226,146 @@
 			children = (
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		D318E832291A4F1000C89C48 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				D3BC6D6A28FFFEAC002DDC8D /* TaskRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		D318E833291A509500C89C48 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				D3026B6D27C26814007BDF24 /* Flows */,
+				D3026B6927C26814007BDF24 /* View */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		D318E834291A512400C89C48 /* InBox */ = {
+			isa = PBXGroup;
+			children = (
+				D3026B7127C26814007BDF24 /* InBoxViewController.swift */,
+				D318E841291A6B7E00C89C48 /* InBoxModuleBuilder.swift */,
+			);
+			path = InBox;
+			sourceTree = "<group>";
+		};
+		D318E835291A520900C89C48 /* Add */ = {
+			isa = PBXGroup;
+			children = (
+				D3026B7927C26814007BDF24 /* AddTaskViewController.swift */,
+				D3026B7627C26814007BDF24 /* AddTaskViewController.xib */,
+				D3026B7427C26814007BDF24 /* AddTaskDelegate.swift */,
+				D318E84F291A94EC00C89C48 /* AddTaskModuleBuilder.swift */,
+			);
+			path = Add;
+			sourceTree = "<group>";
+		};
+		D318E836291A523500C89C48 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				D3026B7327C26814007BDF24 /* DetailTaskViewController.swift */,
+				D3026B7727C26814007BDF24 /* Main.storyboard */,
+				D3026B7A27C26814007BDF24 /* DetailTaskDelegate.swift */,
+				D318E84D291A8FD800C89C48 /* DetailTaskModelBuilder.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		D318E837291A524B00C89C48 /* SelectDate */ = {
+			isa = PBXGroup;
+			children = (
+				D3026B7227C26814007BDF24 /* SelectDateViewController.swift */,
+				D3026B7B27C26814007BDF24 /* SelectDateViewController.xib */,
+				D3026B7527C26814007BDF24 /* SelectDateDelegate.swift */,
+				D318E851291A964A00C89C48 /* SelectDataModuleBuilder.swift */,
+			);
+			path = SelectDate;
+			sourceTree = "<group>";
+		};
+		D318E839291A661700C89C48 /* DI */ = {
+			isa = PBXGroup;
+			children = (
+				D318E83A291A663000C89C48 /* AppDI.swift */,
+			);
+			name = DI;
+			sourceTree = "<group>";
+		};
+		D318E83C291A696600C89C48 /* ToDay */ = {
+			isa = PBXGroup;
+			children = (
+				D3026B6E27C26814007BDF24 /* ToDayViewController.swift */,
+				D318E845291A753000C89C48 /* ToDayModuleBuilder.swift */,
+			);
+			path = ToDay;
+			sourceTree = "<group>";
+		};
+		D318E83D291A69B900C89C48 /* TaskList */ = {
+			isa = PBXGroup;
+			children = (
+				D3026B7C27C26814007BDF24 /* TaskListViewController.swift */,
+				D318E847291A76AE00C89C48 /* TaskListModuleBuilder.swift */,
+			);
+			path = TaskList;
+			sourceTree = "<group>";
+		};
+		D318E83E291A69C500C89C48 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				D3026B6F27C26814007BDF24 /* SearchViewController.swift */,
+				D318E849291A772000C89C48 /* SearchModuleBuilder.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		D318E83F291A6AA900C89C48 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				D356F6A627DF7ACC00604D34 /* StorageHelper.swift */,
+				D36FC5B727F71A5D008F87A9 /* DatabaseTask.swift */,
+				D370E1EE291CE5BA0090DF47 /* ModuleBuilder.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		D3BC6D5B28FFE42E002DDC8D /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				D3BC6D5E28FFF969002DDC8D /* Repositories */,
+				D3026B7E27C26814007BDF24 /* Services */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		D3BC6D5E28FFF969002DDC8D /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				D3BC6D6228FFFA43002DDC8D /* TaskRepositoryImpl.swift */,
+				D3BC6D8629015B61002DDC8D /* LocalStorage.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		D3BC6D6928FFFE8F002DDC8D /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				D3BC6D6D28FFFFB8002DDC8D /* Entities */,
+				D318E832291A4F1000C89C48 /* Repository */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		D3BC6D6D28FFFFB8002DDC8D /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				D3026B6727C26814007BDF24 /* Group.swift */,
+				D3026B6827C26814007BDF24 /* Task.swift */,
+			);
+			path = Entities;
 			sourceTree = "<group>";
 		};
 		D3C53D2D27BA5396000B6E26 = {
@@ -258,23 +393,6 @@
 				D3B0949528C28ACB00A2FD72 /* CoderJSON.swift */,
 			);
 			path = Utils;
-			sourceTree = "<group>";
-		};
-		D3D95B7B27EB4034000F7715 /* TodayModule */ = {
-			isa = PBXGroup;
-			children = (
-				D3D95B7D27EB4059000F7715 /* TodayModule.swift */,
-				D3026B6E27C26814007BDF24 /* ToDayViewController.swift */,
-			);
-			path = TodayModule;
-			sourceTree = "<group>";
-		};
-		D3D95B7C27EB403F000F7715 /* SearchModule */ = {
-			isa = PBXGroup;
-			children = (
-				D3026B6F27C26814007BDF24 /* SearchViewController.swift */,
-			);
-			path = SearchModule;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -410,24 +528,34 @@
 				D3026B8E27C26814007BDF24 /* ToDayViewController.swift in Sources */,
 				D3026B8B27C26814007BDF24 /* Task.swift in Sources */,
 				D3026B9827C26814007BDF24 /* DetailTaskDelegate.swift in Sources */,
+				D318E842291A6B7F00C89C48 /* InBoxModuleBuilder.swift in Sources */,
 				D3026B9327C26814007BDF24 /* AddTaskDelegate.swift in Sources */,
 				D356F6A727DF7ACC00604D34 /* StorageHelper.swift in Sources */,
+				D318E84A291A772000C89C48 /* SearchModuleBuilder.swift in Sources */,
+				D370E1EF291CE5BA0090DF47 /* ModuleBuilder.swift in Sources */,
+				D318E850291A94EC00C89C48 /* AddTaskModuleBuilder.swift in Sources */,
 				D3B0949628C28ACB00A2FD72 /* CoderJSON.swift in Sources */,
-				D36FC5B627F719F3008F87A9 /* BackendService.swift in Sources */,
+				D36FC5B627F719F3008F87A9 /* NetworkService.swift in Sources */,
 				D3026B9027C26814007BDF24 /* InBoxViewController.swift in Sources */,
-				D356F6AE27DFD54500604D34 /* MemoryService.swift in Sources */,
 				D3026B9727C26814007BDF24 /* AddTaskViewController.swift in Sources */,
-				D3D95B7E27EB4059000F7715 /* TodayModule.swift in Sources */,
+				D318E83B291A663000C89C48 /* AppDI.swift in Sources */,
+				D3BC6D8729015B61002DDC8D /* LocalStorage.swift in Sources */,
+				D318E848291A76AE00C89C48 /* TaskListModuleBuilder.swift in Sources */,
 				D3026B9427C26814007BDF24 /* SelectDateDelegate.swift in Sources */,
 				D3026B9F27C26814007BDF24 /* SceneDelegate.swift in Sources */,
 				D3026B8C27C26814007BDF24 /* TaskCell.swift in Sources */,
 				D3026B9B27C26814007BDF24 /* TabBarController.swift in Sources */,
+				D318E846291A753100C89C48 /* ToDayModuleBuilder.swift in Sources */,
 				D3026B9C27C26814007BDF24 /* ConvertDate.swift in Sources */,
+				D318E852291A964A00C89C48 /* SelectDataModuleBuilder.swift in Sources */,
 				D320AC7C27CE22D1002B16B5 /* Constants.swift in Sources */,
+				D3BC6D6B28FFFEAC002DDC8D /* TaskRepository.swift in Sources */,
 				D3026B9227C26814007BDF24 /* DetailTaskViewController.swift in Sources */,
+				D3BC6D6328FFFA43002DDC8D /* TaskRepositoryImpl.swift in Sources */,
 				D3026B9E27C26814007BDF24 /* AppDelegate.swift in Sources */,
 				D356F6A927DF7AE100604D34 /* FileService.swift in Sources */,
 				D3026B8A27C26814007BDF24 /* Group.swift in Sources */,
+				D318E84E291A8FD800C89C48 /* DetailTaskModelBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -589,7 +717,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.intervale.ToDoList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -618,7 +746,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.intervale.ToDoList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

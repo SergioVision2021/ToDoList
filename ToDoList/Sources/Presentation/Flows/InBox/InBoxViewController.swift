@@ -16,7 +16,9 @@ enum Operations {
 class InBoxViewController: UIViewController {
 
     // MARK: - Properties
-    var service: TaskServiceProtocol?
+    var repository = AppDI.makeTaskRepository()
+
+    var service: TaskService?
     private var data: [Group] = []
 
     // MARK: - Visual Component
@@ -35,69 +37,57 @@ class InBoxViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        if data.isEmpty {
-            fetchData()
+        fetch()
+    }
+    
+    func fetch() {
+
+        repository.fetch() { [weak self] (result) in
+            guard let self = self else { return }
+            
+            switch result {
+            case.success(let dataModel):
+
+                //TASK SERVICE
+                self.service?.source = dataModel
+                
+                self.service?.fetch() { (result) in
+                    switch result {
+                    case .success(let data):
+                        DispatchQueue.main.async {
+                            self.data = data
+                            print(data)
+                            self.tableView.reloadData()
+                        }
+                    case .failure(_):
+                        break
+                    }
+                }
+            case.failure(let error):
+                DispatchQueue.main.async {
+                    self.present(self.makeAlertController(error.localizedDescription), animated: true, completion: nil)
+                }
+            }
         }
     }
     
-    func fetchData() {
+    private func execute(operation: Operations, _ task: Task) {
 
-        startAnimationAI()
-
-        service?.fetch() { result in
-            self.stopAnimationAI(result?.localizedDescription)
-            self.fetсhСacheData()
-        }
-    }
-    
-    func fetсhСacheData() {
-        guard let casheData = self.service?.filterPeriod(), !casheData.isEmpty else {
-            print("Not data")
-            return
-        }
-
-        self.data = casheData
-
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
-    }
-
-    private func beginOperation(operation: Operations, _ task: Task) {
+        service?.update(operation, task) { _ in }
+        guard let source = service?.source else { return }
         
-        startAnimationAI()
-        
-        switch operation {
-        case .add:
-            service?.add(task) { result in
-                guard result == nil else {
-                    self.stopAnimationAI(result?.localizedDescription)
-                    return
+        repository.update(operation, task, data: source) { [weak self] error in
+            guard let self = self else { return }
+            
+            guard error == nil else {
+                DispatchQueue.main.async {
+                    self.present(self.makeAlertController(error?.localizedDescription), animated: true, completion: nil)
                 }
-                self.completeOperation()
+                return
             }
-        case .edit:
-            service?.edit(task) { result in
-                guard result == nil else {
-                    self.stopAnimationAI(result?.localizedDescription)
-                    return
-                }
-                self.completeOperation()
-            }
-        case .delete:
-            service?.delete(task) { result in
-                guard result == nil else {
-                    self.stopAnimationAI(result?.localizedDescription)
-                    return
-                }
-                self.completeOperation()
-            }
+            
+            self.fetch()
         }
-    }
-    
-    private func completeOperation() {
-        fetchData()
-        stopAnimationAI(nil)
     }
 }
 
@@ -130,19 +120,15 @@ extension InBoxViewController {
         view.addSubview(lbl)
         return view
     }
-
-    func configureViewController(_ vc: DetailTaskViewController, _ at: IndexPath) {
-        vc.task = data[at.section].tasks?[at.row] ?? Task()
-        vc.nameSection = data[at.section].name ?? ""
-        vc.delegate = self
-        show(vc, sender: self)
-    }
 }
 
 // MARK: - TableView DataSource
 extension InBoxViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
+        
+        print("Coutn: \(data.count)")
+        
         return data.count
     }
 
@@ -171,7 +157,7 @@ extension InBoxViewController: UITableViewDataSource {
             tableView.deleteRows(at: [indexPath], with: .none)
             tableView.endUpdates()
             
-            beginOperation(operation: .delete, selectTask)
+            execute(operation: .delete, selectTask)
         }
     }
 }
@@ -193,11 +179,11 @@ extension InBoxViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Связь му 2 VC (без segues)
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-
-        guard let vc = storyBoard.instantiateViewController(withIdentifier: "IdDetailTask") as? DetailTaskViewController else { fatalError("Unexpected Index Path") }
-
-        configureViewController(vc, indexPath)
+        let vc = DetailTaskModuleBuilder(task: data[indexPath.section].tasks?[indexPath.row] ?? Task(),
+                                         nameSection: data[indexPath.section].name ?? "",
+                                         delegate: self)
+            .build()
+        show(vc, sender: self)
     }
 
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
@@ -215,9 +201,7 @@ extension InBoxViewController {
 
     @objc
     func addActionButton(sender: UIBarButtonItem) {
-        let vc = AddTaskViewController(nibName: "AddTaskViewController", bundle: nil)
-        vc.delegate = self
-
+        let vc = AddTaskModuleBuilder(delegate: self).build()
         show(vc, sender: self)
     }
 }
@@ -225,12 +209,12 @@ extension InBoxViewController {
 // MARK: - Delegates
 extension InBoxViewController: AddTaskDelegate {
     func addTaskDidTapSave(_ sender: UIViewController, _ task: Task) {
-        beginOperation(operation: .add, task)
+        execute(operation: .add, task)
     }
 }
 extension InBoxViewController: DetailTaskDelegate {
     func detailTaskDidTapDone(_ sender: UIViewController, _ task: Task) {
-        beginOperation(operation: .edit, task)
+        execute(operation: .edit, task)
     }
 }
 

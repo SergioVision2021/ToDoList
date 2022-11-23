@@ -32,8 +32,7 @@ class AddTaskViewController: UIViewController {
         selectGroupButton.setTitle("InBox", for: .normal)               // Default - Inbox
     }
     @IBAction func selectDateButton(_ sender: UIButton) {
-        let vc = SelectDateViewController(nibName: "SelectDateViewController", bundle: nil)
-        vc.delegate = self
+        let vc = SelectDataModuleBuilder(delegate: self).build()
         navigationController?.pushViewController(vc, animated: true)
     }
 }

@@ -9,6 +9,9 @@ import Foundation
 
 enum Constants {
     static let taskCellIdentifier = "IdCell"
+    static let detailTaskVCIdentifier = "IdDetailTaskVC"
+    static let addTaskVCIdentifier = "AddTaskViewController"
+    static let selectDataVCIdentifier = "SelectDateViewController"
 
     // Parameters
     static let SHEME = "http"

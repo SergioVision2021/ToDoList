@@ -48,8 +48,7 @@ class InBoxViewController: UIViewController, InBoxViewLogic {
     }
     
     private func fetch() {
-
-        repository.fetch() { [weak self] (result) in
+        repository.fetch(force: false) { [weak self] (result) in
             guard let self = self else { return }
             
             switch result {
@@ -80,10 +79,7 @@ class InBoxViewController: UIViewController, InBoxViewLogic {
     
     private func execute(operation: Operations, _ task: Task) {
 
-        service?.update(operation, task) { _ in }
-        guard let source = service?.source else { return }
-        
-        repository.update(operation, task, data: source) { [weak self] error in
+        repository.update(operation, task) { [weak self] error in
             guard let self = self else { return }
             
             guard error == nil else {
@@ -203,7 +199,7 @@ private extension InBoxViewController {
 
     @objc
     func addActionButton(sender: UIBarButtonItem) {
-        router?.navigationToAddTask(sender: self)
+        router?.navigationToAddTask(sender: self, repository: repository)
     }
 }
 
@@ -265,11 +261,6 @@ private extension InBoxViewController {
 }
 
 // MARK: - Delegates
-extension InBoxViewController: AddTaskDelegate {
-    func addTaskDidTapSave(_ sender: UIViewController, _ task: Task) {
-        execute(operation: .add, task)
-    }
-}
 extension InBoxViewController: DetailTaskDelegate {
     func detailTaskDidTapDone(_ sender: UIViewController, _ task: Task) {
         execute(operation: .edit, task)

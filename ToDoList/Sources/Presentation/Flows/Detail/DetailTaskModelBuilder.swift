@@ -22,10 +22,7 @@ final class DetailTaskModuleBuilder: ModuleBuilder {
 
     func build() -> DetailTaskViewController {
 
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let view = storyBoard.instantiateViewController(withIdentifier: Constants.detailTaskVCIdentifier) as? DetailTaskViewController else {
-            fatalError("Unexpected Index Path")
-        }
+        var view = AppDI.makeDetailTaskScene()
         view.task = task
         view.nameSection = nameSection
         view.delegate = delegate

@@ -16,17 +16,19 @@ enum TaskServiceError: Error {
 }
 
 protocol TaskServiceProtocol {
+    var source: [Group] { get set }
     func fetch(_ completionHandler: @escaping (Result<[Group], Error>) -> ())
     func update(_ operation: Operations, _ task: Task, completionHandler: @escaping (Result<Void, Error>) -> ())
     
     func filterPeriod()
     func filterToday(_ namePeriod: String) -> [Group]?
     func filterAllTasks() -> [String]
+    func filterGroup() -> [String]
 }
 
 class TaskService: TaskServiceProtocol {
 
-    internal var source = [Group]()
+    public var source = [Group]()
     private var filtredData = [Group]()
 
     public func fetch(_ completionHandler: @escaping (Result<[Group], Error>) -> ()) {

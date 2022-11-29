@@ -17,7 +17,7 @@ final class AddTaskModuleBuilder: ModuleBuilder {
 
     func build() -> AddTaskViewController {
 
-        let view = AddTaskViewController(nibName: Constants.addTaskVCIdentifier, bundle: nil)
+        let view = AppDI.makeAddTaskScene()
         view.delegate = delegate
 
         let router = AddTaskRouter(view: view)

@@ -17,7 +17,7 @@ final class SelectDataModuleBuilder: ModuleBuilder {
 
     func build() -> SelectDateViewController {
 
-        let view = SelectDateViewController(nibName: Constants.selectDataVCIdentifier, bundle: nil)
+        let view = AppDI.makeSelectDateScene()
         view.delegate = delegate
         return view
     }

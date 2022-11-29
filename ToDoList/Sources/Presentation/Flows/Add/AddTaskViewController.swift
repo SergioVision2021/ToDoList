@@ -9,7 +9,7 @@ import UIKit
 
 protocol AddTaskViewLogic: ViewProtocol {
     var router: AddTaskRoutingLogic? { get set }
-    var delegate: AddTaskDelegate? { get set }
+    var repository: TaskRepository? { get set }
 }
 
 class AddTaskViewController: UIViewController, AddTaskViewLogic {
@@ -21,7 +21,7 @@ class AddTaskViewController: UIViewController, AddTaskViewLogic {
 
     // MARK: - Properties
     public var router: AddTaskRoutingLogic?
-    public var delegate: AddTaskDelegate?
+    public var repository: TaskRepository?
 
     private let numberRandom = Int.random(in: 1..<1000)
     private var scheduleDate: Date?
@@ -61,9 +61,28 @@ private extension AddTaskViewController {
                             notes: notesTextView.text,
                             status: false)
 
-        // Возврат новой задачи
-        delegate?.addTaskDidTapSave(self, task)
+        repository?.update(Operations.add, task) { [weak self] error in
+            guard let self = self else { return }
+
+            guard error == nil else {
+                DispatchQueue.main.async {
+                    self.present(self.makeAlertController(error?.localizedDescription), animated: true, completion: nil)
+                }
+                return
+            }
+        }
+
         navigationController?.popViewController(animated: true)
+    }
+}
+
+// MARK: - Factory
+private extension AddTaskViewController {
+    func makeAlertController(_ message: String?) -> UIAlertController {
+        let ac = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let button = UIAlertAction(title: "OK", style: .default, handler: nil)
+        ac.addAction(button)
+        return ac
     }
 }
 
@@ -74,30 +93,3 @@ extension AddTaskViewController: SelectDateDelegate {
         scheduleDateButton.setTitle(ConvertDate().convert(from: date), for: .normal)
     }
 }
-
-//extension AddTaskViewController {
-//    func addAlert() {
-//        let alert = UIAlertController(title: "Add new group",
-//                                      message: "Input name new group",
-//                                      preferredStyle: .alert)
-//
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-//
-//        let continueAction = UIAlertAction(title: "Continue", style: .default, handler: { _ in
-//            guard let name = alert.textFields?[0].text, !name.isEmpty else {
-//                return
-//            }
-//
-//            self.nameGroup = name
-//        })
-//
-//        alert.addAction(cancelAction)
-//        alert.addAction(continueAction)
-//
-//        alert.addTextField { (textField) in
-//            textField.placeholder = "Enter name group"
-//        }
-//
-//        present(alert, animated: true, completion: nil)
-//    }
-//}

@@ -11,8 +11,11 @@ class AppCoordinatorImpl: Coordinator {
 
     var tabBarController: UITabBarController
 
-    init(tabBarController: UITabBarController = UITabBarController()) {
+    private var dependencies: AppRootDependency
+
+    init(tabBarController: UITabBarController = UITabBarController(), dependencies: AppRootDependency) {
         self.tabBarController = tabBarController
+        self.dependencies = dependencies
     }
 
     func start() {
@@ -24,7 +27,7 @@ class AppCoordinatorImpl: Coordinator {
         controllers.append(AppDI.makeToDayModule(service: service))
         controllers.append(AppDI.makeTaskListModule(service: service))
         controllers.append(AppDI.makeSearchModule(service: service))
-        
+
         tabBarController.setViewControllers(controllers, animated: true)
     }
 }

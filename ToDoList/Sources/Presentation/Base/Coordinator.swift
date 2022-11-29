@@ -8,6 +8,5 @@
 import UIKit
 
 protocol Coordinator: AnyObject {
-    var tabBarController: UITabBarController { get set }
     func start()
 }

@@ -9,9 +9,9 @@ import Foundation
 
 final class ToDayModuleBuilder: ModuleBuilder {
 
-    let service: TaskService
+    let service: TaskServiceLogic
 
-    init(service: TaskService) {
+    init(service: TaskServiceLogic) {
         self.service = service
     }
 

@@ -9,9 +9,9 @@ import Foundation
 
 final class InBoxModuleBuilder: ModuleBuilder {
 
-    let service: TaskService
+    let service: TaskServiceLogic
 
-    init(service: TaskService) {
+    init(service: TaskServiceLogic) {
         self.service = service
     }
 

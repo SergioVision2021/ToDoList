@@ -14,14 +14,14 @@ enum Operations {
 }
 
 protocol InBoxViewLogic: ViewProtocol {
-    var service: TaskService? { get set }
+    var service: TaskServiceLogic? { get set }
     var router: InBoxRoutingLogic? { get set }
 }
 
 class InBoxViewController: UIViewController, InBoxViewLogic {
 
     // MARK: - Public properties
-    public var service: TaskService?
+    public var service: TaskServiceLogic?
     public var router: InBoxRoutingLogic?
 
     // MARK: - Private properties

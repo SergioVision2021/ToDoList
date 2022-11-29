@@ -44,7 +44,7 @@
 		D34DE544292E20B6001549C4 /* InBoxRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34DE543292E20B6001549C4 /* InBoxRouter.swift */; };
 		D34DE546292E20BE001549C4 /* AddTaskRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34DE545292E20BE001549C4 /* AddTaskRouter.swift */; };
 		D34DE554292E5D2F001549C4 /* AppCoordinatorImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34DE553292E5D2F001549C4 /* AppCoordinatorImpl.swift */; };
-		D34DE55C292E955A001549C4 /* ModuleDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34DE55B292E955A001549C4 /* ModuleDependency.swift */; };
+		D34DE55C292E955A001549C4 /* AppRootDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34DE55B292E955A001549C4 /* AppRootDependency.swift */; };
 		D34DE55F292E9C2B001549C4 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34DE55E292E9C2B001549C4 /* Coordinator.swift */; };
 		D356F6A727DF7ACC00604D34 /* StorageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D356F6A627DF7ACC00604D34 /* StorageHelper.swift */; };
 		D356F6A927DF7AE100604D34 /* FileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D356F6A827DF7AE100604D34 /* FileService.swift */; };
@@ -98,7 +98,7 @@
 		D34DE543292E20B6001549C4 /* InBoxRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InBoxRouter.swift; sourceTree = "<group>"; };
 		D34DE545292E20BE001549C4 /* AddTaskRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTaskRouter.swift; sourceTree = "<group>"; };
 		D34DE553292E5D2F001549C4 /* AppCoordinatorImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinatorImpl.swift; sourceTree = "<group>"; };
-		D34DE55B292E955A001549C4 /* ModuleDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleDependency.swift; sourceTree = "<group>"; };
+		D34DE55B292E955A001549C4 /* AppRootDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootDependency.swift; sourceTree = "<group>"; };
 		D34DE55E292E9C2B001549C4 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		D356F6A627DF7ACC00604D34 /* StorageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageHelper.swift; sourceTree = "<group>"; };
 		D356F6A827DF7AE100604D34 /* FileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileService.swift; sourceTree = "<group>"; };
@@ -247,7 +247,6 @@
 			isa = PBXGroup;
 			children = (
 				D34DE55D292E9C1E001549C4 /* Base */,
-				D34DE55A292E9544001549C4 /* Factories */,
 				D3026B6D27C26814007BDF24 /* Flows */,
 				D3026B6927C26814007BDF24 /* View */,
 			);
@@ -302,6 +301,7 @@
 			isa = PBXGroup;
 			children = (
 				D318E83A291A663000C89C48 /* AppDI.swift */,
+				D34DE55B292E955A001549C4 /* AppRootDependency.swift */,
 			);
 			name = DI;
 			sourceTree = "<group>";
@@ -341,14 +341,6 @@
 				D370E1EE291CE5BA0090DF47 /* ModuleBuilder.swift */,
 			);
 			path = Core;
-			sourceTree = "<group>";
-		};
-		D34DE55A292E9544001549C4 /* Factories */ = {
-			isa = PBXGroup;
-			children = (
-				D34DE55B292E955A001549C4 /* ModuleDependency.swift */,
-			);
-			path = Factories;
 			sourceTree = "<group>";
 		};
 		D34DE55D292E9C1E001549C4 /* Base */ = {
@@ -580,7 +572,7 @@
 				D3026B9C27C26814007BDF24 /* ConvertDate.swift in Sources */,
 				D318E852291A964A00C89C48 /* SelectDataModuleBuilder.swift in Sources */,
 				D320AC7C27CE22D1002B16B5 /* Constants.swift in Sources */,
-				D34DE55C292E955A001549C4 /* ModuleDependency.swift in Sources */,
+				D34DE55C292E955A001549C4 /* AppRootDependency.swift in Sources */,
 				D3BC6D6B28FFFEAC002DDC8D /* TaskRepository.swift in Sources */,
 				D3026B9227C26814007BDF24 /* DetailTaskViewController.swift in Sources */,
 				D3BC6D6328FFFA43002DDC8D /* TaskRepositoryImpl.swift in Sources */,

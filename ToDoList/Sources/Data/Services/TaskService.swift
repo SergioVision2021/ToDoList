@@ -15,7 +15,7 @@ enum TaskServiceError: Error {
     case cacheDeleting
 }
 
-protocol TaskServiceProtocol {
+protocol TaskServiceLogic {
     var source: [Group] { get set }
     func fetch(_ completionHandler: @escaping (Result<[Group], Error>) -> ())
     func update(_ operation: Operations, _ task: Task, completionHandler: @escaping (Result<Void, Error>) -> ())
@@ -26,7 +26,7 @@ protocol TaskServiceProtocol {
     func filterGroup() -> [String]
 }
 
-class TaskService: TaskServiceProtocol {
+class TaskService: TaskServiceLogic {
 
     public var source = [Group]()
     private var filtredData = [Group]()

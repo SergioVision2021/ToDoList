@@ -10,7 +10,7 @@ import UIKit
 class ToDayViewController: UIViewController {
 
     // MARK: - Properties
-    var service: TaskService?
+    var service: TaskServiceLogic?
     private var data: [Group] = []
 
     // MARK: - Visual Component

@@ -10,10 +10,6 @@ import UIKit
 
 class AppDI {
     // MARK: - Scene
-    static func makeModule() -> ModuleDependencyProtocol {
-        ModuleDependencyImpl(service: TaskService())
-    }
-
     static func makeAddTaskScene() -> AddTaskViewController {
         return AddTaskViewController(nibName: Constants.addTaskVCIdentifier, bundle: nil)
     }
@@ -35,11 +31,50 @@ class AppDI {
     static func makeTaskStorageService() -> LocalStorage  {
         FileService()
     }
+    
+    static func makeTaskService() -> TaskServiceLogic {
+        TaskService()
+    }
 
     //  static func makeTaskNetworkService() {}
 
     // MARK: - Repository
     static func makeTaskRepository() -> TaskRepository {
         TaskRepositoryImpl(remoteDataSource: NetworkService(), localDataSource: makeTaskStorageService())
+    }
+}
+
+// MARK: - AppRootDependency
+extension AppDI: AppRootDependency {
+
+    static func makeInBoxModule(service: TaskServiceLogic) -> UINavigationController {
+        makeNavController(vc: InBoxModuleBuilder(service: service).build(),
+                          image: UIImage(systemName: "calendar"),
+                            tag: 0)
+    }
+
+    static func makeToDayModule(service: TaskServiceLogic) -> UINavigationController {
+        makeNavController(vc: ToDayModuleBuilder(service: service).build(),
+                            image: UIImage(systemName: "flame"),
+                            tag: 1)
+    }
+
+    static func makeTaskListModule(service: TaskServiceLogic) -> UINavigationController {
+        makeNavController(vc: TaskListModuleBuilder(service: service).build(),
+                            image: UIImage(systemName: "triangle"),
+                            tag: 2)
+    }
+
+    static func makeSearchModule(service: TaskServiceLogic) -> UINavigationController {
+        makeNavController(vc: SearchModuleBuilder(service: service).build(),
+                            image: UIImage(systemName: "magnifyingglass"),
+                            tag: 3)
+    }
+
+    static func makeNavController(vc: UIViewController, image: UIImage?, tag: Int) -> UINavigationController {
+        let navController = UINavigationController(rootViewController: vc)
+        navController.tabBarItem = UITabBarItem(title: vc.title, image: image, tag: tag)
+        navController.navigationBar.prefersLargeTitles = true
+        return navController
     }
 }

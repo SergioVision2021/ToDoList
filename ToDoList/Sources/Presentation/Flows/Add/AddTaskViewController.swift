@@ -23,8 +23,8 @@ class AddTaskViewController: UIViewController, AddTaskViewLogic {
     public var router: AddTaskRoutingLogic?
     public var repository: TaskRepository?
 
+    public var scheduleDate: Date?
     private let numberRandom = Int.random(in: 1..<1000)
-    private var scheduleDate: Date?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,13 +83,5 @@ private extension AddTaskViewController {
         let button = UIAlertAction(title: "OK", style: .default, handler: nil)
         ac.addAction(button)
         return ac
-    }
-}
-
-// MARK: - Delegate
-extension AddTaskViewController: SelectDateDelegate {
-    func selectDateDidTapDone(_ sender: UIViewController, _ date: Date) {
-        scheduleDate = date
-        scheduleDateButton.setTitle(ConvertDate().convert(from: date), for: .normal)
     }
 }

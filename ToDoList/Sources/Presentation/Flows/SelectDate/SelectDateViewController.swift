@@ -7,11 +7,11 @@
 
 import UIKit
 
-class SelectDateViewController: UIViewController {
+class SelectDateViewController: UIViewController, SelectDateRouting {
 
     @IBOutlet weak var scheduleDatePicker: UIDatePicker!
 
-    internal var delegate: SelectDateDelegate?
+    var onSelectDate: ((Date) -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,8 +29,7 @@ private extension SelectDateViewController {
 
     @objc
     func addActionButton(sender: UIBarButtonItem) {
-        // Вернуть выбранную дату
-        delegate?.selectDateDidTapDone(self, scheduleDatePicker.date)
+        onSelectDate?(scheduleDatePicker.date)
         navigationController?.popViewController(animated: true)
     }
 }

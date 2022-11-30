@@ -9,16 +9,11 @@ import Foundation
 
 final class SelectDataModuleBuilder: ModuleBuilder {
 
-    let delegate: SelectDateDelegate?
-
-    init(delegate: SelectDateDelegate?) {
-        self.delegate = delegate
-    }
+    init() {}
 
     func build() -> SelectDateViewController {
 
         let view = AppDI.makeSelectDateScene()
-        view.delegate = delegate
         return view
     }
 }

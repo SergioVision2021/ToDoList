@@ -19,7 +19,7 @@
 		D3026B9027C26814007BDF24 /* InBoxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3026B7127C26814007BDF24 /* InBoxViewController.swift */; };
 		D3026B9127C26814007BDF24 /* SelectDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3026B7227C26814007BDF24 /* SelectDateViewController.swift */; };
 		D3026B9227C26814007BDF24 /* DetailTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3026B7327C26814007BDF24 /* DetailTaskViewController.swift */; };
-		D3026B9427C26814007BDF24 /* SelectDateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3026B7527C26814007BDF24 /* SelectDateDelegate.swift */; };
+		D3026B9427C26814007BDF24 /* SelectDateRouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3026B7527C26814007BDF24 /* SelectDateRouting.swift */; };
 		D3026B9527C26814007BDF24 /* AddTaskViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3026B7627C26814007BDF24 /* AddTaskViewController.xib */; };
 		D3026B9627C26814007BDF24 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3026B7727C26814007BDF24 /* Main.storyboard */; };
 		D3026B9727C26814007BDF24 /* AddTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3026B7927C26814007BDF24 /* AddTaskViewController.swift */; };
@@ -71,7 +71,7 @@
 		D3026B7127C26814007BDF24 /* InBoxViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InBoxViewController.swift; sourceTree = "<group>"; };
 		D3026B7227C26814007BDF24 /* SelectDateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDateViewController.swift; sourceTree = "<group>"; };
 		D3026B7327C26814007BDF24 /* DetailTaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTaskViewController.swift; sourceTree = "<group>"; };
-		D3026B7527C26814007BDF24 /* SelectDateDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDateDelegate.swift; sourceTree = "<group>"; };
+		D3026B7527C26814007BDF24 /* SelectDateRouting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDateRouting.swift; sourceTree = "<group>"; };
 		D3026B7627C26814007BDF24 /* AddTaskViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddTaskViewController.xib; sourceTree = "<group>"; };
 		D3026B7827C26814007BDF24 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D3026B7927C26814007BDF24 /* AddTaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTaskViewController.swift; sourceTree = "<group>"; };
@@ -288,7 +288,7 @@
 			children = (
 				D3026B7227C26814007BDF24 /* SelectDateViewController.swift */,
 				D3026B7B27C26814007BDF24 /* SelectDateViewController.xib */,
-				D3026B7527C26814007BDF24 /* SelectDateDelegate.swift */,
+				D3026B7527C26814007BDF24 /* SelectDateRouting.swift */,
 				D318E851291A964A00C89C48 /* SelectDataModuleBuilder.swift */,
 			);
 			path = SelectDate;
@@ -561,7 +561,7 @@
 				D318E83B291A663000C89C48 /* AppDI.swift in Sources */,
 				D3BC6D8729015B61002DDC8D /* LocalStorage.swift in Sources */,
 				D318E848291A76AE00C89C48 /* TaskListModuleBuilder.swift in Sources */,
-				D3026B9427C26814007BDF24 /* SelectDateDelegate.swift in Sources */,
+				D3026B9427C26814007BDF24 /* SelectDateRouting.swift in Sources */,
 				D3026B9F27C26814007BDF24 /* SceneDelegate.swift in Sources */,
 				D3026B8C27C26814007BDF24 /* TaskCell.swift in Sources */,
 				D318E846291A753100C89C48 /* ToDayModuleBuilder.swift in Sources */,

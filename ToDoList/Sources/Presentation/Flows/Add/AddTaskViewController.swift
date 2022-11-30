@@ -61,7 +61,7 @@ private extension AddTaskViewController {
                             notes: notesTextView.text,
                             status: false)
 
-        repository?.update(Operations.add, task) { [weak self] error in
+        repository?.update(.add, task) { [weak self] error in
             guard let self = self else { return }
 
             guard error == nil else {

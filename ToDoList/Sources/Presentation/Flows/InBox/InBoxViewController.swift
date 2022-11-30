@@ -181,6 +181,7 @@ extension InBoxViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         router?.navigationToDetailTask(task: data[indexPath.section].tasks?[indexPath.row] ?? Task(),
                                        nameSection: data[indexPath.section].name ?? "",
+                                       repository: repository,
                                        sender: self)
     }
 
@@ -199,7 +200,7 @@ private extension InBoxViewController {
 
     @objc
     func addActionButton(sender: UIBarButtonItem) {
-        router?.navigationToAddTask(sender: self, repository: repository)
+        router?.navigationToAddTask(repository: repository, sender: self)
     }
 }
 
@@ -257,12 +258,5 @@ private extension InBoxViewController {
             
             self.present(self.makeAlertController(result), animated: true, completion: nil)
         }
-    }
-}
-
-// MARK: - Delegates
-extension InBoxViewController: DetailTaskDelegate {
-    func detailTaskDidTapDone(_ sender: UIViewController, _ task: Task) {
-        execute(operation: .edit, task)
     }
 }

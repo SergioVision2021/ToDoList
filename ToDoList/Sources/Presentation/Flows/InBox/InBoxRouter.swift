@@ -10,8 +10,9 @@ import UIKit
 
 protocol InBoxRoutingLogic {
     var viewController: UIViewController? { get set }
-    func navigationToAddTask(sender: InBoxViewController, repository: TaskRepository)
-    func navigationToDetailTask(task: Task, nameSection: String, sender: InBoxViewController)
+    func navigationToAddTask(repository: TaskRepository, sender: InBoxViewController)
+    func navigationToDetailTask(task: Task, nameSection: String,
+                                repository: TaskRepository, sender: InBoxViewController)
 }
 
 class InBoxRouter: InBoxRoutingLogic {
@@ -22,13 +23,13 @@ class InBoxRouter: InBoxRoutingLogic {
         viewController = view
     }
 
-    public func navigationToAddTask(sender: InBoxViewController, repository: TaskRepository) {
+    public func navigationToAddTask(repository: TaskRepository, sender: InBoxViewController) {
         let vc = AddTaskModuleBuilder(repository: repository).build()
         viewController?.show(vc, sender: sender)
     }
 
-    public func navigationToDetailTask(task: Task, nameSection: String, sender: InBoxViewController) {
-        let vc = DetailTaskModuleBuilder(task: task, nameSection: nameSection, delegate: sender).build()
+    public func navigationToDetailTask(task: Task, nameSection: String, repository: TaskRepository, sender: InBoxViewController) {
+        let vc = DetailTaskModuleBuilder(task: task, nameSection: nameSection, repository: repository).build()
         viewController?.show(vc, sender: sender)
     }
 }

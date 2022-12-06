@@ -13,12 +13,7 @@ enum Operations {
     case delete
 }
 
-protocol InBoxViewLogic: ViewProtocol {
-    var service: TaskServiceLogic? { get set }
-    var router: InBoxRoutingLogic? { get set }
-}
-
-class InBoxViewController: UIViewController, InBoxViewLogic {
+class InBoxViewController: UIViewController {
 
     // MARK: - Public properties
     public var service: TaskServiceLogic?

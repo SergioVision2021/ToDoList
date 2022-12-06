@@ -22,7 +22,7 @@ class AddTaskRouter: AddTaskRoutingLogic {
     }
 
     func navigationToSelectDate(sender: AddTaskViewController) {
-        let vc = SelectDataModuleBuilder().build()
+        var vc = SelectDataModuleBuilder().build()
         vc.onSelectDate = { result in
             sender.scheduleDate = result
             sender.scheduleDateButton.setTitle(ConvertDate().convert(from: result), for: .normal)

@@ -20,13 +20,13 @@ class AppCoordinatorImpl: Coordinator {
 
     func start() {
 
-        let service = AppDI.makeTaskService()
+        let service = dependencies.makeTaskService()
         var controllers: [UIViewController] = []
 
-        controllers.append(AppDI.makeInBoxModule(service: service))
-        controllers.append(AppDI.makeToDayModule(service: service))
-        controllers.append(AppDI.makeTaskListModule(service: service))
-        controllers.append(AppDI.makeSearchModule(service: service))
+        controllers.append(dependencies.makeInBoxModule(service: service))
+        controllers.append(dependencies.makeToDayModule(service: service))
+        controllers.append(dependencies.makeTaskListModule(service: service))
+        controllers.append(dependencies.makeSearchModule(service: service))
 
         tabBarController.setViewControllers(controllers, animated: true)
     }

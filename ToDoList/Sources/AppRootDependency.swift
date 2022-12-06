@@ -8,8 +8,9 @@
 import UIKit
 
 protocol AppRootDependency {
-    static func makeInBoxModule(service: TaskServiceLogic) -> UINavigationController
-    static func makeToDayModule(service: TaskServiceLogic) -> UINavigationController
-    static func makeTaskListModule(service: TaskServiceLogic) -> UINavigationController
-    static func makeSearchModule(service: TaskServiceLogic) -> UINavigationController
+    func makeTaskService() -> TaskServiceLogic
+    func makeInBoxModule(service: TaskServiceLogic) -> UINavigationController
+    func makeToDayModule(service: TaskServiceLogic) -> UINavigationController
+    func makeTaskListModule(service: TaskServiceLogic) -> UINavigationController
+    func makeSearchModule(service: TaskServiceLogic) -> UINavigationController
 }

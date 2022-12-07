@@ -9,25 +9,26 @@ import Foundation
 import UIKit
 
 protocol AddTaskRoutingLogic {
-    var viewController: UIViewController? { get set }
+    var coordinator: AddTaskCoordinator? { get set }
     func navigationToSelectDate(sender: AddTaskViewController)
 }
 
 class AddTaskRouter: AddTaskRoutingLogic {
 
-    public weak var viewController: UIViewController?
+    public weak var coordinator: AddTaskCoordinator?
 
-    public init(view: UIViewController) {
-        viewController = view
+    init(coordinator: AddTaskCoordinator) {
+        self.coordinator = coordinator
     }
 
-    func navigationToSelectDate(sender: AddTaskViewController) {
+    public func navigationToSelectDate(sender: AddTaskViewController) {
         var vc = SelectDataModuleBuilder().build()
         vc.onSelectDate = { result in
             sender.scheduleDate = result
             sender.scheduleDateButton.setTitle(ConvertDate().convert(from: result), for: .normal)
             return
         }
-        viewController?.show(vc, sender: sender)
+
+        coordinator?.showSelectDateView(vc: vc)
     }
 }

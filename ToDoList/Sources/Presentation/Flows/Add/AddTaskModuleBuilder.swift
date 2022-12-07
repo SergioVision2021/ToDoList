@@ -9,17 +9,21 @@ import Foundation
 
 final class AddTaskModuleBuilder: ModuleBuilder {
 
-    let repository: TaskRepository
+    private let coordinator: AddTaskCoordinator
+    private let repository: TaskRepository
 
-    init(repository: TaskRepository) {
+    init(coordinator: AddTaskCoordinator, repository: TaskRepository) {
+        self.coordinator = coordinator
         self.repository = repository
     }
 
-    func build() -> AddTaskViewController {
+    public func build() -> AddTaskViewController {
 
         let view = AppDI.makeAddTaskScene()
+        view.title = "Add task"
         view.repository = repository
-        let router = AddTaskRouter(view: view)
+
+        let router = AddTaskRouter(coordinator: coordinator)
         view.router = router
 
         return view

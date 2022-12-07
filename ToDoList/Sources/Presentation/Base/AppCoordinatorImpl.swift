@@ -9,8 +9,9 @@ import UIKit
 
 class AppCoordinatorImpl: Coordinator {
 
-    var tabBarController: UITabBarController
+    public var tabBarController: UITabBarController
 
+    private var childCoordinators = [Coordinator]()
     private var dependencies: AppRootDependency
 
     init(tabBarController: UITabBarController = UITabBarController(), dependencies: AppRootDependency) {
@@ -18,12 +19,17 @@ class AppCoordinatorImpl: Coordinator {
         self.dependencies = dependencies
     }
 
-    func start() {
+    public func start() {
 
         let service = dependencies.makeTaskService()
         var controllers: [UIViewController] = []
 
-        controllers.append(dependencies.makeInBoxModule(service: service))
+        let child = InBoxCoordinator(navigationController: UINavigationController(), service: service)
+        child.parentCoordinator = self
+        childCoordinators.append(child)
+        child.start()
+
+        controllers.append(dependencies.makeInBoxModule(coordinator: child))
         controllers.append(dependencies.makeToDayModule(service: service))
         controllers.append(dependencies.makeTaskListModule(service: service))
         controllers.append(dependencies.makeSearchModule(service: service))

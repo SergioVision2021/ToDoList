@@ -1,4 +1,4 @@
-//
+//  swiftlint:disable all
 //  InBoxRouter.swift
 //  ToDoList
 //
@@ -9,27 +9,27 @@ import Foundation
 import UIKit
 
 protocol InBoxRoutingLogic {
-    var viewController: UIViewController? { get set }
-    func navigationToAddTask(repository: TaskRepository, sender: InBoxViewController)
+    var coordinator: InBoxCoordinator? { get set }
+    func navigationToAddTask(repository: TaskRepository)
     func navigationToDetailTask(task: Task, nameSection: String,
                                 repository: TaskRepository, sender: InBoxViewController)
 }
 
 class InBoxRouter: InBoxRoutingLogic {
 
-    public weak var viewController: UIViewController?
+    public weak var coordinator: InBoxCoordinator?
 
-    public init(view: UIViewController) {
-        viewController = view
+    init(coordinator: InBoxCoordinator) {
+        self.coordinator = coordinator
     }
 
-    public func navigationToAddTask(repository: TaskRepository, sender: InBoxViewController) {
-        let vc = AddTaskModuleBuilder(repository: repository).build()
-        viewController?.show(vc, sender: sender)
+    public func navigationToAddTask(repository: TaskRepository) {
+        coordinator?.showAddTaskView(repository: repository)
     }
 
     public func navigationToDetailTask(task: Task, nameSection: String, repository: TaskRepository, sender: InBoxViewController) {
         let vc = DetailTaskModuleBuilder(task: task, nameSection: nameSection, repository: repository).build()
-        viewController?.show(vc, sender: sender)
+
+        coordinator?.showDetailTaskView(vc: vc)
     }
 }

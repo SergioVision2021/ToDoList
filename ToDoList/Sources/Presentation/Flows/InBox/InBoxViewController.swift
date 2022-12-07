@@ -195,7 +195,7 @@ private extension InBoxViewController {
 
     @objc
     func addActionButton(sender: UIBarButtonItem) {
-        router?.navigationToAddTask(repository: repository, sender: self)
+        router?.navigationToAddTask(repository: repository)
     }
 }
 

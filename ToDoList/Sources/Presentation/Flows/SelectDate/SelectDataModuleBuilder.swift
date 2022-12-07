@@ -12,9 +12,10 @@ final class SelectDataModuleBuilder: ModuleBuilder {
 
     init() {}
 
-    func build() -> UIViewController & SelectDateRouting {
+    public func build() -> UIViewController & SelectDateRouting {
 
         let view = AppDI.makeSelectDateScene()
+        view.title = "Select date"
         return view
     }
 }

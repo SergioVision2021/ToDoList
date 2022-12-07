@@ -47,10 +47,10 @@ extension AppDI: AppRootDependency {
         TaskService()
     }
     
-    func makeInBoxModule(service: TaskServiceLogic) -> UINavigationController {
-        makeNavController(vc: InBoxModuleBuilder(service: service).build(),
-                          image: UIImage(systemName: "calendar"),
-                            tag: 0)
+    func makeInBoxModule(coordinator: InBoxCoordinator) -> UINavigationController {
+        coordinator.navigationController.tabBarItem = UITabBarItem(title: "InBox", image: UIImage(systemName: "flame"), tag: 0)
+        coordinator.navigationController.navigationBar.prefersLargeTitles = true
+        return coordinator.navigationController
     }
 
     func makeToDayModule(service: TaskServiceLogic) -> UINavigationController {

@@ -17,7 +17,7 @@ class InBoxViewController: UIViewController {
 
     // MARK: - Public properties
     public var service: TaskServiceLogic?
-    public var router: InBoxRoutingLogic?
+    public var router: InBoxRouter?
 
     // MARK: - Private properties
     private var repository = AppDI.makeTaskRepository()

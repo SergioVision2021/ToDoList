@@ -9,11 +9,11 @@ import Foundation
 
 final class InBoxModuleBuilder: ModuleBuilder {
 
-    private let coordinator: InBoxCoordinator
+    private let router: InBoxRouter
     private let service: TaskServiceLogic
 
-    init(coordinator: InBoxCoordinator, service: TaskServiceLogic) {
-        self.coordinator = coordinator
+    init(router: InBoxRouter, service: TaskServiceLogic) {
+        self.router = router
         self.service = service
     }
 
@@ -22,8 +22,6 @@ final class InBoxModuleBuilder: ModuleBuilder {
         let view = InBoxViewController()
         view.title = "InBox"
         view.service = service
-
-        let router = InBoxRouter(coordinator: coordinator)
         view.router = router
 
         return view

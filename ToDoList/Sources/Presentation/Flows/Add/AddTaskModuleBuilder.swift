@@ -9,11 +9,11 @@ import Foundation
 
 final class AddTaskModuleBuilder: ModuleBuilder {
 
-    private let coordinator: AddTaskCoordinator
+    private let router: AddTaskRouter
     private let repository: TaskRepository
 
-    init(coordinator: AddTaskCoordinator, repository: TaskRepository) {
-        self.coordinator = coordinator
+    init(router: AddTaskRouter, repository: TaskRepository) {
+        self.router = router
         self.repository = repository
     }
 
@@ -22,8 +22,6 @@ final class AddTaskModuleBuilder: ModuleBuilder {
         let view = AppDI.makeAddTaskScene()
         view.title = "Add task"
         view.repository = repository
-
-        let router = AddTaskRouter(coordinator: coordinator)
         view.router = router
 
         return view

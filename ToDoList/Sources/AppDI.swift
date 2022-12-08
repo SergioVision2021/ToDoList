@@ -46,34 +46,37 @@ extension AppDI: AppRootDependency {
     func makeTaskService() -> TaskServiceLogic {
         TaskService()
     }
-    
-    func makeInBoxModule(coordinator: InBoxCoordinator) -> UINavigationController {
-        coordinator.navigationController.tabBarItem = UITabBarItem(title: "InBox", image: UIImage(systemName: "flame"), tag: 0)
-        coordinator.navigationController.navigationBar.prefersLargeTitles = true
-        return coordinator.navigationController
+
+    func makeInBoxModule(service: TaskServiceLogic) -> InBoxCoordinator{
+        let navController = makeNavController(title: "InBox", image: UIImage(systemName: "calendar"), tag: 0)
+        return InBoxCoordinator(navigationController: navController, service: service)
     }
 
     func makeToDayModule(service: TaskServiceLogic) -> UINavigationController {
-        makeNavController(vc: ToDayModuleBuilder(service: service).build(),
-                            image: UIImage(systemName: "flame"),
-                            tag: 1)
+        let navController = makeNavController(title: "ToDay", image: UIImage(systemName: "flame"), tag: 1)
+        let vc = ToDayModuleBuilder(service: service).build()
+        navController.setViewControllers([vc], animated: true)
+        
+        return navController
     }
 
     func makeTaskListModule(service: TaskServiceLogic) -> UINavigationController {
-        makeNavController(vc: TaskListModuleBuilder(service: service).build(),
-                            image: UIImage(systemName: "triangle"),
-                            tag: 2)
+        let navController = makeNavController(title: "TaskList", image: UIImage(systemName: "triangle"), tag: 2)
+        let vc = TaskListModuleBuilder(service: service).build()
+        navController.setViewControllers([vc], animated: true)
+        return navController
     }
 
     func makeSearchModule(service: TaskServiceLogic) -> UINavigationController {
-        makeNavController(vc: SearchModuleBuilder(service: service).build(),
-                            image: UIImage(systemName: "magnifyingglass"),
-                            tag: 3)
+        let navController = makeNavController(title: "Search", image: UIImage(systemName: "magnifyingglass"), tag: 3)
+        let vc = SearchModuleBuilder(service: service).build()
+        navController.setViewControllers([vc], animated: true)
+        return navController
     }
 
-    func makeNavController(vc: UIViewController, image: UIImage?, tag: Int) -> UINavigationController {
-        let navController = UINavigationController(rootViewController: vc)
-        navController.tabBarItem = UITabBarItem(title: vc.title, image: image, tag: tag)
+    func makeNavController(title: String?, image: UIImage?, tag: Int) -> UINavigationController {
+        let navController = UINavigationController()
+        navController.tabBarItem = UITabBarItem(title: title, image: image, tag: tag)
         navController.navigationBar.prefersLargeTitles = true
         return navController
     }

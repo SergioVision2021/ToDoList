@@ -7,12 +7,8 @@
 
 import UIKit
 
-protocol AddTaskViewLogic: ViewProtocol {
-    var router: AddTaskRoutingLogic? { get set }
-    var repository: TaskRepository? { get set }
-}
+class AddTaskViewController: UIViewController {
 
-class AddTaskViewController: UIViewController, AddTaskViewLogic {
     // MARK: - IBOutlet
     @IBOutlet weak var selectGroupButton: UIButton!
     @IBOutlet weak var nameTaskTextField: UITextField!
@@ -20,7 +16,7 @@ class AddTaskViewController: UIViewController, AddTaskViewLogic {
     @IBOutlet weak var scheduleDateButton: UIButton!
 
     // MARK: - Properties
-    public var router: AddTaskRoutingLogic?
+    public var router: AddTaskRouter?
     public var repository: TaskRepository?
 
     public var scheduleDate: Date?

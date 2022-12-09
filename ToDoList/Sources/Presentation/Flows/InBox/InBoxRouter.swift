@@ -9,6 +9,6 @@ import Foundation
 import UIKit
 
 protocol InBoxRouter {
-    func navigationToAddTask(repository: TaskRepository)
-    func navigationToDetailTask(task: Task, nameSection: String, repository: TaskRepository, sender: InBoxViewController)
+    func navigationToAddTask()
+    func navigationToDetailTask(task: Task, nameSection: String, sender: InBoxViewController)
 }

@@ -17,7 +17,7 @@ class AddTaskViewController: UIViewController {
 
     // MARK: - Properties
     public var router: AddTaskRouter?
-    public var repository: TaskRepository?
+    public var repository: TaskRepository = AppDI.makeTaskRepository()
 
     public var scheduleDate: Date?
     private let numberRandom = Int.random(in: 1..<1000)
@@ -57,7 +57,7 @@ private extension AddTaskViewController {
                             notes: notesTextView.text,
                             status: false)
 
-        repository?.update(.add, task) { [weak self] error in
+        repository.update(.add, task) { [weak self] error in
             guard let self = self else { return }
 
             guard error == nil else {

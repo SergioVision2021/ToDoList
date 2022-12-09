@@ -7,20 +7,18 @@
 
 import UIKit
 
-enum Operations {
-    case add
-    case edit
-    case delete
+protocol InBoxViewLogic: ViewProtocol {
+    func displayData(data: [Group])
+    func displayAlert(message: String)
 }
 
-class InBoxViewController: UIViewController {
+class InBoxViewController: UIViewController, InBoxViewLogic {
 
     // MARK: - Public properties
-    public var service: TaskServiceLogic?
     public var router: InBoxRouter?
+    public var presenter: InBoxPresenterLogic?
 
     // MARK: - Private properties
-    private var repository = AppDI.makeTaskRepository()
     private var data: [Group] = []
 
     // MARK: - Visual Component
@@ -35,57 +33,21 @@ class InBoxViewController: UIViewController {
         addBarButtonItem()
         addTableView()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        fetch()
+        presenter?.fetch()
     }
     
-    private func fetch() {
-        repository.fetch(force: false) { [weak self] (result) in
-            guard let self = self else { return }
-            
-            switch result {
-            case.success(let dataModel):
-
-                //TASK SERVICE
-                self.service?.source = dataModel
-                
-                self.service?.fetch() { (result) in
-                    switch result {
-                    case .success(let data):
-                        DispatchQueue.main.async {
-                            self.data = data
-                            print(data)
-                            self.tableView.reloadData()
-                        }
-                    case .failure(_):
-                        break
-                    }
-                }
-            case.failure(let error):
-                DispatchQueue.main.async {
-                    self.present(self.makeAlertController(error.localizedDescription), animated: true, completion: nil)
-                }
-            }
-        }
+    func displayData(data: [Group]) {
+        print(Thread.current)
+        self.data = data
+        tableView.reloadData()
     }
     
-    private func execute(operation: Operations, _ task: Task) {
-
-        repository.update(operation, task) { [weak self] error in
-            guard let self = self else { return }
-            
-            guard error == nil else {
-                DispatchQueue.main.async {
-                    self.present(self.makeAlertController(error?.localizedDescription), animated: true, completion: nil)
-                }
-                return
-            }
-            
-            self.fetch()
-        }
+    func displayAlert(message: String) {
+        present(makeAlertController(message), animated: true, completion: nil)
     }
 }
 
@@ -125,8 +87,7 @@ extension InBoxViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
         
-        print("Coutn: \(data.count)")
-        
+        print("Count: \(data.count)")
         return data.count
     }
 
@@ -153,7 +114,7 @@ extension InBoxViewController: UITableViewDataSource {
             tableView.deleteRows(at: [indexPath], with: .none)
             tableView.endUpdates()
             
-            execute(operation: .delete, selectTask)
+            presenter?.execute(operation: .delete, selectTask)
         }
     }
 }
@@ -176,7 +137,6 @@ extension InBoxViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         router?.navigationToDetailTask(task: data[indexPath.section].tasks?[indexPath.row] ?? Task(),
                                        nameSection: data[indexPath.section].name ?? "",
-                                       repository: repository,
                                        sender: self)
     }
 
@@ -195,7 +155,7 @@ private extension InBoxViewController {
 
     @objc
     func addActionButton(sender: UIBarButtonItem) {
-        router?.navigationToAddTask(repository: repository)
+        router?.navigationToAddTask()
     }
 }
 

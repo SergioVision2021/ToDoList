@@ -21,8 +21,11 @@ final class InBoxModuleBuilder: ModuleBuilder {
 
         let view = InBoxViewController()
         view.title = "InBox"
-        view.service = service
+        
+        let presenter = InBoxPresenter(view: view, service: service)
+
         view.router = router
+        view.presenter = presenter
 
         return view
     }

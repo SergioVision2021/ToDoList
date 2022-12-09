@@ -19,7 +19,7 @@ class DetailTaskViewController: UIViewController {
     // MARK: - Properties
     internal var task = Task()
     internal var nameSection = String()
-    public var repository: TaskRepository?
+    public var repository: TaskRepository = AppDI.makeTaskRepository()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +59,7 @@ private extension DetailTaskViewController {
     func addActionButton(sender: UIBarButtonItem) {
         task.setDeadlineTask()
 
-        repository?.update(.edit, task) { [weak self] error in
+        repository.update(.edit, task) { [weak self] error in
             guard let self = self else { return }
 
             guard error == nil else {

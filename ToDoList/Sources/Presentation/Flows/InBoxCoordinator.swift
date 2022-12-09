@@ -28,13 +28,13 @@ class InBoxCoordinator: Coordinator {
 
 extension InBoxCoordinator: InBoxRouter {
 
-    func navigationToAddTask(repository: TaskRepository) {
-        let vc = AddTaskModuleBuilder(router: self, repository: repository).build()
+    func navigationToAddTask() {
+        let vc = AddTaskModuleBuilder(router: self).build()
         navigationController.pushViewController(vc, animated: true)
     }
 
-    func navigationToDetailTask(task: Task, nameSection: String, repository: TaskRepository, sender: InBoxViewController) {
-        let vc = DetailTaskModuleBuilder(task: task, nameSection: nameSection, repository: repository).build()
+    func navigationToDetailTask(task: Task, nameSection: String, sender: InBoxViewController) {
+        let vc = DetailTaskModuleBuilder(task: task, nameSection: nameSection).build()
         navigationController.pushViewController(vc, animated: true)
     }
 }

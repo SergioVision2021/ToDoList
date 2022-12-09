@@ -6,19 +6,16 @@
 //
 
 import Foundation
+import UIKit
 
 final class SelectDataModuleBuilder: ModuleBuilder {
 
-    let delegate: SelectDateDelegate?
+    init() {}
 
-    init(delegate: SelectDateDelegate?) {
-        self.delegate = delegate
-    }
+    public func build() -> UIViewController & SelectDateRouting {
 
-    func build() -> SelectDateViewController {
-
-        let view = SelectDateViewController(nibName: Constants.selectDataVCIdentifier, bundle: nil)
-        view.delegate = delegate
+        let view = AppDI.makeSelectDateScene()
+        view.title = "Select date"
         return view
     }
 }

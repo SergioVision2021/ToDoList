@@ -12,23 +12,20 @@ final class DetailTaskModuleBuilder: ModuleBuilder {
 
     let task: Task
     let nameSection: String
-    let delegate: DetailTaskDelegate?
+    let repository: TaskRepository?
 
-    init(task: Task, nameSection: String, delegate: DetailTaskDelegate?) {
+    init(task: Task, nameSection: String, repository: TaskRepository?) {
         self.task = task
         self.nameSection = nameSection
-        self.delegate = delegate
+        self.repository = repository
     }
 
     func build() -> DetailTaskViewController {
 
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let view = storyBoard.instantiateViewController(withIdentifier: Constants.detailTaskVCIdentifier) as? DetailTaskViewController else {
-            fatalError("Unexpected Index Path")
-        }
+        var view = AppDI.makeDetailTaskScene()
         view.task = task
         view.nameSection = nameSection
-        view.delegate = delegate
+        view.repository = repository
 
         return view
     }

@@ -10,7 +10,7 @@ import UIKit
 class SearchViewController: UIViewController {
 
     // MARK: - Properties
-    var service: TaskServiceProtocol?
+    var service: TaskServiceLogic?
     private var data: [String] = []
     private var filteredData: [String] = []
 

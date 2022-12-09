@@ -9,9 +9,11 @@ import Foundation
 
 final class InBoxModuleBuilder: ModuleBuilder {
 
-    let service: TaskService
+    private let router: InBoxRouter
+    private let service: TaskServiceLogic
 
-    init(service: TaskService) {
+    init(router: InBoxRouter, service: TaskServiceLogic) {
+        self.router = router
         self.service = service
     }
 
@@ -20,6 +22,8 @@ final class InBoxModuleBuilder: ModuleBuilder {
         let view = InBoxViewController()
         view.title = "InBox"
         view.service = service
+        view.router = router
+
         return view
     }
 }

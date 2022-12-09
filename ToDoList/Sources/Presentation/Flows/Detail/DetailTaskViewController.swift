@@ -19,7 +19,7 @@ class DetailTaskViewController: UIViewController {
     // MARK: - Properties
     internal var task = Task()
     internal var nameSection = String()
-    internal var delegate: DetailTaskDelegate?
+    public var repository: TaskRepository?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,8 +59,26 @@ private extension DetailTaskViewController {
     func addActionButton(sender: UIBarButtonItem) {
         task.setDeadlineTask()
 
-        // Вернуть завершенную задачу
-        delegate?.detailTaskDidTapDone(self, task)
+        repository?.update(.edit, task) { [weak self] error in
+            guard let self = self else { return }
+
+            guard error == nil else {
+                DispatchQueue.main.async {
+                    self.present(self.makeAlertController(error?.localizedDescription), animated: true, completion: nil)
+                }
+                return
+            }
+        }
         navigationController?.popViewController(animated: true)
+    }
+}
+
+// MARK: - Factory
+private extension DetailTaskViewController {
+    func makeAlertController(_ message: String?) -> UIAlertController {
+        let ac = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let button = UIAlertAction(title: "OK", style: .default, handler: nil)
+        ac.addAction(button)
+        return ac
     }
 }

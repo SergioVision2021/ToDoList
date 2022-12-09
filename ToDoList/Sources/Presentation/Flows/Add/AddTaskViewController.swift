@@ -8,6 +8,7 @@
 import UIKit
 
 class AddTaskViewController: UIViewController {
+
     // MARK: - IBOutlet
     @IBOutlet weak var selectGroupButton: UIButton!
     @IBOutlet weak var nameTaskTextField: UITextField!
@@ -15,11 +16,12 @@ class AddTaskViewController: UIViewController {
     @IBOutlet weak var scheduleDateButton: UIButton!
 
     // MARK: - Properties
-    var delegate: AddTaskDelegate?
+    public var router: AddTaskRouter?
+    public var repository: TaskRepository?
 
-    let numberRandom = Int.random(in: 1..<1000)
-    var scheduleDate: Date?
-    
+    public var scheduleDate: Date?
+    private let numberRandom = Int.random(in: 1..<1000)
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,8 +34,7 @@ class AddTaskViewController: UIViewController {
         selectGroupButton.setTitle("InBox", for: .normal)               // Default - Inbox
     }
     @IBAction func selectDateButton(_ sender: UIButton) {
-        let vc = SelectDataModuleBuilder(delegate: self).build()
-        navigationController?.pushViewController(vc, animated: true)
+        router?.navigationToSelectDate(sender: self)
     }
 }
 
@@ -56,43 +57,27 @@ private extension AddTaskViewController {
                             notes: notesTextView.text,
                             status: false)
 
-        // Возврат новой задачи
-        delegate?.addTaskDidTapSave(self, task)
+        repository?.update(.add, task) { [weak self] error in
+            guard let self = self else { return }
+
+            guard error == nil else {
+                DispatchQueue.main.async {
+                    self.present(self.makeAlertController(error?.localizedDescription), animated: true, completion: nil)
+                }
+                return
+            }
+        }
+
         navigationController?.popViewController(animated: true)
     }
 }
 
-// MARK: - Delegate
-extension AddTaskViewController: SelectDateDelegate {
-    func selectDateDidTapDone(_ sender: UIViewController, _ date: Date) {
-        scheduleDate = date
-        scheduleDateButton.setTitle(ConvertDate().convert(from: date), for: .normal)
+// MARK: - Factory
+private extension AddTaskViewController {
+    func makeAlertController(_ message: String?) -> UIAlertController {
+        let ac = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let button = UIAlertAction(title: "OK", style: .default, handler: nil)
+        ac.addAction(button)
+        return ac
     }
 }
-
-//extension AddTaskViewController {
-//    func addAlert() {
-//        let alert = UIAlertController(title: "Add new group",
-//                                      message: "Input name new group",
-//                                      preferredStyle: .alert)
-//
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-//
-//        let continueAction = UIAlertAction(title: "Continue", style: .default, handler: { _ in
-//            guard let name = alert.textFields?[0].text, !name.isEmpty else {
-//                return
-//            }
-//
-//            self.nameGroup = name
-//        })
-//
-//        alert.addAction(cancelAction)
-//        alert.addAction(continueAction)
-//
-//        alert.addTextField { (textField) in
-//            textField.placeholder = "Enter name group"
-//        }
-//
-//        present(alert, animated: true, completion: nil)
-//    }
-//}

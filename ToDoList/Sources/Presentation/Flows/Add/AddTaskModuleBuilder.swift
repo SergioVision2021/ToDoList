@@ -9,16 +9,21 @@ import Foundation
 
 final class AddTaskModuleBuilder: ModuleBuilder {
 
-    let delegate: AddTaskDelegate?
+    private let router: AddTaskRouter
+    private let repository: TaskRepository
 
-    init(delegate: AddTaskDelegate?) {
-        self.delegate = delegate
+    init(router: AddTaskRouter, repository: TaskRepository) {
+        self.router = router
+        self.repository = repository
     }
 
-    func build() -> AddTaskViewController {
+    public func build() -> AddTaskViewController {
 
-        let view = AddTaskViewController(nibName: Constants.addTaskVCIdentifier, bundle: nil)
-        view.delegate = delegate
+        let view = AppDI.makeAddTaskScene()
+        view.title = "Add task"
+        view.repository = repository
+        view.router = router
+
         return view
     }
 }

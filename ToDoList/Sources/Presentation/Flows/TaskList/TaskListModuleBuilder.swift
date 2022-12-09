@@ -9,9 +9,9 @@ import Foundation
 
 final class TaskListModuleBuilder: ModuleBuilder {
 
-    let service: TaskService
+    let service: TaskServiceLogic
 
-    init(service: TaskService) {
+    init(service: TaskServiceLogic) {
         self.service = service
     }
 

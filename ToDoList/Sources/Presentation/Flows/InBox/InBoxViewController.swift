@@ -15,10 +15,12 @@ enum Operations {
 
 class InBoxViewController: UIViewController {
 
-    // MARK: - Properties
-    var repository = AppDI.makeTaskRepository()
+    // MARK: - Public properties
+    public var service: TaskServiceLogic?
+    public var router: InBoxRouter?
 
-    var service: TaskService?
+    // MARK: - Private properties
+    private var repository = AppDI.makeTaskRepository()
     private var data: [Group] = []
 
     // MARK: - Visual Component
@@ -40,9 +42,8 @@ class InBoxViewController: UIViewController {
         fetch()
     }
     
-    func fetch() {
-
-        repository.fetch() { [weak self] (result) in
+    private func fetch() {
+        repository.fetch(force: false) { [weak self] (result) in
             guard let self = self else { return }
             
             switch result {
@@ -73,10 +74,7 @@ class InBoxViewController: UIViewController {
     
     private func execute(operation: Operations, _ task: Task) {
 
-        service?.update(operation, task) { _ in }
-        guard let source = service?.source else { return }
-        
-        repository.update(operation, task, data: source) { [weak self] error in
+        repository.update(operation, task) { [weak self] error in
             guard let self = self else { return }
             
             guard error == nil else {
@@ -92,7 +90,7 @@ class InBoxViewController: UIViewController {
 }
 
 // MARK: - TableView
-extension InBoxViewController {
+private extension InBoxViewController {
 
     func addTableView() {
         tableView.delegate = self
@@ -149,8 +147,6 @@ extension InBoxViewController: UITableViewDataSource {
 
             guard let selectTask = data[indexPath.section].tasks?[indexPath.row] else { return }
 
-            //когда edit выполняется в потоке и fetch еще не вернул данные
-            //для обновления таблицы надо удалить строку локально
             data[indexPath.section].tasks?.remove(at: indexPath.row)
             
             tableView.beginUpdates()
@@ -178,12 +174,10 @@ extension InBoxViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Связь му 2 VC (без segues)
-        let vc = DetailTaskModuleBuilder(task: data[indexPath.section].tasks?[indexPath.row] ?? Task(),
-                                         nameSection: data[indexPath.section].name ?? "",
-                                         delegate: self)
-            .build()
-        show(vc, sender: self)
+        router?.navigationToDetailTask(task: data[indexPath.section].tasks?[indexPath.row] ?? Task(),
+                                       nameSection: data[indexPath.section].name ?? "",
+                                       repository: repository,
+                                       sender: self)
     }
 
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
@@ -192,7 +186,7 @@ extension InBoxViewController: UITableViewDelegate {
 }
 
 // MARK: - BarButtonItem
-extension InBoxViewController {
+private extension InBoxViewController {
     func addBarButtonItem() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
                                                             target: self,
@@ -201,25 +195,12 @@ extension InBoxViewController {
 
     @objc
     func addActionButton(sender: UIBarButtonItem) {
-        let vc = AddTaskModuleBuilder(delegate: self).build()
-        show(vc, sender: self)
-    }
-}
-
-// MARK: - Delegates
-extension InBoxViewController: AddTaskDelegate {
-    func addTaskDidTapSave(_ sender: UIViewController, _ task: Task) {
-        execute(operation: .add, task)
-    }
-}
-extension InBoxViewController: DetailTaskDelegate {
-    func detailTaskDidTapDone(_ sender: UIViewController, _ task: Task) {
-        execute(operation: .edit, task)
+        router?.navigationToAddTask(repository: repository)
     }
 }
 
 // MARK: - Factory
-extension InBoxViewController {
+private extension InBoxViewController {
     func makeTableView() -> UITableView {
         let table = UITableView(frame: CGRect.zero, style: .insetGrouped)
         table.translatesAutoresizingMaskIntoConstraints = false

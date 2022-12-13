@@ -41,7 +41,7 @@ class SearchViewController: UIViewController {
             case.success(let data):
                 guard let tasks: [Task] = CoderJSON().decoderJSON(data) else { return }
 
-                guard let model = FilterDate().filterTasks(data: tasks) else {
+                guard let model = TaskService().filterTasks(data: tasks) else {
                     self.displayAlert(message: "You have no tasks")
                     return
                 }

@@ -31,7 +31,7 @@ class ToDayViewController: UIViewController {
             switch result {
             case.success(let data):
                 guard let tasks: [Task] = CoderJSON().decoderJSON(data) else { return }
-                guard let model = FilterDate().filterPeriod(data: tasks, name: "ToDay") else {
+                guard let model = TaskService().filterPeriod(data: tasks, name: "ToDay") else {
                     self.displayAlert(message: "You have no tasks for today")
                     return
                 }

@@ -1,5 +1,5 @@
 //
-//  FilterDate.swift
+//  TaskService.swift
 //  ToDoList
 //
 //  Created by Sergey Vysotsky on 13.12.22.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class FilterDate {
+class TaskService {
 
     func filter(data: [Task]?) -> [Model.ViewModel.Group]? {
         guard let data = data else { return nil }

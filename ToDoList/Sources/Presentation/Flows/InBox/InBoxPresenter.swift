@@ -24,7 +24,7 @@ class InBoxPresenter: InBoxPresenterLogic {
     public func present(response: Response) {
 
         guard response.isError else {
-            guard let viewModel = FilterDate().filter(data: response.tasks) else { return }
+            guard let viewModel = TaskService().filter(data: response.tasks) else { return }
             view?.display(vieModel: viewModel)
             return
         }

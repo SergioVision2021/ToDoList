@@ -31,7 +31,7 @@ class TaskListViewController: UIViewController {
             case.success(let data):
                 guard let groups: [Group] = CoderJSON().decoderJSON(data) else { return }
 
-                guard let model = FilterDate().filterGroups(data: groups) else {
+                guard let model = TaskService().filterGroups(data: groups) else {
                     self.displayAlert(message: "You have no group")
                     return
                 }

@@ -10,22 +10,21 @@ import Foundation
 final class InBoxModuleBuilder: ModuleBuilder {
 
     private let router: InBoxRouter
-    private let service: TaskServiceLogic
 
-    init(router: InBoxRouter, service: TaskServiceLogic) {
+    init(router: InBoxRouter) {
         self.router = router
-        self.service = service
     }
 
     public func build() -> InBoxViewController {
 
         let view = InBoxViewController()
         view.title = "InBox"
-        
-        let presenter = InBoxPresenter(view: view, service: service)
 
+        let presenter = InBoxPresenter(view: view)
+        let interactor = InBoxInteractor(presenter: presenter)
+
+        view.interactor = interactor
         view.router = router
-        view.presenter = presenter
 
         return view
     }

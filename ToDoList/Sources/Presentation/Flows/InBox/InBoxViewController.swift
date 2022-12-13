@@ -8,7 +8,7 @@
 import UIKit
 
 protocol InBoxViewLogic: ViewProtocol {
-    func displayData(data: [Group])
+    func display(vieModel: [Model.ViewModel.Group])
     func displayAlert(message: String)
 }
 
@@ -16,10 +16,10 @@ class InBoxViewController: UIViewController, InBoxViewLogic {
 
     // MARK: - Public properties
     public var router: InBoxRouter?
-    public var presenter: InBoxPresenterLogic?
+    public var interactor: InBoxInteractorLogic?
 
     // MARK: - Private properties
-    private var data: [Group] = []
+    private var data: [Model.ViewModel.Group] = []
 
     // MARK: - Visual Component
     private lazy var tableView = makeTableView()
@@ -32,22 +32,29 @@ class InBoxViewController: UIViewController, InBoxViewLogic {
 
         addBarButtonItem()
         addTableView()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        presenter?.fetch()
+        
+        interactor?.fetch()
+        startAnimationAI()
     }
     
-    func displayData(data: [Group]) {
-        print(Thread.current)
-        self.data = data
-        tableView.reloadData()
+    override func viewWillAppear(_ animated: Bool) {
+        interactor?.fetch()
+        startAnimationAI()
+    }
+
+    func display(vieModel: [Model.ViewModel.Group]) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.data = vieModel
+            self.tableView.reloadData()
+            self.stopAnimationAI(nil)
+        }
     }
     
     func displayAlert(message: String) {
-        present(makeAlertController(message), animated: true, completion: nil)
+        DispatchQueue.main.async { [weak self] in
+            self?.stopAnimationAI(message)
+        }
     }
 }
 
@@ -106,7 +113,7 @@ extension InBoxViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
 
-            guard let selectTask = data[indexPath.section].tasks?[indexPath.row] else { return }
+            guard let id = data[indexPath.section].tasks?[indexPath.row].id else { return }
 
             data[indexPath.section].tasks?.remove(at: indexPath.row)
             
@@ -114,7 +121,7 @@ extension InBoxViewController: UITableViewDataSource {
             tableView.deleteRows(at: [indexPath], with: .none)
             tableView.endUpdates()
             
-            presenter?.execute(operation: .delete, selectTask)
+            interactor?.execute(id, operation: .delete)
         }
     }
 }
@@ -135,9 +142,8 @@ extension InBoxViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        router?.navigationToDetailTask(task: data[indexPath.section].tasks?[indexPath.row] ?? Task(),
-                                       nameSection: data[indexPath.section].name ?? "",
-                                       sender: self)
+        guard let id = data[indexPath.section].tasks?[indexPath.row].id else { return }
+        router?.navigationToDetailTask(id: id, sender: self)
     }
 
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {

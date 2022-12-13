@@ -10,5 +10,5 @@ import UIKit
 
 protocol InBoxRouter {
     func navigationToAddTask()
-    func navigationToDetailTask(task: Task, nameSection: String, sender: InBoxViewController)
+    func navigationToDetailTask(id: Int, sender: InBoxViewController)
 }

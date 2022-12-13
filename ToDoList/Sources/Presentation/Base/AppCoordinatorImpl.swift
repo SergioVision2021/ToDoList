@@ -21,18 +21,17 @@ class AppCoordinatorImpl: Coordinator {
 
     public func start() {
 
-        let service = dependencies.makeTaskService()
         var controllers: [UIViewController] = []
 
-        let inBoxCoordinator = dependencies.makeInBoxModule(service: service)
+        let inBoxCoordinator = dependencies.makeInBoxModule()
         inBoxCoordinator.parentCoordinator = self
         childCoordinators.append(inBoxCoordinator)
         inBoxCoordinator.start()
 
         controllers.append(inBoxCoordinator.navigationController)
-        controllers.append(dependencies.makeToDayModule(service: service))
-        controllers.append(dependencies.makeTaskListModule(service: service))
-        controllers.append(dependencies.makeSearchModule(service: service))
+        controllers.append(dependencies.makeToDayModule())
+        controllers.append(dependencies.makeTaskListModule())
+        controllers.append(dependencies.makeSearchModule())
 
         tabBarController.setViewControllers(controllers, animated: true)
     }

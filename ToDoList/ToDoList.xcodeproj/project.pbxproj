@@ -26,7 +26,6 @@
 		D3026B9927C26814007BDF24 /* SelectDateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3026B7B27C26814007BDF24 /* SelectDateViewController.xib */; };
 		D3026B9A27C26814007BDF24 /* TaskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3026B7C27C26814007BDF24 /* TaskListViewController.swift */; };
 		D3026B9C27C26814007BDF24 /* ConvertDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3026B7F27C26814007BDF24 /* ConvertDate.swift */; };
-		D3026B9D27C26814007BDF24 /* TaskService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3026B8027C26814007BDF24 /* TaskService.swift */; };
 		D3026B9E27C26814007BDF24 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3026B8227C26814007BDF24 /* AppDelegate.swift */; };
 		D3026B9F27C26814007BDF24 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3026B8327C26814007BDF24 /* SceneDelegate.swift */; };
 		D318E83B291A663000C89C48 /* AppDI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D318E83A291A663000C89C48 /* AppDI.swift */; };
@@ -39,6 +38,7 @@
 		D318E852291A964A00C89C48 /* SelectDataModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D318E851291A964A00C89C48 /* SelectDataModuleBuilder.swift */; };
 		D320AC7A27CE2256002B16B5 /* Data.json in Resources */ = {isa = PBXBuildFile; fileRef = D320AC7827CE2255002B16B5 /* Data.json */; };
 		D320AC7C27CE22D1002B16B5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D320AC7B27CE22D0002B16B5 /* Constants.swift */; };
+		D33041F52948709D0030D3A5 /* FilterDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33041F42948709D0030D3A5 /* FilterDate.swift */; };
 		D34DE544292E20B6001549C4 /* InBoxRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34DE543292E20B6001549C4 /* InBoxRouter.swift */; };
 		D34DE546292E20BE001549C4 /* AddTaskRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34DE545292E20BE001549C4 /* AddTaskRouter.swift */; };
 		D34DE554292E5D2F001549C4 /* AppCoordinatorImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34DE553292E5D2F001549C4 /* AppCoordinatorImpl.swift */; };
@@ -50,7 +50,9 @@
 		D36FC5B827F71A5D008F87A9 /* DatabaseTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36FC5B727F71A5D008F87A9 /* DatabaseTask.swift */; };
 		D370E1EF291CE5BA0090DF47 /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D370E1EE291CE5BA0090DF47 /* ModuleBuilder.swift */; };
 		D393FFCA293FB3970057A8DC /* InBoxCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D393FFC9293FB3970057A8DC /* InBoxCoordinator.swift */; };
+		D398C11B294711EC00ECCDAF /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = D398C11A294711EC00ECCDAF /* Model.swift */; };
 		D3A9D66329432A9D0029A4F4 /* InBoxPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A9D66229432A9D0029A4F4 /* InBoxPresenter.swift */; };
+		D3A9D66B29434C1E0029A4F4 /* InBoxInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A9D66A29434C1E0029A4F4 /* InBoxInteractor.swift */; };
 		D3B0949628C28ACB00A2FD72 /* CoderJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B0949528C28ACB00A2FD72 /* CoderJSON.swift */; };
 		D3BC6D6328FFFA43002DDC8D /* TaskRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC6D6228FFFA43002DDC8D /* TaskRepositoryImpl.swift */; };
 		D3BC6D6B28FFFEAC002DDC8D /* TaskRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC6D6A28FFFEAC002DDC8D /* TaskRepository.swift */; };
@@ -79,7 +81,6 @@
 		D3026B7B27C26814007BDF24 /* SelectDateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectDateViewController.xib; sourceTree = "<group>"; };
 		D3026B7C27C26814007BDF24 /* TaskListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskListViewController.swift; sourceTree = "<group>"; };
 		D3026B7F27C26814007BDF24 /* ConvertDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConvertDate.swift; sourceTree = "<group>"; };
-		D3026B8027C26814007BDF24 /* TaskService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskService.swift; sourceTree = "<group>"; };
 		D3026B8227C26814007BDF24 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3026B8327C26814007BDF24 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		D3026B8427C26814007BDF24 /* ToDoList.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = ToDoList.xcodeproj; sourceTree = "<group>"; };
@@ -93,6 +94,7 @@
 		D318E851291A964A00C89C48 /* SelectDataModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDataModuleBuilder.swift; sourceTree = "<group>"; };
 		D320AC7827CE2255002B16B5 /* Data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Data.json; sourceTree = "<group>"; };
 		D320AC7B27CE22D0002B16B5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D33041F42948709D0030D3A5 /* FilterDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDate.swift; sourceTree = "<group>"; };
 		D34DE543292E20B6001549C4 /* InBoxRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InBoxRouter.swift; sourceTree = "<group>"; };
 		D34DE545292E20BE001549C4 /* AddTaskRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTaskRouter.swift; sourceTree = "<group>"; };
 		D34DE553292E5D2F001549C4 /* AppCoordinatorImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinatorImpl.swift; sourceTree = "<group>"; };
@@ -104,7 +106,9 @@
 		D36FC5B727F71A5D008F87A9 /* DatabaseTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseTask.swift; sourceTree = "<group>"; };
 		D370E1EE291CE5BA0090DF47 /* ModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
 		D393FFC9293FB3970057A8DC /* InBoxCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InBoxCoordinator.swift; sourceTree = "<group>"; };
+		D398C11A294711EC00ECCDAF /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		D3A9D66229432A9D0029A4F4 /* InBoxPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InBoxPresenter.swift; sourceTree = "<group>"; };
+		D3A9D66A29434C1E0029A4F4 /* InBoxInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InBoxInteractor.swift; sourceTree = "<group>"; };
 		D3B0949528C28ACB00A2FD72 /* CoderJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoderJSON.swift; sourceTree = "<group>"; };
 		D3BC6D6228FFFA43002DDC8D /* TaskRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRepositoryImpl.swift; sourceTree = "<group>"; };
 		D3BC6D6A28FFFEAC002DDC8D /* TaskRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRepository.swift; sourceTree = "<group>"; };
@@ -213,7 +217,6 @@
 		D3026B7E27C26814007BDF24 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				D3026B8027C26814007BDF24 /* TaskService.swift */,
 				D356F6A827DF7AE100604D34 /* FileService.swift */,
 				D36FC5B527F719F3008F87A9 /* NetworkService.swift */,
 			);
@@ -258,9 +261,11 @@
 			isa = PBXGroup;
 			children = (
 				D3026B7127C26814007BDF24 /* InBoxViewController.swift */,
+				D3A9D66A29434C1E0029A4F4 /* InBoxInteractor.swift */,
 				D3A9D66229432A9D0029A4F4 /* InBoxPresenter.swift */,
 				D34DE543292E20B6001549C4 /* InBoxRouter.swift */,
 				D318E841291A6B7E00C89C48 /* InBoxModuleBuilder.swift */,
+				D398C11A294711EC00ECCDAF /* Model.swift */,
 			);
 			path = InBox;
 			sourceTree = "<group>";
@@ -411,6 +416,7 @@
 			children = (
 				D3026B7F27C26814007BDF24 /* ConvertDate.swift */,
 				D3B0949528C28ACB00A2FD72 /* CoderJSON.swift */,
+				D33041F42948709D0030D3A5 /* FilterDate.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -540,7 +546,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D3026B9D27C26814007BDF24 /* TaskService.swift in Sources */,
 				D3026B8F27C26814007BDF24 /* SearchViewController.swift in Sources */,
 				D3026B9A27C26814007BDF24 /* TaskListViewController.swift in Sources */,
 				D34DE546292E20BE001549C4 /* AddTaskRouter.swift in Sources */,
@@ -553,6 +558,7 @@
 				D356F6A727DF7ACC00604D34 /* StorageHelper.swift in Sources */,
 				D318E84A291A772000C89C48 /* SearchModuleBuilder.swift in Sources */,
 				D370E1EF291CE5BA0090DF47 /* ModuleBuilder.swift in Sources */,
+				D33041F52948709D0030D3A5 /* FilterDate.swift in Sources */,
 				D318E850291A94EC00C89C48 /* AddTaskModuleBuilder.swift in Sources */,
 				D3B0949628C28ACB00A2FD72 /* CoderJSON.swift in Sources */,
 				D34DE544292E20B6001549C4 /* InBoxRouter.swift in Sources */,
@@ -574,11 +580,13 @@
 				D320AC7C27CE22D1002B16B5 /* Constants.swift in Sources */,
 				D34DE55C292E955A001549C4 /* AppRootDependency.swift in Sources */,
 				D3BC6D6B28FFFEAC002DDC8D /* TaskRepository.swift in Sources */,
+				D398C11B294711EC00ECCDAF /* Model.swift in Sources */,
 				D3026B9227C26814007BDF24 /* DetailTaskViewController.swift in Sources */,
 				D3BC6D6328FFFA43002DDC8D /* TaskRepositoryImpl.swift in Sources */,
 				D3026B9E27C26814007BDF24 /* AppDelegate.swift in Sources */,
 				D356F6A927DF7AE100604D34 /* FileService.swift in Sources */,
 				D3026B8A27C26814007BDF24 /* Group.swift in Sources */,
+				D3A9D66B29434C1E0029A4F4 /* InBoxInteractor.swift in Sources */,
 				D318E84E291A8FD800C89C48 /* DetailTaskModelBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

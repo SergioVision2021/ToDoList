@@ -9,17 +9,12 @@ import Foundation
 
 final class TaskListModuleBuilder: ModuleBuilder {
 
-    let service: TaskServiceLogic
-
-    init(service: TaskServiceLogic) {
-        self.service = service
-    }
+    init() {}
 
     public func build() -> TaskListViewController {
 
         let view = TaskListViewController()
         view.title = "TaskList"
-        view.service = service
         return view
     }
 }

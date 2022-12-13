@@ -10,9 +10,9 @@ import UIKit
 class SearchViewController: UIViewController {
 
     // MARK: - Properties
-    var service: TaskServiceLogic?
     private var data: [String] = []
     private var filteredData: [String] = []
+    private var repository = AppDI.makeTaskRepository()
 
     // MARK: - Visual Component
     private lazy var tableView = makeTableView()
@@ -26,19 +26,45 @@ class SearchViewController: UIViewController {
         return search
     }()
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        fetchData()
-        tableView.reloadData()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        addTableView()
+        fetch()
     }
 
-    private func fetchData() {
-        guard let empty = service?.filterAllTasks().isEmpty,
-              let filterData = service?.filterAllTasks() else { return print("Not data")}
+    private func fetch() {
+        repository.fetch(id: nil, type: Tables.tasks, force: false) { [weak self] (result) in
+            guard let self = self else { return }
 
-        data = filterData
-        createSearchController()
-        addTableView()
+            switch result {
+            case.success(let data):
+                guard let tasks: [Task] = CoderJSON().decoderJSON(data) else { return }
+
+                guard let model = FilterDate().filterTasks(data: tasks) else {
+                    self.displayAlert(message: "You have no tasks")
+                    return
+                }
+
+                self.data = model
+                self.display()
+            case.failure(let error): break
+            }
+        }
+    }
+
+    private func display() {
+        DispatchQueue.main.async { [weak self] in
+            self?.createSearchController()
+            self?.tableView.reloadData()
+        }
+    }
+
+    private func displayAlert(message: String) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.present(self.makeAlertController(message), animated: true, completion: nil)
+        }
     }
 
     private func createSearchController() {
@@ -139,5 +165,12 @@ extension SearchViewController {
         table.register(nib, forCellReuseIdentifier: Constants.taskCellIdentifier)
 
         return table
+    }
+    
+    func makeAlertController(_ message: String?) -> UIAlertController {
+        let ac = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let button = UIAlertAction(title: "OK", style: .default, handler: nil)
+        ac.addAction(button)
+        return ac
     }
 }

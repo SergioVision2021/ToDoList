@@ -26,15 +26,15 @@ struct CoderJSON: Codable {
         return resp
     }
 
-    func decoderJSON<T: Decodable>(_ data: Data) -> [T]? {
+    func decoderJSON<T: Decodable>(_ data: Data) -> T? {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
-        var resp = [T]()
-        
+        var resp: T
+
         do {
-            resp = try decoder.decode([T].self, from: data)
-        } catch {
-            print("error")
+            resp = try decoder.decode(T.self, from: data)
+        } catch (let error) {
+            print(error)
             return nil
         }
 

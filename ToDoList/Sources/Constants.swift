@@ -17,7 +17,8 @@ enum Constants {
     static let SHEME = "http"
     static let HOST = "localhost"
     static let PORT = 3000
+}
 
-    static let TASKS = "tasks"
-    static let GROUPS = "groups"
+enum Tables: String {
+    case tasks, groups
 }

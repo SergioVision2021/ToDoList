@@ -25,12 +25,17 @@ class NetworkService {
         component.host = Constants.HOST
         component.port = Constants.PORT
     }
-    
-    func fetch(_ completionHandler: @escaping (Result<[Group], Error>) -> ()) {
+
+    func fetch(id: Int?, type: Tables, _ completionHandler: @escaping (Result<Data, Error>) -> ()) {
         var baseURL = component
-        baseURL.path = "/\(Constants.GROUPS)/"
-        baseURL.queryItems = [.init(name: "_embed", value: "tasks")]
-    
+       
+        if let id = id {
+            baseURL.path = "/\(type)/"
+            baseURL.queryItems = [.init(name: "id", value: "\(id)")]
+        } else {
+            baseURL.path = "/\(type)/"
+        }
+        
         let dispatcher = NetworkDispatcher()
         guard let request = dispatcher.prepareRequest(baseURL, HTTPMethod.GET, nil) else { return }
         
@@ -38,10 +43,8 @@ class NetworkService {
             switch result {
             case .success(let data):
                 //Data -> Swift object
-                guard let decodedResponse: [Group] = CoderJSON().decoderJSON(data) else { return }
-
-                completionHandler(Result.success(decodedResponse))
-
+                //guard let decodedResponse: [Task] = CoderJSON().decoderJSON(data) else { return }
+                completionHandler(Result.success(data))
             case .failure(let error):
                 print("Request failed with error: \(error)")
                 completionHandler(Result.failure(NetworkServiceError.requestFailed))
@@ -49,8 +52,7 @@ class NetworkService {
         }
     }
     
-    
-    func update(operation: Operations, _ task: Task, _ completionHandler: @escaping (Error?) -> ()) {
+    func update(operation: Operations, _ task: Task?, _ id: Int?, _ completionHandler: @escaping (Error?) -> ()) {
         
         let dispatcher = NetworkDispatcher()
         var baseURL = component
@@ -61,25 +63,25 @@ class NetworkService {
         
         switch operation {
         case .add:
-            baseURL.path = "/" + Constants.TASKS
+            baseURL.path = "/\(Tables.tasks)"
             
             guard let uploadData: Data = CoderJSON().encoderJSON(task) else { return }
 
             guard let req = dispatcher.prepareRequest(baseURL, HTTPMethod.POST, uploadData) else { return }
             request = req
         case .edit:
-            guard let id = task.id else { return }
+            guard let id = task?.id else { return }
 
-            baseURL.path = "/\(Constants.TASKS)/\(id)"
+            baseURL.path = "/\(Tables.tasks)/\(id)"
             
             guard let uploadData: Data = CoderJSON().encoderJSON(task) else { return }
 
             guard let req = dispatcher.prepareRequest(baseURL, HTTPMethod.PUT, uploadData) else { return }
             request = req
         case .delete:
-            guard let id = task.id else { return }
+            guard let id = id else { return }
 
-            baseURL.path = "/\(Constants.TASKS)/\(id)"
+            baseURL.path = "/\(Tables.tasks)/\(id)"
             
             guard let req = dispatcher.prepareRequest(baseURL, HTTPMethod.DELETE, nil) else { return }
             request = req
@@ -100,11 +102,6 @@ class NetworkService {
 
 extension NetworkService {
     func mock() -> Group {
-        return Group.init(
-            id: 0, name: "Inbox", tasks: [Task.init(groupId: 0,
-                                                    name: "Task default",
-                                                    taskDeadline: Date.now,
-                                                    notes: "Notes task",
-                                                    status: false)])
+        return Group.init(id: 0, name: "Inbox")
     }
 }

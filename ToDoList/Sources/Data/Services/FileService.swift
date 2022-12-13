@@ -9,32 +9,36 @@ import Foundation
 
 class FileService: LocalStorage {
     
-    var storage: StorageHelper<Group>
+    var storage: StorageHelper
 
     init() {
         self.storage = StorageHelper(folderName: "ToDoList", fileName: "Data")
     }
     
-    func fetch(_ completionHandler: @escaping (Result<[Group], Error>) -> ()) {
+    func fetch(_ completionHandler: @escaping (Result<Data, Error>) -> ()) {
 
-        guard let model: [Group] = storage.getData() else {
-            print("Group empty")
+        guard let model: Task = storage.getData() else {
+            print("Tasks empty")
             completionHandler(Result.failure(LocalStorageError.emptyData))
             return
         }
         
-        completionHandler(Result.success(model))
+        guard let data = CoderJSON().encoderJSON(model) else { return }
+        
+        completionHandler(Result.success(data))
     }
     
-    func saveAll(_ task: [Group], completionHandler: @escaping (Error?) -> ()) {
+    func saveAll(_ data: Data, completionHandler: @escaping (Error?) -> ()) {
         
         // save all tasks from cash in local file
-        storage.saveJsonToFile(task) {
+        guard let data: [Task] = CoderJSON().decoderJSON(data) else { return}
+
+        storage.saveJsonToFile(data) {
             completionHandler($0)
         }
     }
     
-    func removeAll(_ task: [Group], completionHandler: @escaping (Result<Void, Error>) -> ()) {
+    func removeAll(_ data: Data, completionHandler: @escaping (Result<Void, Error>) -> ()) {
         //
     }
 }

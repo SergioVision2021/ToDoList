@@ -43,33 +43,29 @@ class AppDI {
 // MARK: - AppRootDependency
 extension AppDI: AppRootDependency {
 
-    func makeTaskService() -> TaskServiceLogic {
-        TaskService()
-    }
-
-    func makeInBoxModule(service: TaskServiceLogic) -> InBoxCoordinator{
+    func makeInBoxModule() -> InBoxCoordinator{
         let navController = makeNavController(title: "InBox", image: UIImage(systemName: "calendar"), tag: 0)
-        return InBoxCoordinator(navigationController: navController, service: service)
+        return InBoxCoordinator(navigationController: navController)
     }
 
-    func makeToDayModule(service: TaskServiceLogic) -> UINavigationController {
+    func makeToDayModule() -> UINavigationController {
         let navController = makeNavController(title: "ToDay", image: UIImage(systemName: "flame"), tag: 1)
-        let vc = ToDayModuleBuilder(service: service).build()
+        let vc = ToDayModuleBuilder().build()
         navController.setViewControllers([vc], animated: true)
         
         return navController
     }
 
-    func makeTaskListModule(service: TaskServiceLogic) -> UINavigationController {
+    func makeTaskListModule() -> UINavigationController {
         let navController = makeNavController(title: "TaskList", image: UIImage(systemName: "triangle"), tag: 2)
-        let vc = TaskListModuleBuilder(service: service).build()
+        let vc = TaskListModuleBuilder().build()
         navController.setViewControllers([vc], animated: true)
         return navController
     }
 
-    func makeSearchModule(service: TaskServiceLogic) -> UINavigationController {
+    func makeSearchModule() -> UINavigationController {
         let navController = makeNavController(title: "Search", image: UIImage(systemName: "magnifyingglass"), tag: 3)
-        let vc = SearchModuleBuilder(service: service).build()
+        let vc = SearchModuleBuilder().build()
         navController.setViewControllers([vc], animated: true)
         return navController
     }

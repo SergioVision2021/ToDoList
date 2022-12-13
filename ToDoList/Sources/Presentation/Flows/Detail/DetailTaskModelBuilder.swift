@@ -10,19 +10,17 @@ import UIKit
 
 final class DetailTaskModuleBuilder: ModuleBuilder {
 
-    let task: Task
-    let nameSection: String
+    private let id: Int
 
-    init(task: Task, nameSection: String) {
-        self.task = task
-        self.nameSection = nameSection
+    init(id: Int) {
+        self.id = id
     }
 
-    func build() -> DetailTaskViewController {
+    public func build() -> DetailTaskViewController {
 
         var view = AppDI.makeDetailTaskScene()
-        view.task = task
-        view.nameSection = nameSection
+        view.title = "Details"
+        view.id = id
 
         return view
     }

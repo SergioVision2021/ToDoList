@@ -25,7 +25,9 @@ class InBoxPresenter: InBoxPresenterLogic {
 
         guard response.isError else {
             guard let viewModel = TaskService().filter(data: response.tasks) else { return }
-            view?.display(vieModel: viewModel)
+            DispatchQueue.main.async { [weak self] in
+                self?.view?.display(vieModel: viewModel)
+            }
             return
         }
 
@@ -33,6 +35,8 @@ class InBoxPresenter: InBoxPresenterLogic {
             return
         }
 
-        view?.displayAlert(message: message)
+        DispatchQueue.main.async { [weak self] in
+            self?.view?.displayError(message: message)
+        }
     }
 }

@@ -17,9 +17,12 @@ final class AddTaskModuleBuilder: ModuleBuilder {
 
     public func build() -> AddTaskViewController {
 
+        let repository = AppDI.makeTaskRepository()
+
         let view = AppDI.makeAddTaskScene()
         view.title = "Add task"
         view.router = router
+        view.repository = repository
 
         return view
     }

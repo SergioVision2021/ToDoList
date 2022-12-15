@@ -18,9 +18,12 @@ final class DetailTaskModuleBuilder: ModuleBuilder {
 
     public func build() -> DetailTaskViewController {
 
+        let repository = AppDI.makeTaskRepository()
+
         var view = AppDI.makeDetailTaskScene()
         view.title = "Details"
         view.id = id
+        view.repository = repository
 
         return view
     }

@@ -1,5 +1,5 @@
 //
-//  SearchModelBuilder.swift
+//  GroupModuleBuilder.swift
 //  ToDoList
 //
 //  Created by Sergey Vysotsky on 8.11.22.
@@ -7,17 +7,17 @@
 
 import Foundation
 
-final class SearchModuleBuilder: ModuleBuilder {
+final class GroupModuleBuilder: ModuleBuilder {
 
     init() {}
 
-    public func build() -> SearchViewController {
+    public func build() -> GroupViewController {
 
         let repository = AppDI.makeTaskRepository()
 
-        let view = SearchViewController()
+        let view = GroupViewController()
         view.repository = repository
-        view.title = "Search"
+        view.title = "Group"
         return view
     }
 }

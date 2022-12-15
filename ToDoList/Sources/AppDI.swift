@@ -57,8 +57,8 @@ extension AppDI: AppRootDependency {
     }
 
     func makeTaskListModule() -> UINavigationController {
-        let navController = makeNavController(title: "TaskList", image: UIImage(systemName: "triangle"), tag: 2)
-        let vc = TaskListModuleBuilder().build()
+        let navController = makeNavController(title: "Group", image: UIImage(systemName: "list.bullet.circle"), tag: 2)
+        let vc = GroupModuleBuilder().build()
         navController.setViewControllers([vc], animated: true)
         return navController
     }

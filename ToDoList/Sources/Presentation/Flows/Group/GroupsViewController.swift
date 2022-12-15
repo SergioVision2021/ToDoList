@@ -1,5 +1,5 @@
 //
-//  TaskListViewController.swift
+//  GroupViewController.swift
 //  ToDoList
 //
 //  Created by Sergey Vysotsky on 14.02.2022.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-class TaskListViewController: UIViewController {
+class GroupViewController: UIViewController {
 
     // MARK: - Properties
+    public var repository: TaskRepository?
     private var data: [String] = []
-    private var repository = AppDI.makeTaskRepository()
 
     // MARK: - Visual Component
     private lazy var tableView = makeTableView()
@@ -20,11 +20,11 @@ class TaskListViewController: UIViewController {
         super.viewDidLoad()
 
         addTableView()
-        fetch()
+        fetchGroups()
     }
 
-    private func fetch() {
-        repository.fetch(id: nil, type: Tables.groups, force: false) { [weak self] (result) in
+    private func fetchGroups() {
+        repository?.fetch(id: nil, type: Tables.groups, force: false) { [weak self] (result) in
             guard let self = self else { return }
 
             switch result {
@@ -32,32 +32,35 @@ class TaskListViewController: UIViewController {
                 guard let groups: [Group] = CoderJSON().decoderJSON(data) else { return }
 
                 guard let model = TaskService().filterGroups(data: groups) else {
-                    self.displayAlert(message: "You have no group")
+                    DispatchQueue.main.async { [weak self] in
+                        self?.displayError(message: "You have no group")
+                    }
                     return
                 }
 
                 self.data = model
-                self.display()
-            case.failure(let error): break
+
+                DispatchQueue.main.async { [weak self] in
+                    self?.display()
+                }
+            case.failure(let error):
+                DispatchQueue.main.async { [weak self] in
+                    self?.displayError(message: error.localizedDescription)
+                }
             }
         }
     }
 
     private func display() {
-        DispatchQueue.main.async { [weak self] in
-            self?.tableView.reloadData()
-        }
+        tableView.reloadData()
     }
 
-    private func displayAlert(message: String) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            self.present(self.makeAlertController(message), animated: true, completion: nil)
-        }
+    private func displayError(message: String) {
+        present(makeAlertController(message), animated: true, completion: nil)
     }
 }
 
-extension TaskListViewController {
+extension GroupViewController {
 
     func addTableView() {
         tableView.delegate = self
@@ -74,7 +77,7 @@ extension TaskListViewController {
 }
 
 // MARK: - TableView Delegate
-extension TaskListViewController: UITableViewDelegate {
+extension GroupViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 40
@@ -82,7 +85,7 @@ extension TaskListViewController: UITableViewDelegate {
 }
 
 // MARK: - TableView DataSource
-extension TaskListViewController: UITableViewDataSource {
+extension GroupViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
@@ -98,7 +101,7 @@ extension TaskListViewController: UITableViewDataSource {
 }
 
 // MARK: - Factory
-extension TaskListViewController {
+extension GroupViewController {
     func makeTableView() -> UITableView {
         let table = UITableView(frame: CGRect.zero, style: .insetGrouped)
         table.translatesAutoresizingMaskIntoConstraints = false

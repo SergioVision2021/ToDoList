@@ -10,9 +10,9 @@ import UIKit
 class SearchViewController: UIViewController {
 
     // MARK: - Properties
+    public var repository: TaskRepository?
     private var data: [String] = []
     private var filteredData: [String] = []
-    private var repository = AppDI.makeTaskRepository()
 
     // MARK: - Visual Component
     private lazy var tableView = makeTableView()
@@ -30,11 +30,11 @@ class SearchViewController: UIViewController {
         super.viewDidLoad()
 
         addTableView()
-        fetch()
+        fetchTasks()
     }
 
-    private func fetch() {
-        repository.fetch(id: nil, type: Tables.tasks, force: false) { [weak self] (result) in
+    private func fetchTasks() {
+        repository?.fetch(id: nil, type: Tables.tasks, force: false) { [weak self] (result) in
             guard let self = self else { return }
 
             switch result {
@@ -42,29 +42,32 @@ class SearchViewController: UIViewController {
                 guard let tasks: [Task] = CoderJSON().decoderJSON(data) else { return }
 
                 guard let model = TaskService().filterTasks(data: tasks) else {
-                    self.displayAlert(message: "You have no tasks")
+                    DispatchQueue.main.async { [weak self] in
+                        self?.displayError(message: "You have no tasks")
+                    }
                     return
                 }
 
                 self.data = model
-                self.display()
-            case.failure(let error): break
+
+                DispatchQueue.main.async { [weak self] in
+                    self?.display()
+                }
+            case.failure(let error):
+                DispatchQueue.main.async { [weak self] in
+                    self?.displayError(message: error.localizedDescription)
+                }
             }
         }
     }
 
     private func display() {
-        DispatchQueue.main.async { [weak self] in
-            self?.createSearchController()
-            self?.tableView.reloadData()
-        }
+        createSearchController()
+        tableView.reloadData()
     }
 
-    private func displayAlert(message: String) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            self.present(self.makeAlertController(message), animated: true, completion: nil)
-        }
+    private func displayError(message: String) {
+        present(makeAlertController(message), animated: true, completion: nil)
     }
 
     private func createSearchController() {

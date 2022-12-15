@@ -13,7 +13,10 @@ final class ToDayModuleBuilder: ModuleBuilder {
 
     public func build() -> ToDayViewController {
 
+        let repository = AppDI.makeTaskRepository()
+
         let view = ToDayViewController()
+        view.repository = repository
         view.title = "ToDay"
         return view
     }

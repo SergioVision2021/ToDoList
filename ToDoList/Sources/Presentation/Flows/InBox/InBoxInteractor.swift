@@ -14,22 +14,23 @@ enum Operations {
 }
 
 protocol InBoxInteractorLogic {
-    func fetch()
+    func fetchTasks()
     func execute(_ id: Int, operation: Operations)
 }
 
 class InBoxInteractor: InBoxInteractorLogic {
 
     private var presenter: InBoxPresenterLogic?
-    private var repository = AppDI.makeTaskRepository()
+    private var repository: TaskRepository?
 
-    init(presenter: InBoxPresenterLogic) {
+    init(presenter: InBoxPresenterLogic, repository: TaskRepository) {
         self.presenter = presenter
+        self.repository = repository
     }
 
-    public func fetch() {
+    public func fetchTasks() {
 
-        repository.fetch(id: nil, type: Tables.tasks, force: false) { [weak self] (result) in
+        repository?.fetch(id: nil, type: Tables.tasks, force: false) { [weak self] (result) in
             let response: Model.Response
 
             switch result {
@@ -46,10 +47,10 @@ class InBoxInteractor: InBoxInteractorLogic {
 
     public func execute(_ id: Int, operation: Operations) {
 
-        repository.update(type: Tables.tasks, operation, nil, id) { [weak self] error in
+        repository?.update(type: Tables.tasks, operation, nil, id) { [weak self] error in
             let response = Model.Response(tasks: nil, isError: true, message: error?.localizedDescription)
             self?.presenter?.present(response: response)
-            self?.fetch()
+            self?.fetchTasks()
         }
     }
 }

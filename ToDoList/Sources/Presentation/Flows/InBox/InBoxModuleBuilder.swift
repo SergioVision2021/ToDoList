@@ -21,7 +21,8 @@ final class InBoxModuleBuilder: ModuleBuilder {
         view.title = "InBox"
 
         let presenter = InBoxPresenter(view: view)
-        let interactor = InBoxInteractor(presenter: presenter)
+        let repository = AppDI.makeTaskRepository()
+        let interactor = InBoxInteractor(presenter: presenter, repository: repository)
 
         view.interactor = interactor
         view.router = router

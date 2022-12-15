@@ -17,25 +17,27 @@ class DetailTaskViewController: UIViewController {
     @IBOutlet weak var deadlineDatePicker: UIDatePicker!
 
     // MARK: - Properties
+    public var repository: TaskRepository?
     public var id: Int?
-    private var repository: TaskRepository = AppDI.makeTaskRepository()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         addBarButtonItem()
-        fetch()
+        fetchTask()
     }
 
-    private func fetch() {
+    private func fetchTask() {
 
-        repository.fetch(id: id, type: Tables.tasks, force: false) { [weak self] result in
+        repository?.fetch(id: id, type: Tables.tasks, force: false) { [weak self] result in
             switch result {
             case.success(let data):
 
                 guard let data: [Task] = CoderJSON().decoderJSON(data) else { return }
 
-                self?.configureUI(data: data.first)
+                DispatchQueue.main.async { [weak self] in
+                    self?.configureUI(data: data.first)
+                }
             case.failure(let error):
                 print(error.localizedDescription)
             }
@@ -43,25 +45,21 @@ class DetailTaskViewController: UIViewController {
     }
 
     private func configureUI(data: Task?) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
+        guard let group = data?.groupId else { return }
+        groupTexField.text = String(group)
+        nameTextField.text = data?.name
+        noteTextView.text = data?.notes
 
-            guard let group = data?.groupId else { return }
-            self.groupTexField.text = String(group)
-            self.nameTextField.text = data?.name
-            self.noteTextView.text = data?.notes
+        if let dateS = data?.taskScheduledDate {
+            self.scheduleDatePicker.date = dateS
+        }
 
-            if let dateS = data?.taskScheduledDate {
-                self.scheduleDatePicker.date = dateS
-            }
-
-            if let dateD = data?.taskDeadline {
-                self.deadlineDatePicker.date = dateD
-                self.navigationItem.rightBarButtonItem?.isEnabled = false
-            } else {
-                self.deadlineDatePicker.isHidden = true
-                self.navigationItem.rightBarButtonItem?.isEnabled = true
-            }
+        if let dateD = data?.taskDeadline {
+            deadlineDatePicker.date = dateD
+            navigationItem.rightBarButtonItem?.isEnabled = false
+        } else {
+            deadlineDatePicker.isHidden = true
+            navigationItem.rightBarButtonItem?.isEnabled = true
         }
     }
 
@@ -87,7 +85,7 @@ private extension DetailTaskViewController {
     @objc
     func addActionButton(sender: UIBarButtonItem) {
 
-        repository.update(type: .tasks, .edit, getData(), nil) { [weak self] error in
+        repository?.update(type: .tasks, .edit, getData(), nil) { [weak self] error in
             guard let self = self else { return }
 
             guard error == nil else {

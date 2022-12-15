@@ -9,7 +9,7 @@ import UIKit
 
 protocol InBoxViewLogic: ViewProtocol {
     func display(vieModel: [Model.ViewModel.Group])
-    func displayAlert(message: String)
+    func displayError(message: String)
 }
 
 class InBoxViewController: UIViewController, InBoxViewLogic {
@@ -32,29 +32,26 @@ class InBoxViewController: UIViewController, InBoxViewLogic {
 
         addBarButtonItem()
         addTableView()
+        addActivitiIndicator()
         
-        interactor?.fetch()
-        startAnimationAI()
+        activitiIndicator.startAnimating()
+        interactor?.fetchTasks()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        interactor?.fetch()
-        startAnimationAI()
+        activitiIndicator.startAnimating()
+        interactor?.fetchTasks()
     }
 
     func display(vieModel: [Model.ViewModel.Group]) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            self.data = vieModel
-            self.tableView.reloadData()
-            self.stopAnimationAI(nil)
-        }
+        data = vieModel
+        activitiIndicator.stopAnimating()
+        tableView.reloadData()
     }
     
-    func displayAlert(message: String) {
-        DispatchQueue.main.async { [weak self] in
-            self?.stopAnimationAI(message)
-        }
+    func displayError(message: String) {
+        activitiIndicator.stopAnimating()
+        present(self.makeAlertController(message), animated: true, completion: nil)
     }
 }
 
@@ -197,27 +194,8 @@ private extension InBoxViewController {
 
 //MARK: - ActivitiIndicator
 private extension InBoxViewController {
-    func startAnimationAI() {
-        
-        guard view.contains(activitiIndicator) else {
-            view.addSubview(activitiIndicator)
-            activitiIndicator.startAnimating()
-            return
-        }
     
-        activitiIndicator.startAnimating()
-    }
-    
-    func stopAnimationAI(_ result: String?) {
-        DispatchQueue.main.async {
-            self.activitiIndicator.stopAnimating()
-            self.activitiIndicator.removeFromSuperview()
-            
-            guard let result = result else {
-                return
-            }
-            
-            self.present(self.makeAlertController(result), animated: true, completion: nil)
-        }
+    func addActivitiIndicator() {
+        view.addSubview(activitiIndicator)
     }
 }

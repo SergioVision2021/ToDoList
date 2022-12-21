@@ -19,6 +19,8 @@ class InBoxPresenter: InBoxPresenterLogic {
 
     init(view: InBoxViewLogic) {
         self.view = view
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.reload(notification:)), name: Notification.Name("reload"), object: nil)
     }
 
     public func present(response: Response) {
@@ -37,6 +39,13 @@ class InBoxPresenter: InBoxPresenterLogic {
 
         DispatchQueue.main.async { [weak self] in
             self?.view?.displayError(message: message)
+        }
+    }
+
+    @objc
+    private func reload(notification: Notification) {
+        DispatchQueue.main.async { [weak self] in
+            self?.view?.fetchData()
         }
     }
 }

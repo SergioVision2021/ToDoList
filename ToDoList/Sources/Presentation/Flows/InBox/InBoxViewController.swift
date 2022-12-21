@@ -8,6 +8,7 @@
 import UIKit
 
 protocol InBoxViewLogic: ViewProtocol {
+    func fetchData()
     func display(vieModel: [Model.ViewModel.Group])
     func displayError(message: String)
 }
@@ -33,12 +34,12 @@ class InBoxViewController: UIViewController, InBoxViewLogic {
         addBarButtonItem()
         addTableView()
         addActivitiIndicator()
-        
-        activitiIndicator.startAnimating()
-        interactor?.fetchTasks()
+
+        fetchData()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
+
+    @objc
+    func fetchData() {
         activitiIndicator.startAnimating()
         interactor?.fetchTasks()
     }

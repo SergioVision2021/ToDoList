@@ -60,14 +60,14 @@ private extension AddTaskViewController {
         repository?.update(type: Tables.tasks, .add, task, nil) { [weak self] error in
             guard let self = self else { return }
 
-            NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
-
             guard error == nil else {
                 DispatchQueue.main.async {
                     self.present(self.makeAlertController(error?.localizedDescription), animated: true, completion: nil)
                 }
                 return
             }
+            
+            NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
         }
 
         navigationController?.popViewController(animated: true)

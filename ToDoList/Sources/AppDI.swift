@@ -43,29 +43,24 @@ class AppDI {
 // MARK: - AppRootDependency
 extension AppDI: AppRootDependency {
 
-    func makeInBoxModule() -> InBoxCoordinator{
-        let navController = makeNavController(title: "InBox", image: UIImage(systemName: "calendar"), tag: 0)
-        return InBoxCoordinator(navigationController: navController)
+    func makeInBoxModule() -> UINavigationController{
+        makeNavController(title: "InBox", image: UIImage(systemName: "calendar"), tag: 0)
     }
 
-    func makeToDayModule() -> UINavigationController {
-        let navController = makeNavController(title: "ToDay", image: UIImage(systemName: "flame"), tag: 1)
-        let vc = ToDayModuleBuilder().build()
+    func makeToDayModule(vc: UIViewController) -> UINavigationController {
+        let navController =  makeNavController(title: "ToDay", image: UIImage(systemName: "flame"), tag: 1)
         navController.setViewControllers([vc], animated: true)
-        
         return navController
     }
 
-    func makeTaskListModule() -> UINavigationController {
+    func makeGroupModule(vc: UIViewController) -> UINavigationController {
         let navController = makeNavController(title: "Group", image: UIImage(systemName: "list.bullet.circle"), tag: 2)
-        let vc = GroupModuleBuilder().build()
         navController.setViewControllers([vc], animated: true)
         return navController
     }
 
-    func makeSearchModule() -> UINavigationController {
+    func makeSearchModule(vc: UIViewController) -> UINavigationController {
         let navController = makeNavController(title: "Search", image: UIImage(systemName: "magnifyingglass"), tag: 3)
-        let vc = SearchModuleBuilder().build()
         navController.setViewControllers([vc], animated: true)
         return navController
     }

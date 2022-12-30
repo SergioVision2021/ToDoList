@@ -8,8 +8,8 @@
 import UIKit
 
 protocol AppRootDependency {
-    func makeInBoxModule() -> InBoxCoordinator
-    func makeToDayModule() -> UINavigationController
-    func makeTaskListModule() -> UINavigationController
-    func makeSearchModule() -> UINavigationController
+    func makeInBoxModule() -> UINavigationController
+    func makeToDayModule(vc: UIViewController) -> UINavigationController
+    func makeGroupModule(vc: UIViewController) -> UINavigationController
+    func makeSearchModule(vc: UIViewController) -> UINavigationController
 }

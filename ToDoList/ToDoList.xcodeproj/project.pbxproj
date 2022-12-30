@@ -53,10 +53,16 @@
 		D398C11B294711EC00ECCDAF /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = D398C11A294711EC00ECCDAF /* Model.swift */; };
 		D3A9D66329432A9D0029A4F4 /* InBoxPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A9D66229432A9D0029A4F4 /* InBoxPresenter.swift */; };
 		D3A9D66B29434C1E0029A4F4 /* InBoxInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A9D66A29434C1E0029A4F4 /* InBoxInteractor.swift */; };
+		D3AE5A3E2953683B00AD2EE4 /* RootComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AE5A3D2953683B00AD2EE4 /* RootComponent.swift */; };
+		D3AE5A40295377CC00AD2EE4 /* InBoxCoordinatorComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AE5A3F295377CC00AD2EE4 /* InBoxCoordinatorComponent.swift */; };
+		D3AE5A44295441AE00AD2EE4 /* ToDayComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AE5A43295441AE00AD2EE4 /* ToDayComponent.swift */; };
+		D3AE5A46295441BF00AD2EE4 /* GroupComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AE5A45295441BF00AD2EE4 /* GroupComponent.swift */; };
+		D3AE5A48295441D000AD2EE4 /* SearchComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AE5A47295441D000AD2EE4 /* SearchComponent.swift */; };
 		D3B0949628C28ACB00A2FD72 /* CoderJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B0949528C28ACB00A2FD72 /* CoderJSON.swift */; };
 		D3BC6D6328FFFA43002DDC8D /* TaskRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC6D6228FFFA43002DDC8D /* TaskRepositoryImpl.swift */; };
 		D3BC6D6B28FFFEAC002DDC8D /* TaskRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC6D6A28FFFEAC002DDC8D /* TaskRepository.swift */; };
 		D3BC6D8729015B61002DDC8D /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC6D8629015B61002DDC8D /* LocalStorage.swift */; };
+		D3C8393D2954A3B500D5D290 /* NeedleGenerated.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C8393C2954A3B500D5D290 /* NeedleGenerated.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -109,11 +115,17 @@
 		D398C11A294711EC00ECCDAF /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		D3A9D66229432A9D0029A4F4 /* InBoxPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InBoxPresenter.swift; sourceTree = "<group>"; };
 		D3A9D66A29434C1E0029A4F4 /* InBoxInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InBoxInteractor.swift; sourceTree = "<group>"; };
+		D3AE5A3D2953683B00AD2EE4 /* RootComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootComponent.swift; sourceTree = "<group>"; };
+		D3AE5A3F295377CC00AD2EE4 /* InBoxCoordinatorComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InBoxCoordinatorComponent.swift; sourceTree = "<group>"; };
+		D3AE5A43295441AE00AD2EE4 /* ToDayComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDayComponent.swift; sourceTree = "<group>"; };
+		D3AE5A45295441BF00AD2EE4 /* GroupComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupComponent.swift; sourceTree = "<group>"; };
+		D3AE5A47295441D000AD2EE4 /* SearchComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchComponent.swift; sourceTree = "<group>"; };
 		D3B0949528C28ACB00A2FD72 /* CoderJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoderJSON.swift; sourceTree = "<group>"; };
 		D3BC6D6228FFFA43002DDC8D /* TaskRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRepositoryImpl.swift; sourceTree = "<group>"; };
 		D3BC6D6A28FFFEAC002DDC8D /* TaskRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRepository.swift; sourceTree = "<group>"; };
 		D3BC6D8629015B61002DDC8D /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		D3C53D3627BA5396000B6E26 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D3C8393C2954A3B500D5D290 /* NeedleGenerated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeedleGenerated.swift; sourceTree = "<group>"; };
 		FDD4244FF57F7028DD205125 /* Pods-ToDoList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoList.release.xcconfig"; path = "Target Support Files/Pods-ToDoList/Pods-ToDoList.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -171,6 +183,7 @@
 		D3026B6527C26814007BDF24 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				D3C8393C2954A3B500D5D290 /* NeedleGenerated.swift */,
 				D318E839291A661700C89C48 /* DI */,
 				D318E833291A509500C89C48 /* Presentation */,
 				D3BC6D6928FFFE8F002DDC8D /* Domain */,
@@ -202,6 +215,7 @@
 		D3026B6D27C26814007BDF24 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
+				D3AE5A3F295377CC00AD2EE4 /* InBoxCoordinatorComponent.swift */,
 				D393FFC9293FB3970057A8DC /* InBoxCoordinator.swift */,
 				D318E834291A512400C89C48 /* InBox */,
 				D318E83C291A696600C89C48 /* ToDay */,
@@ -315,6 +329,7 @@
 		D318E83C291A696600C89C48 /* ToDay */ = {
 			isa = PBXGroup;
 			children = (
+				D3AE5A43295441AE00AD2EE4 /* ToDayComponent.swift */,
 				D3026B6E27C26814007BDF24 /* ToDayViewController.swift */,
 				D318E845291A753000C89C48 /* ToDayModuleBuilder.swift */,
 			);
@@ -324,6 +339,7 @@
 		D318E83D291A69B900C89C48 /* Group */ = {
 			isa = PBXGroup;
 			children = (
+				D3AE5A45295441BF00AD2EE4 /* GroupComponent.swift */,
 				D3026B7C27C26814007BDF24 /* GroupsViewController.swift */,
 				D318E847291A76AE00C89C48 /* GroupsModuleBuilder.swift */,
 			);
@@ -333,6 +349,7 @@
 		D318E83E291A69C500C89C48 /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				D3AE5A47295441D000AD2EE4 /* SearchComponent.swift */,
 				D3026B6F27C26814007BDF24 /* SearchViewController.swift */,
 				D318E849291A772000C89C48 /* SearchModuleBuilder.swift */,
 			);
@@ -352,6 +369,7 @@
 		D34DE55D292E9C1E001549C4 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				D3AE5A3D2953683B00AD2EE4 /* RootComponent.swift */,
 				D34DE55E292E9C2B001549C4 /* Coordinator.swift */,
 				D34DE553292E5D2F001549C4 /* AppCoordinatorImpl.swift */,
 			);
@@ -433,6 +451,8 @@
 				D3C53D3327BA5396000B6E26 /* Frameworks */,
 				D3C53D3427BA5396000B6E26 /* Resources */,
 				D3E7458B27C26C290005F421 /* ShellScript */,
+				D3AE5A3C29531D8A00AD2EE4 /* ShellScript */,
+				C4146A0C3782DE69723B889F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -522,6 +542,40 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		C4146A0C3782DE69723B889F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ToDoList/Pods-ToDoList-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ToDoList/Pods-ToDoList-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ToDoList/Pods-ToDoList-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D3AE5A3C29531D8A00AD2EE4 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n#export SOURCEKIT_LOGGING=0 && needle generate ../NeedleGenerated.swift\nneedle generate ../NeedleGenerated.swift Sources/\n";
+		};
 		D3E7458B27C26C290005F421 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -537,7 +591,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n#\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -556,11 +610,13 @@
 				D3026B8B27C26814007BDF24 /* Task.swift in Sources */,
 				D318E842291A6B7F00C89C48 /* InBoxModuleBuilder.swift in Sources */,
 				D356F6A727DF7ACC00604D34 /* StorageHelper.swift in Sources */,
+				D3AE5A40295377CC00AD2EE4 /* InBoxCoordinatorComponent.swift in Sources */,
 				D318E84A291A772000C89C48 /* SearchModuleBuilder.swift in Sources */,
 				D370E1EF291CE5BA0090DF47 /* ModuleBuilder.swift in Sources */,
 				D33041F52948709D0030D3A5 /* TaskService.swift in Sources */,
 				D318E850291A94EC00C89C48 /* AddTaskModuleBuilder.swift in Sources */,
 				D3B0949628C28ACB00A2FD72 /* CoderJSON.swift in Sources */,
+				D3AE5A48295441D000AD2EE4 /* SearchComponent.swift in Sources */,
 				D34DE544292E20B6001549C4 /* InBoxRouter.swift in Sources */,
 				D34DE55F292E9C2B001549C4 /* Coordinator.swift in Sources */,
 				D36FC5B627F719F3008F87A9 /* NetworkService.swift in Sources */,
@@ -578,6 +634,7 @@
 				D3026B9C27C26814007BDF24 /* ConvertDate.swift in Sources */,
 				D318E852291A964A00C89C48 /* SelectDataModuleBuilder.swift in Sources */,
 				D320AC7C27CE22D1002B16B5 /* Constants.swift in Sources */,
+				D3AE5A46295441BF00AD2EE4 /* GroupComponent.swift in Sources */,
 				D34DE55C292E955A001549C4 /* AppRootDependency.swift in Sources */,
 				D3BC6D6B28FFFEAC002DDC8D /* TaskRepository.swift in Sources */,
 				D398C11B294711EC00ECCDAF /* Model.swift in Sources */,
@@ -585,8 +642,11 @@
 				D3BC6D6328FFFA43002DDC8D /* TaskRepositoryImpl.swift in Sources */,
 				D3026B9E27C26814007BDF24 /* AppDelegate.swift in Sources */,
 				D356F6A927DF7AE100604D34 /* FileService.swift in Sources */,
+				D3AE5A3E2953683B00AD2EE4 /* RootComponent.swift in Sources */,
 				D3026B8A27C26814007BDF24 /* Group.swift in Sources */,
+				D3C8393D2954A3B500D5D290 /* NeedleGenerated.swift in Sources */,
 				D3A9D66B29434C1E0029A4F4 /* InBoxInteractor.swift in Sources */,
+				D3AE5A44295441AE00AD2EE4 /* ToDayComponent.swift in Sources */,
 				D318E84E291A8FD800C89C48 /* DetailTaskModelBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

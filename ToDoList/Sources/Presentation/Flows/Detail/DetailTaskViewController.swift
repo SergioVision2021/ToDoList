@@ -94,6 +94,8 @@ private extension DetailTaskViewController {
                 }
                 return
             }
+            
+            NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
         }
         navigationController?.popViewController(animated: true)
     }

@@ -10,10 +10,10 @@ import UIKit
 
 class InBoxCoordinator: Coordinator {
 
-    public let navigationController: UINavigationController
-    public weak var parentCoordinator: AppCoordinatorImpl?
+    private let navigationController: UINavigationController
+    //private weak var parentCoordinator: AppCoordinatorImpl?
 
-    init(navigationController: UINavigationController = UINavigationController()) {
+    init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
 

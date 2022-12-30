@@ -38,7 +38,6 @@ class InBoxViewController: UIViewController, InBoxViewLogic {
         fetchData()
     }
 
-    @objc
     func fetchData() {
         activitiIndicator.startAnimating()
         interactor?.fetchTasks()

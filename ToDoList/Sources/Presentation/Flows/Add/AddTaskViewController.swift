@@ -16,8 +16,8 @@ class AddTaskViewController: UIViewController {
     @IBOutlet weak var scheduleDateButton: UIButton!
 
     // MARK: - Properties
-    public var router: AddTaskRouter?
     public var repository: TaskRepository?
+    public var router: AddTaskRouter?
 
     public var scheduleDate: Date?
     private let numberRandom = Int.random(in: 1..<1000)
@@ -57,7 +57,7 @@ private extension AddTaskViewController {
                             notes: notesTextView.text,
                             status: false)
 
-        repository?.update(.add, task) { [weak self] error in
+        repository?.update(type: Tables.tasks, .add, task, nil) { [weak self] error in
             guard let self = self else { return }
 
             guard error == nil else {
@@ -66,6 +66,8 @@ private extension AddTaskViewController {
                 }
                 return
             }
+            
+            NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
         }
 
         navigationController?.popViewController(animated: true)

@@ -10,31 +10,28 @@ import UIKit
 
 class InBoxCoordinator: Coordinator {
 
-    public let navigationController: UINavigationController
-    public weak var parentCoordinator: AppCoordinatorImpl?
-    private var service: TaskServiceLogic
+    private let navigationController: UINavigationController
+    //private weak var parentCoordinator: AppCoordinatorImpl?
 
-    init(navigationController: UINavigationController = UINavigationController(),
-         service: TaskServiceLogic) {
+    init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-        self.service = service
     }
 
     public func start() {
-        let vc = InBoxModuleBuilder(router: self, service: service).build()
+        let vc = InBoxModuleBuilder(router: self).build()
         navigationController.pushViewController(vc, animated: true)
     }
 }
 
 extension InBoxCoordinator: InBoxRouter {
 
-    func navigationToAddTask(repository: TaskRepository) {
-        let vc = AddTaskModuleBuilder(router: self, repository: repository).build()
+    func navigationToAddTask() {
+        let vc = AddTaskModuleBuilder(router: self).build()
         navigationController.pushViewController(vc, animated: true)
     }
 
-    func navigationToDetailTask(task: Task, nameSection: String, repository: TaskRepository, sender: InBoxViewController) {
-        let vc = DetailTaskModuleBuilder(task: task, nameSection: nameSection, repository: repository).build()
+    func navigationToDetailTask(id: Int, sender: InBoxViewController) {
+        let vc = DetailTaskModuleBuilder(id: id).build()
         navigationController.pushViewController(vc, animated: true)
     }
 }

@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+protocol ViewProtocol: UIViewController {}
+
 // Basic builder represents for building module
 public protocol ModuleBuilder {
     associatedtype ViewController

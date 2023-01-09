@@ -10,21 +10,19 @@ import UIKit
 
 final class DetailTaskModuleBuilder: ModuleBuilder {
 
-    let task: Task
-    let nameSection: String
-    let repository: TaskRepository?
+    private let id: Int
 
-    init(task: Task, nameSection: String, repository: TaskRepository?) {
-        self.task = task
-        self.nameSection = nameSection
-        self.repository = repository
+    init(id: Int) {
+        self.id = id
     }
 
-    func build() -> DetailTaskViewController {
+    public func build() -> DetailTaskViewController {
+
+        let repository = AppDI.makeTaskRepository()
 
         var view = AppDI.makeDetailTaskScene()
-        view.task = task
-        view.nameSection = nameSection
+        view.title = "Details"
+        view.id = id
         view.repository = repository
 
         return view

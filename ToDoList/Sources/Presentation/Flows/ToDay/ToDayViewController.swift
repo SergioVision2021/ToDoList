@@ -1,4 +1,4 @@
-//
+//  swiftlint:disable all
 //  ToDayViewController.swift
 //  ToDoList
 //
@@ -9,32 +9,54 @@ import UIKit
 
 class ToDayViewController: UIViewController {
 
-    // MARK: - Properties
-    var service: TaskServiceLogic?
-    private var data: [Group] = []
+    // MARK: - Private properties
+    public var repository: TaskRepository?
+    private var data: [Model.ViewModel.Group] = []
 
     // MARK: - Visual Component
     private lazy var tableView = makeTableView()
+    private lazy var alertController = makeAlertController(nil)
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchData()
-        tableView.reloadData()
+        
+        addTableView()
+        fetchTasks()
     }
 
-    private func fetchData() {
-        if let fetchData = service?.filterToday("ToDay") {
-            data = fetchData
-            addTableView()
-        } else {
-            addAlert(title: "Warning", message: "No tasks for today!")
+    private func fetchTasks() {
+        repository?.fetch(id: nil, type: Tables.tasks, force: false) { [weak self] (result) in
+            guard let self = self else { return }
+
+            switch result {
+            case.success(let data):
+                guard let tasks: [Task] = CoderJSON().decoderJSON(data) else { return }
+                guard let model = TaskService().filterPeriod(data: tasks, name: "ToDay") else {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.displayError(message: "You have no tasks for today")
+                    }
+                    return
+                }
+
+                self.data = model
+
+                DispatchQueue.main.async { [weak self] in
+                    self?.display()
+                }
+            case.failure(let error):
+                DispatchQueue.main.async { [weak self] in
+                    self?.displayError(message: error.localizedDescription)
+                }
+            }
         }
     }
-
-    private func addAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
+    
+    private func display() {
+        tableView.reloadData()
+    }
+    
+    private func displayError(message: String) {
+        present(makeAlertController(message), animated: true, completion: nil)
     }
 }
 
@@ -114,5 +136,12 @@ extension ToDayViewController {
         table.register(nib, forCellReuseIdentifier: Constants.taskCellIdentifier)
 
         return table
+    }
+    
+    func makeAlertController(_ message: String?) -> UIAlertController {
+        let ac = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let button = UIAlertAction(title: "OK", style: .default, handler: nil)
+        ac.addAction(button)
+        return ac
     }
 }

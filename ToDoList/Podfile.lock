@@ -1,16 +1,20 @@
 PODS:
+  - NeedleFoundation (0.17.2)
   - SwiftLint (0.46.2)
 
 DEPENDENCIES:
+  - NeedleFoundation
   - SwiftLint
 
 SPEC REPOS:
   trunk:
+    - NeedleFoundation
     - SwiftLint
 
 SPEC CHECKSUMS:
+  NeedleFoundation: 36cfaea9ae9eb527a796f5c1df19296c722666b8
   SwiftLint: 6bc52a21f0fd44cab9aa2dc8e534fb9f5e3ec507
 
-PODFILE CHECKSUM: f62e7d631b94ea3c9cbeb7eae0c2485701b92674
+PODFILE CHECKSUM: b97c1016ea1dce7089381782b57604f500cf7ab7
 
 COCOAPODS: 1.11.3

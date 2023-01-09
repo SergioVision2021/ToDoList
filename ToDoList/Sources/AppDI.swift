@@ -43,33 +43,24 @@ class AppDI {
 // MARK: - AppRootDependency
 extension AppDI: AppRootDependency {
 
-    func makeTaskService() -> TaskServiceLogic {
-        TaskService()
+    func makeInBoxModule() -> UINavigationController{
+        makeNavController(title: "InBox", image: UIImage(systemName: "calendar"), tag: 0)
     }
 
-    func makeInBoxModule(service: TaskServiceLogic) -> InBoxCoordinator{
-        let navController = makeNavController(title: "InBox", image: UIImage(systemName: "calendar"), tag: 0)
-        return InBoxCoordinator(navigationController: navController, service: service)
-    }
-
-    func makeToDayModule(service: TaskServiceLogic) -> UINavigationController {
-        let navController = makeNavController(title: "ToDay", image: UIImage(systemName: "flame"), tag: 1)
-        let vc = ToDayModuleBuilder(service: service).build()
-        navController.setViewControllers([vc], animated: true)
-        
-        return navController
-    }
-
-    func makeTaskListModule(service: TaskServiceLogic) -> UINavigationController {
-        let navController = makeNavController(title: "TaskList", image: UIImage(systemName: "triangle"), tag: 2)
-        let vc = TaskListModuleBuilder(service: service).build()
+    func makeToDayModule(vc: UIViewController) -> UINavigationController {
+        let navController =  makeNavController(title: "ToDay", image: UIImage(systemName: "flame"), tag: 1)
         navController.setViewControllers([vc], animated: true)
         return navController
     }
 
-    func makeSearchModule(service: TaskServiceLogic) -> UINavigationController {
+    func makeGroupModule(vc: UIViewController) -> UINavigationController {
+        let navController = makeNavController(title: "Group", image: UIImage(systemName: "list.bullet.circle"), tag: 2)
+        navController.setViewControllers([vc], animated: true)
+        return navController
+    }
+
+    func makeSearchModule(vc: UIViewController) -> UINavigationController {
         let navController = makeNavController(title: "Search", image: UIImage(systemName: "magnifyingglass"), tag: 3)
-        let vc = SearchModuleBuilder(service: service).build()
         navController.setViewControllers([vc], animated: true)
         return navController
     }

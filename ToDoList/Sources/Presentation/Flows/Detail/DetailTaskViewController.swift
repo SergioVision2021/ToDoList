@@ -17,33 +17,60 @@ class DetailTaskViewController: UIViewController {
     @IBOutlet weak var deadlineDatePicker: UIDatePicker!
 
     // MARK: - Properties
-    internal var task = Task()
-    internal var nameSection = String()
     public var repository: TaskRepository?
+    public var id: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         addBarButtonItem()
-        getData()
+        fetchTask()
     }
 
-    private func getData() {
-        groupTexField.text = nameSection
-        nameTextField.text = task.name
-        noteTextView.text = task.notes
+    private func fetchTask() {
 
-        if let dateS = task.taskScheduledDate {
-            scheduleDatePicker.date = dateS
+        repository?.fetch(id: id, type: Tables.tasks, force: false) { [weak self] result in
+            switch result {
+            case.success(let data):
+
+                guard let data: [Task] = CoderJSON().decoderJSON(data) else { return }
+
+                DispatchQueue.main.async { [weak self] in
+                    self?.configureUI(data: data.first)
+                }
+            case.failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+
+    private func configureUI(data: Task?) {
+        guard let group = data?.groupId else { return }
+        groupTexField.text = String(group)
+        nameTextField.text = data?.name
+        noteTextView.text = data?.notes
+
+        if let dateS = data?.taskScheduledDate {
+            self.scheduleDatePicker.date = dateS
         }
 
-        if let dateD = task.taskDeadline {
+        if let dateD = data?.taskDeadline {
             deadlineDatePicker.date = dateD
             navigationItem.rightBarButtonItem?.isEnabled = false
         } else {
             deadlineDatePicker.isHidden = true
             navigationItem.rightBarButtonItem?.isEnabled = true
         }
+    }
+
+    private func getData() -> Task {
+        var task = Task(id: id,
+                        groupId: Int(groupTexField.text ?? "") ?? 0,
+                        name: nameTextField.text,
+                        taskScheduledDate: scheduleDatePicker.date, notes: noteTextView.text)
+
+        task.setDeadlineTask()
+        return task
     }
 }
 
@@ -57,9 +84,8 @@ private extension DetailTaskViewController {
 
     @objc
     func addActionButton(sender: UIBarButtonItem) {
-        task.setDeadlineTask()
 
-        repository?.update(.edit, task) { [weak self] error in
+        repository?.update(type: .tasks, .edit, getData(), nil) { [weak self] error in
             guard let self = self else { return }
 
             guard error == nil else {
@@ -68,6 +94,8 @@ private extension DetailTaskViewController {
                 }
                 return
             }
+            
+            NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
         }
         navigationController?.popViewController(animated: true)
     }

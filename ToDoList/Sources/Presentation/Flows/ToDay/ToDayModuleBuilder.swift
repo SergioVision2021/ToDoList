@@ -9,17 +9,15 @@ import Foundation
 
 final class ToDayModuleBuilder: ModuleBuilder {
 
-    let service: TaskServiceLogic
-
-    init(service: TaskServiceLogic) {
-        self.service = service
-    }
+    init() {}
 
     public func build() -> ToDayViewController {
 
+        let repository = AppDI.makeTaskRepository()
+
         let view = ToDayViewController()
+        view.repository = repository
         view.title = "ToDay"
-        view.service = service
         return view
     }
 }

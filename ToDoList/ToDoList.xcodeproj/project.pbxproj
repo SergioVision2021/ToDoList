@@ -24,21 +24,21 @@
 		D3026B9627C26814007BDF24 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3026B7727C26814007BDF24 /* Main.storyboard */; };
 		D3026B9727C26814007BDF24 /* AddTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3026B7927C26814007BDF24 /* AddTaskViewController.swift */; };
 		D3026B9927C26814007BDF24 /* SelectDateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3026B7B27C26814007BDF24 /* SelectDateViewController.xib */; };
-		D3026B9A27C26814007BDF24 /* TaskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3026B7C27C26814007BDF24 /* TaskListViewController.swift */; };
+		D3026B9A27C26814007BDF24 /* GroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3026B7C27C26814007BDF24 /* GroupsViewController.swift */; };
 		D3026B9C27C26814007BDF24 /* ConvertDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3026B7F27C26814007BDF24 /* ConvertDate.swift */; };
-		D3026B9D27C26814007BDF24 /* TaskService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3026B8027C26814007BDF24 /* TaskService.swift */; };
 		D3026B9E27C26814007BDF24 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3026B8227C26814007BDF24 /* AppDelegate.swift */; };
 		D3026B9F27C26814007BDF24 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3026B8327C26814007BDF24 /* SceneDelegate.swift */; };
 		D318E83B291A663000C89C48 /* AppDI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D318E83A291A663000C89C48 /* AppDI.swift */; };
 		D318E842291A6B7F00C89C48 /* InBoxModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D318E841291A6B7E00C89C48 /* InBoxModuleBuilder.swift */; };
 		D318E846291A753100C89C48 /* ToDayModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D318E845291A753000C89C48 /* ToDayModuleBuilder.swift */; };
-		D318E848291A76AE00C89C48 /* TaskListModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D318E847291A76AE00C89C48 /* TaskListModuleBuilder.swift */; };
+		D318E848291A76AE00C89C48 /* GroupsModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D318E847291A76AE00C89C48 /* GroupsModuleBuilder.swift */; };
 		D318E84A291A772000C89C48 /* SearchModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D318E849291A772000C89C48 /* SearchModuleBuilder.swift */; };
 		D318E84E291A8FD800C89C48 /* DetailTaskModelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D318E84D291A8FD800C89C48 /* DetailTaskModelBuilder.swift */; };
 		D318E850291A94EC00C89C48 /* AddTaskModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D318E84F291A94EC00C89C48 /* AddTaskModuleBuilder.swift */; };
 		D318E852291A964A00C89C48 /* SelectDataModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D318E851291A964A00C89C48 /* SelectDataModuleBuilder.swift */; };
 		D320AC7A27CE2256002B16B5 /* Data.json in Resources */ = {isa = PBXBuildFile; fileRef = D320AC7827CE2255002B16B5 /* Data.json */; };
 		D320AC7C27CE22D1002B16B5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D320AC7B27CE22D0002B16B5 /* Constants.swift */; };
+		D33041F52948709D0030D3A5 /* TaskService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33041F42948709D0030D3A5 /* TaskService.swift */; };
 		D34DE544292E20B6001549C4 /* InBoxRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34DE543292E20B6001549C4 /* InBoxRouter.swift */; };
 		D34DE546292E20BE001549C4 /* AddTaskRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34DE545292E20BE001549C4 /* AddTaskRouter.swift */; };
 		D34DE554292E5D2F001549C4 /* AppCoordinatorImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34DE553292E5D2F001549C4 /* AppCoordinatorImpl.swift */; };
@@ -50,10 +50,19 @@
 		D36FC5B827F71A5D008F87A9 /* DatabaseTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36FC5B727F71A5D008F87A9 /* DatabaseTask.swift */; };
 		D370E1EF291CE5BA0090DF47 /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D370E1EE291CE5BA0090DF47 /* ModuleBuilder.swift */; };
 		D393FFCA293FB3970057A8DC /* InBoxCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D393FFC9293FB3970057A8DC /* InBoxCoordinator.swift */; };
+		D398C11B294711EC00ECCDAF /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = D398C11A294711EC00ECCDAF /* Model.swift */; };
+		D3A9D66329432A9D0029A4F4 /* InBoxPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A9D66229432A9D0029A4F4 /* InBoxPresenter.swift */; };
+		D3A9D66B29434C1E0029A4F4 /* InBoxInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A9D66A29434C1E0029A4F4 /* InBoxInteractor.swift */; };
+		D3AE5A3E2953683B00AD2EE4 /* RootComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AE5A3D2953683B00AD2EE4 /* RootComponent.swift */; };
+		D3AE5A40295377CC00AD2EE4 /* InBoxCoordinatorComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AE5A3F295377CC00AD2EE4 /* InBoxCoordinatorComponent.swift */; };
+		D3AE5A44295441AE00AD2EE4 /* ToDayComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AE5A43295441AE00AD2EE4 /* ToDayComponent.swift */; };
+		D3AE5A46295441BF00AD2EE4 /* GroupComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AE5A45295441BF00AD2EE4 /* GroupComponent.swift */; };
+		D3AE5A48295441D000AD2EE4 /* SearchComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AE5A47295441D000AD2EE4 /* SearchComponent.swift */; };
 		D3B0949628C28ACB00A2FD72 /* CoderJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B0949528C28ACB00A2FD72 /* CoderJSON.swift */; };
 		D3BC6D6328FFFA43002DDC8D /* TaskRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC6D6228FFFA43002DDC8D /* TaskRepositoryImpl.swift */; };
 		D3BC6D6B28FFFEAC002DDC8D /* TaskRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC6D6A28FFFEAC002DDC8D /* TaskRepository.swift */; };
 		D3BC6D8729015B61002DDC8D /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC6D8629015B61002DDC8D /* LocalStorage.swift */; };
+		D3C8393D2954A3B500D5D290 /* NeedleGenerated.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C8393C2954A3B500D5D290 /* NeedleGenerated.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,22 +85,22 @@
 		D3026B7827C26814007BDF24 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D3026B7927C26814007BDF24 /* AddTaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTaskViewController.swift; sourceTree = "<group>"; };
 		D3026B7B27C26814007BDF24 /* SelectDateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectDateViewController.xib; sourceTree = "<group>"; };
-		D3026B7C27C26814007BDF24 /* TaskListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskListViewController.swift; sourceTree = "<group>"; };
+		D3026B7C27C26814007BDF24 /* GroupsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupsViewController.swift; sourceTree = "<group>"; };
 		D3026B7F27C26814007BDF24 /* ConvertDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConvertDate.swift; sourceTree = "<group>"; };
-		D3026B8027C26814007BDF24 /* TaskService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskService.swift; sourceTree = "<group>"; };
 		D3026B8227C26814007BDF24 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3026B8327C26814007BDF24 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		D3026B8427C26814007BDF24 /* ToDoList.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = ToDoList.xcodeproj; sourceTree = "<group>"; };
 		D318E83A291A663000C89C48 /* AppDI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDI.swift; sourceTree = "<group>"; };
 		D318E841291A6B7E00C89C48 /* InBoxModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InBoxModuleBuilder.swift; sourceTree = "<group>"; };
 		D318E845291A753000C89C48 /* ToDayModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDayModuleBuilder.swift; sourceTree = "<group>"; };
-		D318E847291A76AE00C89C48 /* TaskListModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListModuleBuilder.swift; sourceTree = "<group>"; };
+		D318E847291A76AE00C89C48 /* GroupsModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsModuleBuilder.swift; sourceTree = "<group>"; };
 		D318E849291A772000C89C48 /* SearchModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModuleBuilder.swift; sourceTree = "<group>"; };
 		D318E84D291A8FD800C89C48 /* DetailTaskModelBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTaskModelBuilder.swift; sourceTree = "<group>"; };
 		D318E84F291A94EC00C89C48 /* AddTaskModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskModuleBuilder.swift; sourceTree = "<group>"; };
 		D318E851291A964A00C89C48 /* SelectDataModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDataModuleBuilder.swift; sourceTree = "<group>"; };
 		D320AC7827CE2255002B16B5 /* Data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Data.json; sourceTree = "<group>"; };
 		D320AC7B27CE22D0002B16B5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D33041F42948709D0030D3A5 /* TaskService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskService.swift; sourceTree = "<group>"; };
 		D34DE543292E20B6001549C4 /* InBoxRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InBoxRouter.swift; sourceTree = "<group>"; };
 		D34DE545292E20BE001549C4 /* AddTaskRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTaskRouter.swift; sourceTree = "<group>"; };
 		D34DE553292E5D2F001549C4 /* AppCoordinatorImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinatorImpl.swift; sourceTree = "<group>"; };
@@ -103,11 +112,20 @@
 		D36FC5B727F71A5D008F87A9 /* DatabaseTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseTask.swift; sourceTree = "<group>"; };
 		D370E1EE291CE5BA0090DF47 /* ModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
 		D393FFC9293FB3970057A8DC /* InBoxCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InBoxCoordinator.swift; sourceTree = "<group>"; };
+		D398C11A294711EC00ECCDAF /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		D3A9D66229432A9D0029A4F4 /* InBoxPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InBoxPresenter.swift; sourceTree = "<group>"; };
+		D3A9D66A29434C1E0029A4F4 /* InBoxInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InBoxInteractor.swift; sourceTree = "<group>"; };
+		D3AE5A3D2953683B00AD2EE4 /* RootComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootComponent.swift; sourceTree = "<group>"; };
+		D3AE5A3F295377CC00AD2EE4 /* InBoxCoordinatorComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InBoxCoordinatorComponent.swift; sourceTree = "<group>"; };
+		D3AE5A43295441AE00AD2EE4 /* ToDayComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDayComponent.swift; sourceTree = "<group>"; };
+		D3AE5A45295441BF00AD2EE4 /* GroupComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupComponent.swift; sourceTree = "<group>"; };
+		D3AE5A47295441D000AD2EE4 /* SearchComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchComponent.swift; sourceTree = "<group>"; };
 		D3B0949528C28ACB00A2FD72 /* CoderJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoderJSON.swift; sourceTree = "<group>"; };
 		D3BC6D6228FFFA43002DDC8D /* TaskRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRepositoryImpl.swift; sourceTree = "<group>"; };
 		D3BC6D6A28FFFEAC002DDC8D /* TaskRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRepository.swift; sourceTree = "<group>"; };
 		D3BC6D8629015B61002DDC8D /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		D3C53D3627BA5396000B6E26 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D3C8393C2954A3B500D5D290 /* NeedleGenerated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeedleGenerated.swift; sourceTree = "<group>"; };
 		FDD4244FF57F7028DD205125 /* Pods-ToDoList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoList.release.xcconfig"; path = "Target Support Files/Pods-ToDoList/Pods-ToDoList.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -165,6 +183,7 @@
 		D3026B6527C26814007BDF24 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				D3C8393C2954A3B500D5D290 /* NeedleGenerated.swift */,
 				D318E839291A661700C89C48 /* DI */,
 				D318E833291A509500C89C48 /* Presentation */,
 				D3BC6D6928FFFE8F002DDC8D /* Domain */,
@@ -196,10 +215,11 @@
 		D3026B6D27C26814007BDF24 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
+				D3AE5A3F295377CC00AD2EE4 /* InBoxCoordinatorComponent.swift */,
 				D393FFC9293FB3970057A8DC /* InBoxCoordinator.swift */,
 				D318E834291A512400C89C48 /* InBox */,
 				D318E83C291A696600C89C48 /* ToDay */,
-				D318E83D291A69B900C89C48 /* TaskList */,
+				D318E83D291A69B900C89C48 /* Group */,
 				D318E83E291A69C500C89C48 /* Search */,
 				D318E836291A523500C89C48 /* Detail */,
 				D318E835291A520900C89C48 /* Add */,
@@ -211,7 +231,7 @@
 		D3026B7E27C26814007BDF24 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				D3026B8027C26814007BDF24 /* TaskService.swift */,
+				D33041F42948709D0030D3A5 /* TaskService.swift */,
 				D356F6A827DF7AE100604D34 /* FileService.swift */,
 				D36FC5B527F719F3008F87A9 /* NetworkService.swift */,
 			);
@@ -256,8 +276,11 @@
 			isa = PBXGroup;
 			children = (
 				D3026B7127C26814007BDF24 /* InBoxViewController.swift */,
-				D318E841291A6B7E00C89C48 /* InBoxModuleBuilder.swift */,
+				D3A9D66A29434C1E0029A4F4 /* InBoxInteractor.swift */,
+				D3A9D66229432A9D0029A4F4 /* InBoxPresenter.swift */,
 				D34DE543292E20B6001549C4 /* InBoxRouter.swift */,
+				D318E841291A6B7E00C89C48 /* InBoxModuleBuilder.swift */,
+				D398C11A294711EC00ECCDAF /* Model.swift */,
 			);
 			path = InBox;
 			sourceTree = "<group>";
@@ -267,8 +290,8 @@
 			children = (
 				D3026B7927C26814007BDF24 /* AddTaskViewController.swift */,
 				D3026B7627C26814007BDF24 /* AddTaskViewController.xib */,
-				D318E84F291A94EC00C89C48 /* AddTaskModuleBuilder.swift */,
 				D34DE545292E20BE001549C4 /* AddTaskRouter.swift */,
+				D318E84F291A94EC00C89C48 /* AddTaskModuleBuilder.swift */,
 			);
 			path = Add;
 			sourceTree = "<group>";
@@ -277,8 +300,8 @@
 			isa = PBXGroup;
 			children = (
 				D3026B7327C26814007BDF24 /* DetailTaskViewController.swift */,
-				D3026B7727C26814007BDF24 /* Main.storyboard */,
 				D318E84D291A8FD800C89C48 /* DetailTaskModelBuilder.swift */,
+				D3026B7727C26814007BDF24 /* Main.storyboard */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -306,24 +329,27 @@
 		D318E83C291A696600C89C48 /* ToDay */ = {
 			isa = PBXGroup;
 			children = (
+				D3AE5A43295441AE00AD2EE4 /* ToDayComponent.swift */,
 				D3026B6E27C26814007BDF24 /* ToDayViewController.swift */,
 				D318E845291A753000C89C48 /* ToDayModuleBuilder.swift */,
 			);
 			path = ToDay;
 			sourceTree = "<group>";
 		};
-		D318E83D291A69B900C89C48 /* TaskList */ = {
+		D318E83D291A69B900C89C48 /* Group */ = {
 			isa = PBXGroup;
 			children = (
-				D3026B7C27C26814007BDF24 /* TaskListViewController.swift */,
-				D318E847291A76AE00C89C48 /* TaskListModuleBuilder.swift */,
+				D3AE5A45295441BF00AD2EE4 /* GroupComponent.swift */,
+				D3026B7C27C26814007BDF24 /* GroupsViewController.swift */,
+				D318E847291A76AE00C89C48 /* GroupsModuleBuilder.swift */,
 			);
-			path = TaskList;
+			path = Group;
 			sourceTree = "<group>";
 		};
 		D318E83E291A69C500C89C48 /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				D3AE5A47295441D000AD2EE4 /* SearchComponent.swift */,
 				D3026B6F27C26814007BDF24 /* SearchViewController.swift */,
 				D318E849291A772000C89C48 /* SearchModuleBuilder.swift */,
 			);
@@ -343,6 +369,7 @@
 		D34DE55D292E9C1E001549C4 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				D3AE5A3D2953683B00AD2EE4 /* RootComponent.swift */,
 				D34DE55E292E9C2B001549C4 /* Coordinator.swift */,
 				D34DE553292E5D2F001549C4 /* AppCoordinatorImpl.swift */,
 			);
@@ -424,6 +451,8 @@
 				D3C53D3327BA5396000B6E26 /* Frameworks */,
 				D3C53D3427BA5396000B6E26 /* Resources */,
 				D3E7458B27C26C290005F421 /* ShellScript */,
+				D3AE5A3C29531D8A00AD2EE4 /* ShellScript */,
+				C4146A0C3782DE69723B889F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -513,6 +542,40 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		C4146A0C3782DE69723B889F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ToDoList/Pods-ToDoList-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ToDoList/Pods-ToDoList-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ToDoList/Pods-ToDoList-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D3AE5A3C29531D8A00AD2EE4 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n#export SOURCEKIT_LOGGING=0 && needle generate ../NeedleGenerated.swift\nneedle generate ../NeedleGenerated.swift Sources/\n";
+		};
 		D3E7458B27C26C290005F421 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -528,7 +591,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n#\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -537,9 +600,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D3026B9D27C26814007BDF24 /* TaskService.swift in Sources */,
 				D3026B8F27C26814007BDF24 /* SearchViewController.swift in Sources */,
-				D3026B9A27C26814007BDF24 /* TaskListViewController.swift in Sources */,
+				D3026B9A27C26814007BDF24 /* GroupsViewController.swift in Sources */,
 				D34DE546292E20BE001549C4 /* AddTaskRouter.swift in Sources */,
 				D3026B9127C26814007BDF24 /* SelectDateViewController.swift in Sources */,
 				D36FC5B827F71A5D008F87A9 /* DatabaseTask.swift in Sources */,
@@ -548,10 +610,13 @@
 				D3026B8B27C26814007BDF24 /* Task.swift in Sources */,
 				D318E842291A6B7F00C89C48 /* InBoxModuleBuilder.swift in Sources */,
 				D356F6A727DF7ACC00604D34 /* StorageHelper.swift in Sources */,
+				D3AE5A40295377CC00AD2EE4 /* InBoxCoordinatorComponent.swift in Sources */,
 				D318E84A291A772000C89C48 /* SearchModuleBuilder.swift in Sources */,
 				D370E1EF291CE5BA0090DF47 /* ModuleBuilder.swift in Sources */,
+				D33041F52948709D0030D3A5 /* TaskService.swift in Sources */,
 				D318E850291A94EC00C89C48 /* AddTaskModuleBuilder.swift in Sources */,
 				D3B0949628C28ACB00A2FD72 /* CoderJSON.swift in Sources */,
+				D3AE5A48295441D000AD2EE4 /* SearchComponent.swift in Sources */,
 				D34DE544292E20B6001549C4 /* InBoxRouter.swift in Sources */,
 				D34DE55F292E9C2B001549C4 /* Coordinator.swift in Sources */,
 				D36FC5B627F719F3008F87A9 /* NetworkService.swift in Sources */,
@@ -560,7 +625,8 @@
 				D393FFCA293FB3970057A8DC /* InBoxCoordinator.swift in Sources */,
 				D318E83B291A663000C89C48 /* AppDI.swift in Sources */,
 				D3BC6D8729015B61002DDC8D /* LocalStorage.swift in Sources */,
-				D318E848291A76AE00C89C48 /* TaskListModuleBuilder.swift in Sources */,
+				D3A9D66329432A9D0029A4F4 /* InBoxPresenter.swift in Sources */,
+				D318E848291A76AE00C89C48 /* GroupsModuleBuilder.swift in Sources */,
 				D3026B9427C26814007BDF24 /* SelectDateRouting.swift in Sources */,
 				D3026B9F27C26814007BDF24 /* SceneDelegate.swift in Sources */,
 				D3026B8C27C26814007BDF24 /* TaskCell.swift in Sources */,
@@ -568,13 +634,19 @@
 				D3026B9C27C26814007BDF24 /* ConvertDate.swift in Sources */,
 				D318E852291A964A00C89C48 /* SelectDataModuleBuilder.swift in Sources */,
 				D320AC7C27CE22D1002B16B5 /* Constants.swift in Sources */,
+				D3AE5A46295441BF00AD2EE4 /* GroupComponent.swift in Sources */,
 				D34DE55C292E955A001549C4 /* AppRootDependency.swift in Sources */,
 				D3BC6D6B28FFFEAC002DDC8D /* TaskRepository.swift in Sources */,
+				D398C11B294711EC00ECCDAF /* Model.swift in Sources */,
 				D3026B9227C26814007BDF24 /* DetailTaskViewController.swift in Sources */,
 				D3BC6D6328FFFA43002DDC8D /* TaskRepositoryImpl.swift in Sources */,
 				D3026B9E27C26814007BDF24 /* AppDelegate.swift in Sources */,
 				D356F6A927DF7AE100604D34 /* FileService.swift in Sources */,
+				D3AE5A3E2953683B00AD2EE4 /* RootComponent.swift in Sources */,
 				D3026B8A27C26814007BDF24 /* Group.swift in Sources */,
+				D3C8393D2954A3B500D5D290 /* NeedleGenerated.swift in Sources */,
+				D3A9D66B29434C1E0029A4F4 /* InBoxInteractor.swift in Sources */,
+				D3AE5A44295441AE00AD2EE4 /* ToDayComponent.swift in Sources */,
 				D318E84E291A8FD800C89C48 /* DetailTaskModelBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -737,7 +809,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6;
+				MARKETING_VERSION = 1.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.intervale.ToDoList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -766,7 +838,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6;
+				MARKETING_VERSION = 1.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.intervale.ToDoList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

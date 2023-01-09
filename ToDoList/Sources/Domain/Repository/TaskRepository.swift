@@ -8,9 +8,9 @@
 import Foundation
 
 protocol TaskRepository {
-    typealias FetchCompletionHandler = (Result<[Group], Error>) -> Void
+    typealias FetchCompletionHandler = (Result<Data, Error>) -> Void
     typealias UpdateCompletionHandler = (Error?) -> Void
 
-    func fetch(force: Bool, _ completionHandler: @escaping FetchCompletionHandler)
-    func update(_ operation: Operations, _ task: Task, completionHandler: @escaping UpdateCompletionHandler)
+    func fetch(id: Int?, type: Tables, force: Bool, _ completionHandler: @escaping FetchCompletionHandler)
+    func update(type: Tables, _ operation: Operations, _ task: Task?, _ id: Int?, completionHandler: @escaping UpdateCompletionHandler)
 }

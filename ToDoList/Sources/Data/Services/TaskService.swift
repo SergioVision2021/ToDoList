@@ -1,86 +1,42 @@
-//swiftlint:disable all
+//
 //  TaskService.swift
 //  ToDoList
 //
-//  Created by Sergey Vysotsky on 14.02.2022.
+//  Created by Sergey Vysotsky on 13.12.22.
 //
 
 import Foundation
 
-enum TaskServiceError: Error {
-    case cashe
-    case cacheFetching
-    case cacheAdding
-    case cacheEditing
-    case cacheDeleting
-}
+class TaskService {
 
-protocol TaskServiceLogic {
-    var source: [Group] { get set }
-    func fetch(_ completionHandler: @escaping (Result<[Group], Error>) -> ())
-    func update(_ operation: Operations, _ task: Task, completionHandler: @escaping (Result<Void, Error>) -> ())
-    
-    func filterPeriod()
-    func filterToday(_ namePeriod: String) -> [Group]?
-    func filterAllTasks() -> [String]
-    func filterGroup() -> [String]
-}
+    func filter(data: [Task]?) -> [Model.ViewModel.Group]? {
+        guard let data = data else { return nil }
 
-class TaskService: TaskServiceLogic {
-
-    public var source = [Group]()
-    private var filtredData = [Group]()
-
-    public func fetch(_ completionHandler: @escaping (Result<[Group], Error>) -> ()) {
-        filterPeriod()
-        completionHandler(Result.success(filtredData))
-    }
-
-    public func update(_ operation: Operations, _ task: Task, completionHandler: @escaping (Result<Void, Error>) -> ()) {
-        
-        guard let id = task.groupId else {
-            completionHandler(Result.failure(TaskServiceError.cashe))
-            return
-        }
-
-        switch operation {
-        case .add:
-            // AddTask - добавить новую задачу (по умолчанию 0 групп)
-            source[id].addTask(task)
-        case .edit:
-            // DetailTask - завершить задачу
-            source[id].editTask(task)
-        case .delete:
-            source[id].removeTask(task)
-        }
-    }
-    
-    // For InBoxViewController
-    func filterPeriod() {
-
-        filtredData.removeAll()
+        var groups: [Model.ViewModel.Group] = []
 
         var sections = [String]()
-        var tasks = [(Int, Task)]()
+        var tasks = [(Int, Model.ViewModel.Task)]()
 
-        source.forEach { group in
-            group.tasks?.forEach { task in
-                let intervale = ConvertDate().intervaleString(end: task.taskScheduledDate)
+        data.forEach { task in
+            let intervale = ConvertDate().intervaleString(end: task.taskScheduledDate)
 
-                //Проверка на наличии дубликата
-                if !sections.contains(intervale) {
-                    // Массив всех периодов
-                    sections.append(intervale)
-                }
-
-                // Массив всех задач Id = section, Task = value
-                guard let id = sections.firstIndex( where: { $0 == intervale } ) else { return }
-                tasks.append((id, task))
+            //Проверка на наличии дубликата
+            if !sections.contains(intervale) {
+                // Массив всех периодов
+                sections.append(intervale)
             }
+
+            // Массив всех задач Id = section, Task = value
+            guard let id = sections.firstIndex( where: { $0 == intervale } ) else { return }
+            tasks.append((id, Model.ViewModel.Task(id: task.id,
+                                                            groupId: task.groupId,
+                                                            name: task.name,
+                                                            status: task.status)
+            ))
         }
 
         for (indexS, _) in sections.enumerated() {          // Section
-            var sectionTasks = [Task]()
+            var sectionTasks = [Model.ViewModel.Task]()
 
             let filter = tasks.filter { $0.0 == indexS }
 
@@ -88,29 +44,28 @@ class TaskService: TaskServiceLogic {
                 sectionTasks.append(task.1)
             }
 
-            filtredData.append(Group.init(id: indexS, name: sections[indexS], tasks: sectionTasks))
+            groups.append(Model.ViewModel.Group(id: indexS, name: sections[indexS], tasks: sectionTasks))
         }
+
+        return groups
     }
 
-    // For TodayViewController
-    func filterToday(_ namePeriod: String) -> [Group]? {
-        filterPeriod()
-
-        guard !filtredData.isEmpty else { return nil }
+    func filterPeriod(data: [Task]?, name: String) -> [Model.ViewModel.Group]? {
+        guard let source = filter(data: data) else { return nil }
 
         // Из всех секций (периодов) получить секцию ToDay
-        let groupPeriod = filtredData.filter { $0.name == namePeriod }
+        let groupPeriod = source.filter { $0.name == name }
 
         guard !groupPeriod.isEmpty else { return nil }
 
         guard let toDay = groupPeriod.first else { return nil }
 
-        // Создать 2 группы по статусу тасков из ToDay
-        var statusToDay = [Group]()
+        // Создать 2 группы по статусу тасков
+        var groupStatus = [Model.ViewModel.Group]()
 
         if let list = toDay.tasks {
-            var taskCompleted = [Task]()
-            var taskIncomplete = [Task]()
+            var taskCompleted = [Model.ViewModel.Task]()
+            var taskIncomplete = [Model.ViewModel.Task]()
 
             for task in list {
                 switch task.status {
@@ -119,19 +74,18 @@ class TaskService: TaskServiceLogic {
                 default: break
                 }
             }
-            statusToDay.append(Group.init(id: 0, name: "Completed", tasks: taskCompleted))
-            statusToDay.append(Group.init(id: 1, name: "Incomplete", tasks: taskIncomplete))
+
+            groupStatus.append(Model.ViewModel.Group(id: 0, name: "Completed", tasks: taskCompleted))
+            groupStatus.append(Model.ViewModel.Group(id: 1, name: "Incomplete", tasks: taskIncomplete))
         }
-        return statusToDay
+        return groupStatus
     }
 
-    // For SearchViewController
-    func filterAllTasks() -> [String] {
-        return source.compactMap { $0.tasks?.compactMap { $0.name }}.flatMap{ $0 }
+    func filterGroups(data: [Group]) -> [String]? {
+        return data.compactMap { $0.name }
     }
 
-    // For TaskListViewController
-    func filterGroup() -> [String] {
-        source.compactMap { $0.name }
+    func filterTasks(data: [Task]) -> [String]? {
+        return data.compactMap { $0.name }
     }
 }

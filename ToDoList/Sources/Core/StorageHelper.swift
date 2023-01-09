@@ -15,7 +15,7 @@ enum StorageHelperError: Error {
     case encoderJSON
 }
 
-class StorageHelper<T> {
+class StorageHelper {
 
     private var folderName: String
     private var fileName: String
@@ -26,7 +26,7 @@ class StorageHelper<T> {
         self.fileName = fileName
     }
 
-    func getData<T: Codable>() -> [T]? {
+    func getData<T: Codable>() -> T? {
 
         fileURL = existFolderFile()
 
@@ -102,7 +102,7 @@ class StorageHelper<T> {
 extension StorageHelper {
 
     // [Group] -> JSON -> сохранить в файл
-    func saveJsonToFile<T: Encodable>(_ source: [T], _ callback: @escaping (Error?) -> Void) {
+    func saveJsonToFile<T: Encodable>(_ source: T, _ callback: @escaping (Error?) -> Void) {
         guard let data = CoderJSON().encoderJSON(source) else {
             return callback(StorageHelperError.encoderJSON)
         }
@@ -112,7 +112,7 @@ extension StorageHelper {
         callback(nil)
     }
 
-    private func getModel<T: Decodable>(_ data: Data) -> [T]? {
+    private func getModel<T: Decodable>(_ data: Data) -> T? {
         guard !data.isEmpty else {
             print("Data empty")
             return nil

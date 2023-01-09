@@ -17,27 +17,27 @@ class TaskRepositoryImpl: TaskRepository {
         self.localDataSource = localDataSource
     }
 
-    func fetch(force: Bool, _ completionHandler: @escaping FetchCompletionHandler) {
-        
+    func fetch(id: Int? = nil, type: Tables, force: Bool, _ completionHandler: @escaping FetchCompletionHandler) {
+
         guard !force else {
-            fetchFromLocal { completionHandler($0) }
+            fetchFromLocal(type: type) { completionHandler($0) }
             return
         }
-        
-        fetchFromRemote { completionHandler($0) }
+
+        fetchFromRemote(type: type, id: id) { completionHandler($0) }
     }
 
-    func update(_ operation: Operations, _ task: Task, completionHandler: @escaping UpdateCompletionHandler) {
+    func update(type: Tables, _ operation: Operations, _ task: Task?, _ id: Int?, completionHandler: @escaping UpdateCompletionHandler) {
 
-        remoteDataSource.update(operation: operation, task) { [weak self] result in
+        remoteDataSource.update(operation: operation, task, id) { [weak self] result in
             guard let self = self else { return }
 
             guard result == nil else {
                 completionHandler(result)
                 return
             }
-            
-            self.fetch(force: true) { result in
+
+            self.fetch(type: type, force: true) { result in
                 switch result {
                 case .success(_):
                     completionHandler(nil)
@@ -50,7 +50,7 @@ class TaskRepositoryImpl: TaskRepository {
 }
 
 private extension TaskRepositoryImpl {
-    func fetchFromLocal(completionHandler: @escaping FetchCompletionHandler) {
+    func fetchFromLocal(type: Tables, completionHandler: @escaping FetchCompletionHandler) {
     
         localDataSource.fetch { [weak self] (result) in
             guard let self = self else { return }
@@ -60,25 +60,26 @@ private extension TaskRepositoryImpl {
                 completionHandler(Result.success(dataModel))
             case .failure(let error):
                 print(error.localizedDescription)
-                self.fetchFromRemote { completionHandler($0) }
+                self.fetchFromRemote(type: type, id: nil) { completionHandler($0) }
             }
         }
     }
     
-    func fetchFromRemote(completionHandler: @escaping FetchCompletionHandler) {
-    
-        remoteDataSource.fetch { (result) in
+    func fetchFromRemote(type: Tables, id: Int?, completionHandler: @escaping FetchCompletionHandler) {
+
+        remoteDataSource.fetch(id: id, type: type) { (result) in
             switch result {
             case .success(let dataModel):
-                
+
                 self.localDataSource.saveAll(dataModel) { (result) in
                     guard result == nil else {
                         completionHandler(Result.failure(result!))
                         return
                     }
                 }
-                
+
                 completionHandler(Result.success(dataModel))
+
             case .failure(let error):
                 completionHandler(Result.failure(error))
             }

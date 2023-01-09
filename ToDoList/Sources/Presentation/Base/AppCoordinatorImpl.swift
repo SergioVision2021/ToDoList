@@ -10,29 +10,38 @@ import UIKit
 class AppCoordinatorImpl: Coordinator {
 
     public let tabBarController: UITabBarController
-
-    private var childCoordinators = [Coordinator]()
     private var dependencies: AppRootDependency
+    private let inBoxCoordinatorComponent: InBoxCoordinatorComponent
+    private let toDayBuilder: ToDayBuilder
+    private let groupBuilder: GroupBuilder
+    private let searchBuilder: SearchBuilder
 
-    init(tabBarController: UITabBarController = UITabBarController(), dependencies: AppRootDependency) {
+    // private var childCoordinators = [Coordinator]()
+
+    init(tabBarController: UITabBarController,
+         dependencies: AppRootDependency,
+         inBoxCoordinatorComponent: InBoxCoordinatorComponent,
+         toDayBuilder: ToDayBuilder,
+         groupBuilder: GroupBuilder,
+         searchBuilder: SearchBuilder) {
         self.tabBarController = tabBarController
         self.dependencies = dependencies
+        self.inBoxCoordinatorComponent = inBoxCoordinatorComponent
+        self.toDayBuilder = toDayBuilder
+        self.groupBuilder = groupBuilder
+        self.searchBuilder = searchBuilder
     }
 
     public func start() {
 
-        let service = dependencies.makeTaskService()
         var controllers: [UIViewController] = []
-
-        let inBoxCoordinator = dependencies.makeInBoxModule(service: service)
-        inBoxCoordinator.parentCoordinator = self
-        childCoordinators.append(inBoxCoordinator)
-        inBoxCoordinator.start()
-
-        controllers.append(inBoxCoordinator.navigationController)
-        controllers.append(dependencies.makeToDayModule(service: service))
-        controllers.append(dependencies.makeTaskListModule(service: service))
-        controllers.append(dependencies.makeSearchModule(service: service))
+        
+        inBoxCoordinatorComponent.inBoxCoordinator.start()
+        
+        controllers.append(inBoxCoordinatorComponent.navController)
+        controllers.append(dependencies.makeToDayModule(vc: toDayBuilder.toDayComponent))
+        controllers.append(dependencies.makeGroupModule(vc: groupBuilder.groupComponent))
+        controllers.append(dependencies.makeSearchModule(vc: searchBuilder.sarchComponent))
 
         tabBarController.setViewControllers(controllers, animated: true)
     }

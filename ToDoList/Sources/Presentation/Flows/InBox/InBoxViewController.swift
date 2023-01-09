@@ -7,21 +7,20 @@
 
 import UIKit
 
-enum Operations {
-    case add
-    case edit
-    case delete
+protocol InBoxViewLogic: ViewProtocol {
+    func fetchData()
+    func display(vieModel: [Model.ViewModel.Group])
+    func displayError(message: String)
 }
 
-class InBoxViewController: UIViewController {
+class InBoxViewController: UIViewController, InBoxViewLogic {
 
     // MARK: - Public properties
-    public var service: TaskServiceLogic?
     public var router: InBoxRouter?
+    public var interactor: InBoxInteractorLogic?
 
     // MARK: - Private properties
-    private var repository = AppDI.makeTaskRepository()
-    private var data: [Group] = []
+    private var data: [Model.ViewModel.Group] = []
 
     // MARK: - Visual Component
     private lazy var tableView = makeTableView()
@@ -34,58 +33,25 @@ class InBoxViewController: UIViewController {
 
         addBarButtonItem()
         addTableView()
+        addActivitiIndicator()
+
+        fetchData()
+    }
+
+    func fetchData() {
+        activitiIndicator.startAnimating()
+        interactor?.fetchTasks()
+    }
+
+    func display(vieModel: [Model.ViewModel.Group]) {
+        data = vieModel
+        activitiIndicator.stopAnimating()
+        tableView.reloadData()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        fetch()
-    }
-    
-    private func fetch() {
-        repository.fetch(force: false) { [weak self] (result) in
-            guard let self = self else { return }
-            
-            switch result {
-            case.success(let dataModel):
-
-                //TASK SERVICE
-                self.service?.source = dataModel
-                
-                self.service?.fetch() { (result) in
-                    switch result {
-                    case .success(let data):
-                        DispatchQueue.main.async {
-                            self.data = data
-                            print(data)
-                            self.tableView.reloadData()
-                        }
-                    case .failure(_):
-                        break
-                    }
-                }
-            case.failure(let error):
-                DispatchQueue.main.async {
-                    self.present(self.makeAlertController(error.localizedDescription), animated: true, completion: nil)
-                }
-            }
-        }
-    }
-    
-    private func execute(operation: Operations, _ task: Task) {
-
-        repository.update(operation, task) { [weak self] error in
-            guard let self = self else { return }
-            
-            guard error == nil else {
-                DispatchQueue.main.async {
-                    self.present(self.makeAlertController(error?.localizedDescription), animated: true, completion: nil)
-                }
-                return
-            }
-            
-            self.fetch()
-        }
+    func displayError(message: String) {
+        activitiIndicator.stopAnimating()
+        present(self.makeAlertController(message), animated: true, completion: nil)
     }
 }
 
@@ -125,8 +91,7 @@ extension InBoxViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
         
-        print("Coutn: \(data.count)")
-        
+        print("Count: \(data.count)")
         return data.count
     }
 
@@ -145,7 +110,7 @@ extension InBoxViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
 
-            guard let selectTask = data[indexPath.section].tasks?[indexPath.row] else { return }
+            guard let id = data[indexPath.section].tasks?[indexPath.row].id else { return }
 
             data[indexPath.section].tasks?.remove(at: indexPath.row)
             
@@ -153,7 +118,7 @@ extension InBoxViewController: UITableViewDataSource {
             tableView.deleteRows(at: [indexPath], with: .none)
             tableView.endUpdates()
             
-            execute(operation: .delete, selectTask)
+            interactor?.execute(id, operation: .delete)
         }
     }
 }
@@ -174,10 +139,8 @@ extension InBoxViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        router?.navigationToDetailTask(task: data[indexPath.section].tasks?[indexPath.row] ?? Task(),
-                                       nameSection: data[indexPath.section].name ?? "",
-                                       repository: repository,
-                                       sender: self)
+        guard let id = data[indexPath.section].tasks?[indexPath.row].id else { return }
+        router?.navigationToDetailTask(id: id, sender: self)
     }
 
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
@@ -195,7 +158,7 @@ private extension InBoxViewController {
 
     @objc
     func addActionButton(sender: UIBarButtonItem) {
-        router?.navigationToAddTask(repository: repository)
+        router?.navigationToAddTask()
     }
 }
 
@@ -231,27 +194,8 @@ private extension InBoxViewController {
 
 //MARK: - ActivitiIndicator
 private extension InBoxViewController {
-    func startAnimationAI() {
-        
-        guard view.contains(activitiIndicator) else {
-            view.addSubview(activitiIndicator)
-            activitiIndicator.startAnimating()
-            return
-        }
     
-        activitiIndicator.startAnimating()
-    }
-    
-    func stopAnimationAI(_ result: String?) {
-        DispatchQueue.main.async {
-            self.activitiIndicator.stopAnimating()
-            self.activitiIndicator.removeFromSuperview()
-            
-            guard let result = result else {
-                return
-            }
-            
-            self.present(self.makeAlertController(result), animated: true, completion: nil)
-        }
+    func addActivitiIndicator() {
+        view.addSubview(activitiIndicator)
     }
 }

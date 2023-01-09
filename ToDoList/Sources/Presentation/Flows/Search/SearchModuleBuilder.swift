@@ -9,17 +9,15 @@ import Foundation
 
 final class SearchModuleBuilder: ModuleBuilder {
 
-    let service: TaskServiceLogic
-
-    init(service: TaskServiceLogic) {
-        self.service = service
-    }
+    init() {}
 
     public func build() -> SearchViewController {
 
+        let repository = AppDI.makeTaskRepository()
+
         let view = SearchViewController()
+        view.repository = repository
         view.title = "Search"
-        view.service = service
         return view
     }
 }
